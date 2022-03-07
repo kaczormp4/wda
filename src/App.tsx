@@ -1,16 +1,23 @@
 import './App.scss';
 import Home from './pages/Home/Home';
 import NotFound from './pages/NotFound/NotFound';
+import Showcase from './components/Showcase/Showcase';
+import './utils/icons';
 import {
   BrowserRouter as Router,
   Routes,
   Route
 } from "react-router-dom";
 
+
 const routes = [
   {
     path: "/",
     element: Home
+  },
+  {
+    path: "/components",
+    element: Showcase
   },
   {
     path: "/*",
@@ -26,7 +33,7 @@ function App() {
         <div className="app">
           <Routes >
             {routes.map((route, i) => (
-              <Route key={i} path={route.path} element={<route.element/>}/>
+              <Route key={i} path={route.path} element={<route.element />} />
             ))}
           </Routes>
         </div>
