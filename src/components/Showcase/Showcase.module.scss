@@ -1,0 +1,50 @@
+.Showcase {
+    max-width: 1600px;
+    margin: auto;
+    padding: var(--spacing-05);
+    h1 {
+        font-size: var(--font-size-05);
+        margin-bottom: var(--spacing-04);
+        font-weight: bold;
+    }
+    h2 {
+        font-size: var(--font-size-04);
+        margin-bottom: var(--font-size-02);
+        font-weight: bold;
+    }
+
+    .componentWrapper {
+        padding: var(--spacing-02);
+        border-left: 4px solid var(--background-02);
+
+        .section {
+            background-color: var(--background-02);
+            border-radius: 0.5rem;
+            padding: var(--spacing-04);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            &:not(:last-of-type) {
+                margin-bottom: var(--spacing-02);
+            }
+
+            &Description {
+                margin-bottom: var(--spacing-02);
+                font-size: var(--font-size-02);
+            }
+        }
+        dd {
+            margin-bottom: var(--spacing-02);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .inlineFlex {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-02);
+        }
+    }
+
+}

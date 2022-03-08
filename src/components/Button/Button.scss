@@ -1,0 +1,187 @@
+@import "../../styles/variables";
+
+.#{$prefix}-btn {
+    $btn: &;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    outline: none;
+    text-align: left;
+    text-decoration: none;
+    border: 0;
+    margin: 0;
+    font-size: var(--font-size-03);
+    position: relative;
+    display: inline-flex;
+    max-width: 300px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--text-01);
+    border: 2px solid transparent;
+    box-sizing: border-box;
+    overflow: hidden;
+
+    // states
+    &:disabled,
+    &--disabled {
+        background: var(--disabled-01);
+        color: var(--text-02);
+        cursor: not-allowed;
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 2px var(--focus);
+    }
+
+    // elements
+    &--text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &--icon {
+        margin-left: var(--spacing-02);
+    }
+    &--icon-only {
+        border-radius: 50%;
+        margin-left: 0;
+        &.#{$prefix}-btn {
+            padding: 0;
+            justify-content: center;
+            &--sm {
+                width: var(--spacing-05);
+            }
+            &--md {
+                width: var(--spacing-06);
+            }
+            &--lg {
+                width: var(--spacing-07);
+            }
+        }
+    }
+
+    // sizes
+    &--sm {
+        font-size: var(--font-size-02);
+        padding: 0 var(--spacing-02);
+        height: var(--spacing-05);
+    }
+    &--md {
+        padding: 0 var(--spacing-03);
+        height: var(--spacing-06);
+    }
+    &--lg {
+        padding: 0 var(--spacing-04);
+        height: var(--spacing-07);
+    }
+
+    // kinds
+    &--primary {
+        background: var(--primary);
+        color: var(--text-02);
+
+        &:hover:not(:disabled) {
+            background: var(--primary-hover);
+        }
+    }
+    &--secondary {
+        background: var(--secondary);
+        color: var(--text-02);
+        &:hover:not(:disabled) {
+            background: var(--secondary-hover);
+        }
+    }
+
+    &--teritiary {
+        background: none;
+        color: var(--primary);
+        border: 2px solid var(--primary);
+        &:hover:not(:disabled) {
+            background: var(--lt-overlay);
+            border-color: transparent;
+            // color: var(--text-02)
+        }
+        &:disabled,
+        &.#{$prefix}-btn--disabled {
+            background: none;
+            border-color: var(--disabled-01);
+            color: var(--disabled-02);
+        }
+    }
+
+    &--ghost {
+        background: none;
+        &:hover:not(:disabled) {
+            background: var(--lt-overlay);
+        }
+    }
+
+    &--danger {
+        background: var(--danger);
+        &:hover:not(:disabled) {
+            background: var(--danger-hover);
+        }
+        &.#{$prefix}-btn--ghost {
+            &:not(:disabled) {
+                color: var(--danger);
+                background: none;
+            }
+            &:hover:not(:disabled) {
+                background: var(--danger-hover);
+                color: var(--text-02);
+            }
+        }
+    }
+
+    // skeleton
+    &--skeleton#{&}--disabled {
+        color: transparent;
+        background: white;
+        border-color: transparent;
+        &::after {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            content: "";
+            transform: translateX(-100%);
+            animation: skeletonAnim 2s infinite;
+            background-image: linear-gradient(
+                90deg,
+                transparent 0,
+                var(--disabled-01) 20%,
+                transparent 60%,
+                var(--disabled-01)
+            );
+        }
+        &:hover {
+            background: transparent;
+        }
+        @keyframes skeletonAnim {
+            100% {
+                transform: translateX(100%);
+            }
+        }
+    }
+
+    // ripple
+    &--ripple {
+        position: absolute;
+        transform: scale(0);
+        animation: ripple 400ms linear;
+        border-radius: 50%;
+        background-color: rgba(white, 0.25);
+    }
+    &--teritiary:not(.#{$prefix}-btn--danger),
+    &--ghost:not(.#{$prefix}-btn--danger) {
+        .#{$prefix}-btn--ripple {
+            background-color: rgba(black, 0.25);
+        }
+    }
+    @keyframes ripple {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+}
