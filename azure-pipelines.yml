@@ -7,17 +7,6 @@ trigger:
 - main
 
 variables:
-
-  # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: '9f79295e-036a-4b82-ae7f-841996402712'
-
-  # Web app name
-  webAppName: 'weddingsclient'
-
-  # Environment name
-  environmentName: 'weddingsclient'
-
-  # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
 stages:
@@ -42,7 +31,7 @@ stages:
         customCommand: 'run build'
     - task: ArchiveFiles@2
       inputs:
-        rootFolderOrFile: '$(Build.SourcesDirectory)'
+        rootFolderOrFile: '$(Build.SourcesDirectory)/build'
         includeRootFolder: true
         archiveType: 'zip'
         archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
