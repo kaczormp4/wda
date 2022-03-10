@@ -1,6 +1,6 @@
 import React, { FC, useRef } from 'react';
 import "./Button.scss";
-import { cssPrefix } from '../../config';
+import { cssPrefix } from '../../../config';
 import classNames from 'classnames';
 
 const cls = `${cssPrefix}-btn`;

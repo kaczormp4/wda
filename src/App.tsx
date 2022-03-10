@@ -8,6 +8,7 @@ import {
   Routes,
   Route
 } from "react-router-dom";
+import Navbar from './components/Navbar/Navbar';
 
 
 const routes = [
@@ -30,6 +31,7 @@ function App() {
   return (
     <div className="App">
       <Router>
+        <Navbar />
         <div className="app">
           <Routes >
             {routes.map((route, i) => (
