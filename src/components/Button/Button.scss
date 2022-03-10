@@ -20,6 +20,7 @@
     border: 2px solid transparent;
     box-sizing: border-box;
     overflow: hidden;
+    gap: var(--spacing-02);
 
     // states
     &:disabled,
@@ -41,7 +42,24 @@
     }
 
     &--icon {
-        margin-left: var(--spacing-02);
+        &-top, &-bottom {
+            gap: var(--spacing-01);
+            height: unset;
+            padding-top: var(--spacing-01);
+            padding-bottom: var(--spacing-01);
+        }
+
+        &-top {
+            flex-direction: column-reverse;
+        }
+
+        &-bottom {
+            flex-direction: column;
+        }
+
+        &-left {
+            flex-direction: row-reverse;
+        }
     }
     &--icon-only {
         border-radius: 50%;
@@ -133,6 +151,7 @@
             }
         }
     }
+    
 
     // skeleton
     &--skeleton#{&}--disabled {

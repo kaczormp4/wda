@@ -1,9 +1,15 @@
-import React, { FunctionComponent, useRef } from 'react';
+import React, { FC, useRef } from 'react';
 import "./Button.scss";
 import { cssPrefix } from '../../config';
 import classNames from 'classnames';
 
 const cls = `${cssPrefix}-btn`;
+enum POSITIONS  {
+    RIGHT = 'right',
+    TOP = 'top',
+    LEFT = 'left',
+    BOTTOM = 'bottom'
+};
 
 type ButtonProps = {
     className?: string,
@@ -17,6 +23,7 @@ type ButtonProps = {
     onFocus?: Function,
     icon?: any,
     iconOnly?: boolean,
+    iconPosition?: string,
     iconDescription?: string,
     [rest: string]: any;
 }
@@ -46,7 +53,7 @@ const handleClick = (ev: React.MouseEvent, onClick: Function, ripple: HTMLSpanEl
     onClick(ev);
 };
 
-const Button: FunctionComponent<ButtonProps> = (props: React.PropsWithChildren<ButtonProps>) => {
+const Button: FC<ButtonProps> = (props: React.PropsWithChildren<ButtonProps>) => {
     const { className, disabled, skeleton, kind, danger, size, onBlur, onClick, onFocus, icon, iconOnly, iconDescription, children, ...rest } = props;
     const ripple = useRef<HTMLSpanElement>(null);
 
@@ -55,6 +62,7 @@ const Button: FunctionComponent<ButtonProps> = (props: React.PropsWithChildren<B
         [`${cls}--${kind}`]: true,
         [`${cls}--${size}`]: true,
         [`${cls}--disabled`]: disabled || skeleton,
+        [`${cls}--icon-${props.iconPosition}`]: icon && !iconOnly,
         [`${cls}--skeleton`]: skeleton,
         [`${cls}--danger`]: danger,
         [`${cls}--icon-only`]: iconOnly,
@@ -89,6 +97,7 @@ const defaultProps: ButtonProps = {
     onClick: () => { },
     onFocus: () => { },
     icon: null,
+    iconPosition: POSITIONS.RIGHT,
     iconDescription: null,
     iconOnly: false
 }

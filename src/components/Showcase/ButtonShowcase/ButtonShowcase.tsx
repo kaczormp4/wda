@@ -1,11 +1,11 @@
 
-import React, { FunctionComponent } from 'react';
+import React, { FC } from 'react';
 import Button from './../../Button/Button';
 import parentStyles from "./../Showcase.module.scss";
 import styles from "./ButtonShowcase.module.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const ButtonShowcase: FunctionComponent = () =>
+const ButtonShowcase: FC = () =>
     <div className={styles.Buttons}>
         <h2>Button</h2>
         <section className={parentStyles.section}>
@@ -101,6 +101,21 @@ const ButtonShowcase: FunctionComponent = () =>
                     Medium primary
                 </Button>
                 <Button size='lg' danger kind='primary' iconOnly icon={<FontAwesomeIcon icon="coffee" />} iconDescription="Coffe time">
+                    Large primary
+                </Button>
+            </div>
+        </section>
+
+        <section className={parentStyles.section}>
+            <dd>Icon positions</dd>
+            <div className={styles.inlineFlex}>
+                <Button size='sm' kind='primary' icon={<FontAwesomeIcon icon="coffee" />} iconDescription="Coffe time" iconPosition="top">
+                    Small primary
+                </Button>
+                <Button size='md' kind='secondary' icon={<FontAwesomeIcon icon="coffee" />} iconDescription="Coffe time" iconPosition="left">
+                    Medium primary
+                </Button>
+                <Button size='lg' kind='teritiary' icon={<FontAwesomeIcon icon="coffee" />} iconDescription="Coffe time" iconPosition='bottom'>
                     Large primary
                 </Button>
             </div>
