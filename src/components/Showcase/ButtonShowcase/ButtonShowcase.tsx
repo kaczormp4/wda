@@ -1,11 +1,6 @@
 
-<<<<<<< HEAD
 import React, { FC } from 'react';
-import Button from './../../Button/Button';
-=======
-import React, { FunctionComponent } from 'react';
-import Button from '../../commonComponents/Button/Button';
->>>>>>> basic nav layout
+import Button from './../../commonComponents/Button/Button';
 import parentStyles from "./../Showcase.module.scss";
 import styles from "./ButtonShowcase.module.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
