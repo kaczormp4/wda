@@ -28,7 +28,7 @@ stages:
     - task: Npm@1
       inputs:
         command: 'custom'
-        customCommand: 'run build --nomaps'
+        customCommand: 'run build'
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: 'build'
