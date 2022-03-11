@@ -26,12 +26,32 @@ const routes = [
   }
 ];
 
+const temporaryFlyoutMenuList = [
+  {
+    id: '1',
+    text: 'home',
+    route: '/home',
+    icon: 'home'
+  },
+  {
+    id: '2',
+    text: 'User',
+    route: '/user',
+    icon: 'circle-plus'
+  },
+  {
+    id: '3',
+    text: 'Settiings',
+    route: '/ettiings',
+    icon: 'comment-alt'
+  },
+]
 
 function App() {
   return (
     <div className="App">
       <Router>
-        <Navbar />
+        <Navbar loggedIn={true} flyoutMenuList={temporaryFlyoutMenuList} />
         <div className="app">
           <Routes >
             {routes.map((route, i) => (
