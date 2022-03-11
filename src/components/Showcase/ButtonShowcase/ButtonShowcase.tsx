@@ -1,6 +1,6 @@
 
 import React, { FC } from 'react';
-import Button from './../../Button/Button';
+import Button from './../../commonComponents/Button/Button';
 import parentStyles from "./../Showcase.module.scss";
 import styles from "./ButtonShowcase.module.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
