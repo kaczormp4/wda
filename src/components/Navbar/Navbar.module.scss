@@ -49,7 +49,7 @@
                     min-width: 160px;
                     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
                     padding: 12px 16px;
-                    z-index: 1;
+                    z-index: 996;
                     transition-delay: 1.5s;
                 }
                 &:hover .FlyoutMenu {
@@ -106,8 +106,6 @@
         z-index: 997;
     }
     .FloatMobileMenuBackground {
-        width: 80vw;
-        height: calc(100vh - (var(--spacing-05) + var(--spacing-05) + var(--spacing-07)));
         position: fixed;
         top: 0;
         right: -100vw;
