@@ -1,7 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FC, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { FC, useCallback, useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../commonComponents/Button/Button';
+import { NavbarMobileProvider } from './NavbarMobileProvider/NavbarMobileProvider';
 import styles from "./Navbar.module.scss";
 
 interface NavbarProps {
@@ -12,11 +13,43 @@ interface NavbarProps {
         route: string,
         icon: string
     }[];
+    userInfo: any
 }
 
 const Navbar: FC<NavbarProps> = (props) => {
-    const { loggedIn, flyoutMenuList } = props;
+    const { loggedIn, flyoutMenuList, userInfo } = props;
     const [openMenu, setOpenMenu] = useState<boolean>(false);
+    const navigate = useNavigate();
+
+    const escFunction = useCallback((event) => {
+        if (event.key === "Escape") {
+            setOpenMenu(false);
+        }
+    }, []);
+
+    useEffect(() => {
+        document.addEventListener("keydown", escFunction, false);
+
+        return () => {
+            document.removeEventListener("keydown", escFunction, false);
+        };
+    }, []);
+
+    const navigateTo = (route: string) => {
+        navigate(`/${route}`);
+        setOpenMenu(false);
+    }
+    const UserAvatar = () => {
+        if (userInfo.avatar) {
+            return <Link to='/profil'>
+                <img src={userInfo.avatar} />
+            </Link>
+        } else {
+            return <Link to='/profil'>
+                <img src={"https://mir-s3-cdn-cf.behance.net/project_modules/disp/ea7a3c32163929.567197ac70bda.png"} />
+            </Link>
+        }
+    }
 
     return (
         <div className={styles.NavbarContainer}>
@@ -25,21 +58,19 @@ const Navbar: FC<NavbarProps> = (props) => {
                     <Link to='/'>WEDD LOGO</Link>
                 </div>
                 <nav className={styles.NavMenu}>
-                    <Link to='/'>
-                        <Button kind='teritiary' icon={<FontAwesomeIcon icon="comment-alt" />}>Wiadomości</Button>
+                    <Link to='/wiadomosci'>
+                        <Button kind='teritiary' icon={<FontAwesomeIcon icon="comment-alt" />} iconPosition="left">Wiadomości</Button>
                     </Link>
-                    <Link to='/'>
-                        <Button kind='teritiary' icon={<FontAwesomeIcon icon="list-squares" />}>Moja Lista</Button>
+                    <Link to='/moja-lista'>
+                        <Button kind='teritiary' icon={<FontAwesomeIcon icon="list-squares" />} iconPosition="left">Moja Lista</Button>
                     </Link>
-                    <Link to='/'>
+                    <Link to='/nowe-ogloszenie'>
                         <Button kind='teritiary' icon={<FontAwesomeIcon icon="circle-plus" />}>Dodaj ogłoszenie</Button>
                     </Link>
                     {
                         loggedIn ?
                             <div className={styles.Avatar}>
-                                <Link to='/'>
-                                    <img src={"https://mir-s3-cdn-cf.behance.net/project_modules/disp/ea7a3c32163929.567197ac70bda.png"} />
-                                </Link>
+                                {UserAvatar()}
                                 <div className={styles.FlyoutMenu}>
                                     {
                                         flyoutMenuList.map((item) =>
@@ -51,72 +82,51 @@ const Navbar: FC<NavbarProps> = (props) => {
                                 </div>
                             </div>
                             :
-                            <Link to='/'>
+                            <Link to='/logowanie'>
                                 <Button kind='primary'>Zaloguj Się</Button>
                             </Link>
                     }
 
                 </nav>
             </div>
-            <div className={styles.NavbarContentMobile}>
-                <nav className={styles.NavMenu}>
-                    <Link to='/'>
-                        <Button kind='ghost' size="lg" iconOnly icon={<FontAwesomeIcon icon="home" />}>Wiadomości</Button>
-                    </Link>
-                    <Link to='/components'>
-                        <Button kind='ghost' size="lg" iconOnly icon={<FontAwesomeIcon icon="list-squares" />}>Moja Lista</Button>
-                    </Link>
-                    <Link to='/components'>
-                        <Button kind='ghost' size="lg" iconOnly icon={<FontAwesomeIcon icon="circle-plus" />}>Dodaj ogłoszenie</Button>
-                    </Link>
-                    <Link to='/components'>
-                        <Button kind='ghost' size="lg" iconOnly icon={<FontAwesomeIcon icon="comment-alt" />}>Wiadomości</Button>
-                    </Link>
-                    {
-                        openMenu ?
-                            <Button
-                                kind='ghost'
-                                size="lg"
-                                iconOnly
-                                icon={<FontAwesomeIcon icon='close' />}
-                                onClick={() => setOpenMenu(!openMenu)}
-                            >
-                                MENU
-                            </Button> :
-                            <Button
-                                kind='ghost'
-                                size="lg"
-                                iconOnly
-                                icon={<FontAwesomeIcon icon='navicon' />}
-                                onClick={() => setOpenMenu(!openMenu)}
-                            >
-                                CLOSE
+            <NavbarMobileProvider>
+                <div className={styles.NavbarContainer}>
+                    <div className={styles.NavbarContentMobile}>
+                        <nav className={styles.NavMenu}>
+                            <Button kind='ghost' size="lg" iconOnly icon={<FontAwesomeIcon icon="home" />} onClick={() => navigateTo('')}>
+                                HOME
                             </Button>
-                    }
-                </nav>
+                            <Button kind='ghost' size="lg" iconOnly icon={<FontAwesomeIcon icon="list-squares" />} onClick={() => navigateTo('moja-lista')}>
+                                Moja Lista
+                            </Button>
+                            <Button kind='ghost' size="lg" iconOnly icon={<FontAwesomeIcon icon="circle-plus" />} onClick={() => navigateTo('nowe-ogloszenie')}>
+                                Dodaj ogłoszenie
+                            </Button>
+                            <Button kind='ghost' size="lg" iconOnly icon={<FontAwesomeIcon icon="comment-alt" />} onClick={() => navigateTo('wiadomosci')}>
+                                wiadomosci
+                            </Button>
+                            <Button kind='ghost' size="lg" iconOnly icon={<FontAwesomeIcon icon={openMenu ? 'close' : 'navicon'} />} onClick={() => setOpenMenu(!openMenu)} >
+                                MENU
+                            </Button>
+                        </nav>
+                    </div>
+                </div>
                 {
                     openMenu && <>
-                        <div className={styles.FloatMobileMenuOverlay} onClick={() => setOpenMenu(!openMenu)}>
-                        </div>
+                        <div className={styles.FloatMobileMenuOverlay} onClick={() => setOpenMenu(!openMenu)}></div>
                         <div className={styles.FloatMobileMenuBackground}>
                             <div className={styles.FloatMobileMenu}>
                                 <div className={styles.FloatMenuClose}>
-                                    <Button
-                                        kind='ghost'
-                                        size="lg"
-                                        iconOnly
-                                        icon={<FontAwesomeIcon icon='close' />}
-                                        onClick={() => setOpenMenu(!openMenu)}
-                                    ></Button>
+                                    <Button kind='ghost' size="lg" iconOnly icon={<FontAwesomeIcon icon='close' />} onClick={() => setOpenMenu(!openMenu)} />
                                 </div>
                                 {
                                     loggedIn &&
                                     <div className={styles.FloatMenuAvatarBox}>
                                         <div className={styles.FloatMenuAvatar}>
-                                            <img src={"https://mir-s3-cdn-cf.behance.net/project_modules/disp/ea7a3c32163929.567197ac70bda.png"} />
+                                            {UserAvatar()}
                                         </div>
                                         <div className={styles.FloatMenuUserName}>
-                                            <h1>Jan Kowalski</h1>
+                                            <h1>{userInfo.name}</h1>
                                         </div>
                                     </div>
                                 }
@@ -124,7 +134,7 @@ const Navbar: FC<NavbarProps> = (props) => {
                                     {
                                         flyoutMenuList.map((item) =>
                                             <Link to={item.route} key={item.id}>
-                                                <Button kind='ghost' size="lg" icon={<FontAwesomeIcon icon="home" />}>{item.text}</Button>
+                                                {item.text}
                                             </Link>
                                         )
                                     }
@@ -132,19 +142,16 @@ const Navbar: FC<NavbarProps> = (props) => {
                                 <div className={styles.FloatMenuLogout}>
                                     {
                                         loggedIn ?
-                                            <Link to='/'>
-                                                <Button kind='ghost' size="lg" icon={<FontAwesomeIcon icon="sign-out" />}>WYLOGUJ</Button>
-                                            </Link> :
-                                            <Link to='/'>
-                                                <Button kind='ghost' size="lg" icon={<FontAwesomeIcon icon="sign-out" />}>ZALOGUJ</Button>
-                                            </Link>
+                                            <Button kind='ghost' size="lg" icon={<FontAwesomeIcon icon="sign-out" />} onClick={() => navigateTo('log-out')}>WYLOGUJ</Button>
+                                            :
+                                            <Button kind='ghost' size="lg" icon={<FontAwesomeIcon icon="sign-out" />} onClick={() => navigateTo('logowanie')}>ZALOGUJ</Button>
                                     }
                                 </div>
                             </div>
                         </div>
                     </>
                 }
-            </div>
+            </NavbarMobileProvider>
         </div>
     )
 }

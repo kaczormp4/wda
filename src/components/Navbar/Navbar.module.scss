@@ -1,3 +1,7 @@
+.FloatMobileMenuOverlay,
+.FloatMobileMenuBackground {
+    display: none;
+}
 .NavbarContainer {
     background-color: var(--background-02);
     position: sticky;
@@ -35,7 +39,10 @@
                     border-radius: inherit;
                 }
                 & > .FlyoutMenu {
-                    display: none;
+                    // display: none;
+                    display: flex;
+                    visibility: hidden;
+                    flex-direction: column;
                     position: absolute;
                     background-color: #f9f9f9;
                     right: 0;
@@ -43,10 +50,11 @@
                     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
                     padding: 12px 16px;
                     z-index: 1;
+                    transition-delay: 1.5s;
                 }
                 &:hover .FlyoutMenu {
-                    display: flex;
-                    flex-direction: column;
+                    visibility: visible;
+                    transition-delay: 0s;
                 }
             }
         }
@@ -64,6 +72,7 @@
         .NavbarContentMobile {
             display: block;
             padding: var(--spacing-01);
+            z-index: 999;
         }
         .NavMenu {
             width: 100%;
@@ -84,98 +93,106 @@
                 }
             }
         }
-        .FloatMobileMenuOverlay {
-            width: 100vw;
-            height: calc(100vh - (var(--spacing-01) + var(--spacing-01) + var(--spacing-07)));
-            backdrop-filter: blur(2px);
-            transition-delay: 2s;
-            position: fixed;
-            top: 0;
-            left: 0;
+    }
+    .FloatMobileMenuOverlay {
+        width: 100vw;
+        height: calc(100vh - (var(--spacing-01) + var(--spacing-01) + var(--spacing-07)));
+        backdrop-filter: blur(2px);
+        transition-delay: 2s;
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 997;
+    }
+    .FloatMobileMenuBackground {
+        width: 80vw;
+        height: calc(100vh - (var(--spacing-05) + var(--spacing-05) + var(--spacing-07)));
+        position: fixed;
+        top: 0;
+        right: -100vw;
+        z-index: 998;
+        display: flex;
+        justify-content: flex-end;
+        -webkit-animation: slideRightLeft 0.5s forwards;
+        animation: slideRightLeft 0.5s forwards;
+        @-webkit-keyframes slideRightLeft {
+            100% {
+                right: 0;
+            }
         }
-        .FloatMobileMenuBackground {
+        @keyframes slideRightLeft {
+            100% {
+                right: 0;
+            }
+        }
+        .FloatMobileMenu {
             width: 80vw;
-            height: calc(100vh - (var(--spacing-05) + var(--spacing-05) + var(--spacing-07)));
-            position: fixed;
-            top: 0;
-            right: -100vw;
+            height: calc(100vh - (var(--spacing-01) + var(--spacing-01) + var(--spacing-07)));
+            background-color: var(--background-02);
             display: flex;
-            justify-content: flex-end;
-            -webkit-animation: slideRightLeft 0.5s forwards;
-            animation: slideRightLeft 0.5s forwards;
-            @-webkit-keyframes slideRightLeft {
-                100% {
-                    right: 0;
-                }
+            flex-direction: column;
+            &:last-child {
+                margin-top: auto;
             }
-            @keyframes slideRightLeft {
-                100% {
-                    right: 0;
-                }
-            }
-            .FloatMobileMenu {
-                width: 80vw;
-                height: calc(100vh - (var(--spacing-01) + var(--spacing-01) + var(--spacing-07)));
-                background-color: var(--background-02);
+            .FloatMenuClose {
+                width: 100%;
                 display: flex;
+                justify-content: flex-end;
+                padding-top: var(--spacing-05);
+                padding-bottom: var(--spacing-05);
+                background-color: var(--lt-overlay);
+            }
+            .FloatMenuAvatarBox {
+                width: 100%;
+                margin-top: var(--spacing-05);
+                margin-bottom: var(--spacing-05);
+                display: flex;
+                justify-content: center;
                 flex-direction: column;
-                &:last-child {
-                    margin-top: auto;
-                }
-                .FloatMenuClose {
-                    width: 100%;
-                    display: flex;
-                    justify-content: flex-end;
-                    padding-top: var(--spacing-05);
-                    padding-bottom: var(--spacing-05);
-                    background-color: var(--lt-overlay);
-                }
-                .FloatMenuAvatarBox {
-                    width: 100%;
-                    margin-top: var(--spacing-05);
-                    margin-bottom: var(--spacing-05);
+                align-items: center;
+                .FloatMenuAvatar {
                     display: flex;
                     justify-content: center;
-                    flex-direction: column;
+                    width: max-content;
+                    & > a > img {
+                        width: 100px;
+                    }
+                }
+                .FloatMenuUserName {
+                    width: 100%;
+                    text-align: center;
+                    margin-top: var(--spacing-05);
+                }
+            }
+            .FloatMenuList {
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                overflow: auto;
+                & > a {
+                    width: 100%;
+                    border-bottom: 1px solid lightgray;
+                    font-size: var(--font-size-03);
+                    padding: 0 var(--spacing-04);
+                    height: var(--spacing-07);
+                    margin: var(--spacing-01);
+                    display: flex;
                     align-items: center;
-                    .FloatMenuAvatar {
-                        display: flex;
-                        justify-content: center;
-                        width: max-content;
-                        & > img {
-                            width: 100px;
-                        }
+                    &:hover {
+                        background-color: var(--lt-overlay);
                     }
-                    .FloatMenuUserName {
-                        width: 100%;
-                        text-align: center;
-                        margin-top: var(--spacing-05);
+                    &:focus,
+                    :focus-visible {
+                        box-shadow: 0 0 0 2px var(--focus);
+                        outline: 0;
                     }
                 }
-                .FloatMenuList {
-                    width: 100%;
-                    display: flex;
-                    flex-wrap: wrap;
-                    overflow: auto;
-                    & > a {
-                        width: 100%;
-                        border-bottom: 1px solid lightgray;
-                        &:hover {
-                            background-color: var(--lt-overlay);
-                        }
-                    }
-                }
-                .FloatMenuLogout {
-                    margin-top: auto;
-                    width: 100%;
-                    display: flex;
-                    & > a {
-                        width: 100%;
-                        &:hover {
-                            background-color: var(--lt-overlay);
-                        }
-                    }
-                }
+            }
+            .FloatMenuLogout {
+                margin-top: auto;
+                width: 100%;
+                display: flex;
             }
         }
     }

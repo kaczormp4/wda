@@ -29,20 +29,26 @@ const routes = [
 const temporaryFlyoutMenuList = [
   {
     id: '1',
-    text: 'home',
-    route: '/home',
+    text: 'Profil',
+    route: '/profil',
     icon: 'home'
   },
   {
     id: '2',
-    text: 'User',
-    route: '/user',
+    text: 'Wiadomości',
+    route: '/wiadomosci',
     icon: 'circle-plus'
   },
   {
     id: '3',
-    text: 'Settiings',
-    route: '/ettiings',
+    text: 'Ustawienia',
+    route: '/ustawienia',
+    icon: 'comment-alt'
+  },
+  {
+    id: '4',
+    text: 'Moja Lista',
+    route: '/moja-lista',
     icon: 'comment-alt'
   },
 ]
@@ -51,7 +57,7 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Navbar loggedIn={true} flyoutMenuList={temporaryFlyoutMenuList} />
+        <Navbar loggedIn={true} flyoutMenuList={temporaryFlyoutMenuList} userInfo={{ name: "Jan Kowalski", avatar: null }} />
         <div className="app">
           <Routes >
             {routes.map((route, i) => (
