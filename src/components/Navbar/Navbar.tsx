@@ -1,9 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FC, useCallback, useEffect, useState } from 'react'
+import { FC, useCallback, useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../commonComponents/Button/Button';
 import { NavbarMobileProvider } from './NavbarMobileProvider/NavbarMobileProvider';
 import styles from "./Navbar.module.scss";
+import classnames from 'classnames';
 
 interface NavbarProps {
     loggedIn: boolean,
@@ -13,12 +14,18 @@ interface NavbarProps {
         route: string,
         icon: string
     }[];
-    userInfo: any
+    userInfo: {
+        name: string,
+        avatar: string
+    }
 }
 
 const Navbar: FC<NavbarProps> = (props) => {
     const { loggedIn, flyoutMenuList, userInfo } = props;
     const [openMenu, setOpenMenu] = useState<boolean>(false);
+    const [unhideNavbar, setUnhideNavbar] = useState<boolean>(true);
+    const mobileNavbarHeight = useRef<HTMLDivElement>(null);
+
     const navigate = useNavigate();
 
     const escFunction = useCallback((event) => {
@@ -27,8 +34,24 @@ const Navbar: FC<NavbarProps> = (props) => {
         }
     }, []);
 
+    const handleScroll = useCallback(() => {
+        var lastScrollTop = 0;
+        var st = window.pageYOffset || document.documentElement.scrollTop;
+        if (openMenu === false) {
+            if (st > lastScrollTop) {
+                setUnhideNavbar(false);
+                setOpenMenu(false);
+            } else {
+                setUnhideNavbar(true);
+            }
+        }
+
+        lastScrollTop = st <= 0 ? 0 : st;
+    }, []);
+
     useEffect(() => {
         document.addEventListener("keydown", escFunction, false);
+        window.addEventListener('scroll', handleScroll, false);
 
         return () => {
             document.removeEventListener("keydown", escFunction, false);
@@ -86,11 +109,10 @@ const Navbar: FC<NavbarProps> = (props) => {
                                 <Button kind='primary'>Zaloguj Się</Button>
                             </Link>
                     }
-
                 </nav>
             </div>
             <NavbarMobileProvider>
-                <div className={styles.NavbarContainer}>
+                <div className={classnames(styles.NavbarContainer, { [styles.Open]: unhideNavbar, [styles.Close]: !unhideNavbar })} ref={mobileNavbarHeight}>
                     <div className={styles.NavbarContentMobile}>
                         <nav className={styles.NavMenu}>
                             <Button kind='ghost' size="lg" iconOnly icon={<FontAwesomeIcon icon="home" />} onClick={() => navigateTo('')}>
@@ -112,45 +134,46 @@ const Navbar: FC<NavbarProps> = (props) => {
                     </div>
                 </div>
                 {
-                    openMenu && <>
-                        <div className={styles.FloatMobileMenuOverlay} onClick={() => setOpenMenu(!openMenu)}></div>
-                        <div className={styles.FloatMobileMenuBackground}>
-                            <div className={styles.FloatMobileMenu}>
-                                <div className={styles.FloatMenuClose}>
-                                    <Button kind='ghost' size="lg" iconOnly icon={<FontAwesomeIcon icon='close' />} onClick={() => setOpenMenu(!openMenu)} />
+                    openMenu &&
+                    <div className={styles.FloatMobileMenuOverlay} onClick={() => setOpenMenu(!openMenu)}></div>
+                }
+                <div className={classnames(styles.FloatMobileMenuBackground, { [styles.FloatMenuOpen]: openMenu, [styles.FloatMenuClose]: !openMenu })}>
+                    <div className={styles.FloatMobileMenu}>
+                        <div className={styles.FloatMenuClose}>
+                            <Button kind='ghost' size="lg" iconOnly icon={<FontAwesomeIcon icon='close' />} onClick={() => setOpenMenu(!openMenu)} />
+                        </div>
+                        {
+                            loggedIn &&
+                            <div className={styles.FloatMenuAvatarBox}>
+                                <div className={styles.FloatMenuAvatar}>
+                                    {UserAvatar()}
                                 </div>
-                                {
-                                    loggedIn &&
-                                    <div className={styles.FloatMenuAvatarBox}>
-                                        <div className={styles.FloatMenuAvatar}>
-                                            {UserAvatar()}
-                                        </div>
-                                        <div className={styles.FloatMenuUserName}>
-                                            <h1>{userInfo.name}</h1>
-                                        </div>
-                                    </div>
-                                }
-                                <div className={styles.FloatMenuList}>
-                                    {
-                                        flyoutMenuList.map((item) =>
-                                            <Link to={item.route} key={item.id}>
-                                                {item.text}
-                                            </Link>
-                                        )
-                                    }
-                                </div>
-                                <div className={styles.FloatMenuLogout}>
-                                    {
-                                        loggedIn ?
-                                            <Button kind='ghost' size="lg" icon={<FontAwesomeIcon icon="sign-out" />} onClick={() => navigateTo('log-out')}>WYLOGUJ</Button>
-                                            :
-                                            <Button kind='ghost' size="lg" icon={<FontAwesomeIcon icon="sign-out" />} onClick={() => navigateTo('logowanie')}>ZALOGUJ</Button>
-                                    }
+                                <div className={styles.FloatMenuUserName}>
+                                    <h1>{userInfo.name}</h1>
                                 </div>
                             </div>
+                        }
+                        <div className={styles.FloatMenuList}>
+                            {
+                                flyoutMenuList.map((item) =>
+                                    <Link to={item.route} key={item.id}>
+                                        {item.text}
+                                    </Link>
+                                )
+                            }
                         </div>
-                    </>
-                }
+                        {
+                            openMenu && <div className={styles.FloatMenuLogout} style={{ marginBottom: mobileNavbarHeight.current.clientHeight }}>
+                                {
+                                    loggedIn ?
+                                        <Button kind='ghost' size="lg" icon={<FontAwesomeIcon icon="sign-out" />} onClick={() => navigateTo('log-out')}>WYLOGUJ</Button>
+                                        :
+                                        <Button kind='ghost' size="lg" icon={<FontAwesomeIcon icon="sign-out" />} onClick={() => navigateTo('logowanie')}>ZALOGUJ</Button>
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
             </NavbarMobileProvider>
         </div>
     )

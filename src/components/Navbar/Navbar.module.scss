@@ -7,12 +7,12 @@
     position: sticky;
     position: -webkit-sticky;
     top: 0;
-    z-index: 999;
+    z-index: 10;
     .NavbarContentMobile {
         display: none;
     }
     .NavbarContent {
-        max-width: 1600px;
+        max-width: var(--width-desktop-1600);
         margin: auto;
         padding: var(--spacing-05);
         display: flex;
@@ -39,18 +39,17 @@
                     border-radius: inherit;
                 }
                 & > .FlyoutMenu {
-                    // display: none;
                     display: flex;
                     visibility: hidden;
                     flex-direction: column;
                     position: absolute;
-                    background-color: #f9f9f9;
+                    background-color: var(--background-02);
                     right: 0;
-                    min-width: 160px;
-                    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-                    padding: 12px 16px;
-                    z-index: 996;
-                    transition-delay: 1.5s;
+                    min-width: 160px; // temporary?
+                    box-shadow: var(--box-shadow);
+                    padding: var(--spacing-04);
+                    z-index: 8;
+                    transition-delay: var(--transition-delay);
                 }
                 &:hover .FlyoutMenu {
                     visibility: visible;
@@ -61,18 +60,47 @@
     }
 }
 @media only screen and (max-width: 800px) {
+    .Close {
+        bottom: 0px;
+        -webkit-animation: slideDownUp 0.5s forwards;
+        animation: slideDownUp 0.5s forwards;
+        @-webkit-keyframes slideDownUp {
+            100% {
+                bottom: -70px;
+            }
+        }
+        @keyframes slideDownUp {
+            100% {
+                bottom: -70px;
+            }
+        }
+    }
+    .Open {
+        bottom: -70px;
+        -webkit-animation: slideUpDown 0.5s forwards;
+        animation: slideUpDown 0.5s forwards;
+        @-webkit-keyframes slideUpDown {
+            100% {
+                bottom: 0;
+            }
+        }
+        @keyframes slideUpDown {
+            100% {
+                bottom: 0;
+            }
+        }
+    }
     .NavbarContainer {
         width: 100%;
         position: fixed;
         top: auto;
-        bottom: 0;
         .NavbarContent {
             display: none;
         }
         .NavbarContentMobile {
             display: block;
             padding: var(--spacing-01);
-            z-index: 999;
+            z-index: 10;
         }
         .NavMenu {
             width: 100%;
@@ -96,22 +124,31 @@
     }
     .FloatMobileMenuOverlay {
         width: 100vw;
-        height: calc(100vh - (var(--spacing-01) + var(--spacing-01) + var(--spacing-07)));
+        height: 100vh;
         backdrop-filter: blur(2px);
-        transition-delay: 2s;
         display: block;
         position: fixed;
         top: 0;
         left: 0;
-        z-index: 997;
+        z-index: 8;
     }
-    .FloatMobileMenuBackground {
-        position: fixed;
-        top: 0;
+    .FloatMenuClose {
+        right: 0;
+        -webkit-animation: slideLeftRight 0.5s forwards;
+        animation: slideLeftRight 0.5s forwards;
+        @-webkit-keyframes slideLeftRight {
+            100% {
+                right: -100vw;
+            }
+        }
+        @keyframes slideLeftRight {
+            100% {
+                right: -100vw;
+            }
+        }
+    }
+    .FloatMenuOpen {
         right: -100vw;
-        z-index: 998;
-        display: flex;
-        justify-content: flex-end;
         -webkit-animation: slideRightLeft 0.5s forwards;
         animation: slideRightLeft 0.5s forwards;
         @-webkit-keyframes slideRightLeft {
@@ -124,9 +161,19 @@
                 right: 0;
             }
         }
+    }
+    .FloatMobileMenuBackground {
+        // width: 100%;
+        position: fixed;
+        top: 0;
+        z-index: 9;
+        display: flex;
+        justify-content: flex-end;
         .FloatMobileMenu {
-            width: 80vw;
-            height: calc(100vh - (var(--spacing-01) + var(--spacing-01) + var(--spacing-07)));
+            width: var(--width-mobile-460);
+            max-width: 100%;
+            // height: calc(100vh - (var(--spacing-01) + var(--spacing-01) + var(--spacing-07)));
+            height: 100vh;
             background-color: var(--background-02);
             display: flex;
             flex-direction: column;
@@ -170,7 +217,7 @@
                 overflow: auto;
                 & > a {
                     width: 100%;
-                    border-bottom: 1px solid lightgray;
+                    border-bottom: 1px solid var(--background-01);
                     font-size: var(--font-size-03);
                     padding: 0 var(--spacing-04);
                     height: var(--spacing-07);
@@ -192,6 +239,13 @@
                 width: 100%;
                 display: flex;
             }
+        }
+    }
+}
+@media only screen and (max-width: 460px) and (max-height: 855px) {
+    .FloatMobileMenuBackground {
+        .FloatMobileMenu {
+            width: var(--width-mobile-360);
         }
     }
 }
