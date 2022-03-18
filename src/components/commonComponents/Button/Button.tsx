@@ -4,7 +4,7 @@ import { cssPrefix } from '../../../config';
 import classNames from 'classnames';
 
 const cls = `${cssPrefix}-btn`;
-enum POSITIONS  {
+enum POSITIONS {
     RIGHT = 'right',
     TOP = 'top',
     LEFT = 'left',
