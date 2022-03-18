@@ -1,10 +1,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FC, useCallback, useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import Button from '../commonComponents/Button/Button';
-import { NavbarMobileProvider } from './NavbarMobileProvider/NavbarMobileProvider';
-import styles from "./Navbar.module.scss";
 import classnames from 'classnames';
+
+import Button from '../commonComponents/Button/Button';
+import { Portal } from '../Portal/Portal';
+import styles from "./Navbar.module.scss";
 
 interface NavbarProps {
     loggedIn: boolean,
@@ -28,7 +29,7 @@ const Navbar: FC<NavbarProps> = (props) => {
 
     const navigate = useNavigate();
 
-    const escFunction = useCallback((event) => {
+    const escFunction = useCallback((event: KeyboardEvent) => {
         if (event.key === "Escape") {
             setOpenMenu(false);
         }
@@ -62,6 +63,7 @@ const Navbar: FC<NavbarProps> = (props) => {
         navigate(`/${route}`);
         setOpenMenu(false);
     }
+
     const UserAvatar = () => {
         if (userInfo.avatar) {
             return <Link to='/profil'>
@@ -111,7 +113,7 @@ const Navbar: FC<NavbarProps> = (props) => {
                     }
                 </nav>
             </div>
-            <NavbarMobileProvider>
+            <Portal divId="navbarMenuMobile">
                 <div className={classnames(styles.NavbarContainer, { [styles.Open]: unhideNavbar, [styles.Close]: !unhideNavbar })} ref={mobileNavbarHeight}>
                     <div className={styles.NavbarContentMobile}>
                         <nav className={styles.NavMenu}>
@@ -174,7 +176,7 @@ const Navbar: FC<NavbarProps> = (props) => {
                         }
                     </div>
                 </div>
-            </NavbarMobileProvider>
+            </Portal>
         </div>
     )
 }
