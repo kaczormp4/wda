@@ -163,8 +163,8 @@
         }
     }
     .FloatMobileMenuBackground {
-        // width: 100%;
         position: fixed;
+        right: -100vw;
         top: 0;
         z-index: 9;
         display: flex;
@@ -172,7 +172,6 @@
         .FloatMobileMenu {
             width: var(--width-mobile-460);
             max-width: 100%;
-            // height: calc(100vh - (var(--spacing-01) + var(--spacing-01) + var(--spacing-07)));
             height: 100vh;
             background-color: var(--background-02);
             display: flex;
