@@ -25,10 +25,9 @@ type ButtonProps = {
     iconOnly?: boolean,
     iconPosition?: string,
     iconDescription?: string,
+    counter?: string | number,
     [rest: string]: any;
 }
-
-
 
 const getIcon = (icon: ButtonProps["icon"]) => {
     const Icon = icon;
@@ -37,12 +36,13 @@ const getIcon = (icon: ButtonProps["icon"]) => {
 
 const handleRipple = (ev: React.MouseEvent, ripple: HTMLSpanElement) => {
     const button = ev.currentTarget as HTMLButtonElement;
+    const buttonWrapper = button.parentElement;
     const diameter = Math.max(button.clientWidth, button.clientHeight);
     const radius = diameter / 2;
     if (ripple) {
         ripple.style.width = ripple.style.height = `${diameter}px`;
-        ripple.style.left = `${ev.clientX - button.offsetLeft - radius}px`;
-        ripple.style.top = `${ev.clientY - button.offsetTop - radius}px`;
+        ripple.style.left = `${ev.pageX - buttonWrapper.offsetLeft - radius}px`;
+        ripple.style.top = `${ev.pageY - buttonWrapper.offsetTop - radius}px`;
         ripple.className = `${cls}--ripple`;
         button.appendChild(ripple);
     }
@@ -54,7 +54,7 @@ const handleClick = (ev: React.MouseEvent, onClick: Function, ripple: HTMLSpanEl
 };
 
 const Button: FC<ButtonProps> = (props: React.PropsWithChildren<ButtonProps>) => {
-    const { className, disabled, skeleton, kind, danger, size, onBlur, onClick, onFocus, icon, iconOnly, iconDescription, children, ...rest } = props;
+    const { className, disabled, skeleton, kind, danger, size, onBlur, onClick, onFocus, icon, iconOnly, iconDescription, iconPosition, counter, children, ...rest } = props;
     const ripple = useRef<HTMLSpanElement>(null);
 
     const classes = classNames(className, {
@@ -62,28 +62,31 @@ const Button: FC<ButtonProps> = (props: React.PropsWithChildren<ButtonProps>) =>
         [`${cls}--${kind}`]: true,
         [`${cls}--${size}`]: true,
         [`${cls}--disabled`]: disabled || skeleton,
-        [`${cls}--icon-${props.iconPosition}`]: icon && !iconOnly,
+        [`${cls}--icon-${iconPosition}`]: icon && !iconOnly,
         [`${cls}--skeleton`]: skeleton,
         [`${cls}--danger`]: danger,
         [`${cls}--icon-only`]: iconOnly,
     });
 
-    return <button
-        className={classes}
-        disabled={disabled || skeleton}
-        title={iconOnly && iconDescription}
-        onClick={(e) => handleClick(e, onClick, ripple.current)}
-        onFocus={(e) => onFocus(e)}
-        {...rest}
-    >
-        {!iconOnly && <span className={`${cls}--text`}>
-            {children}
-        </span>}
-        {icon && <span className={`${cls}--icon ${iconOnly ? `${cls}--icon-only` : ''}`}>
-            {getIcon(icon)}
-        </span>}
-        <span ref={ripple} className={`${cls}--ripple`}></span>
-    </button>
+    return <div className={`${cls}--wrapper`}>
+        <button
+            className={classes}
+            disabled={disabled || skeleton}
+            title={iconOnly && iconDescription}
+            onClick={(e) => handleClick(e, onClick, ripple.current)}
+            onFocus={(e) => onFocus(e)}
+            {...rest}
+        >
+            {!iconOnly && <span className={`${cls}--text`}>
+                {children}
+            </span>}
+            {icon && <span className={`${cls}--icon ${iconOnly ? `${cls}--icon-only` : ''}`}>
+                {getIcon(icon)}
+            </span>}
+            <span ref={ripple} className={`${cls}--ripple`}></span>
+        </button>
+        {counter && <div className={`${cls}--counter`}>{counter}</div>}
+    </div>
 }
 
 const defaultProps: ButtonProps = {
