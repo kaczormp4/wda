@@ -41,8 +41,6 @@
         white-space: nowrap;
     }
 
-    
-
     // sizes
     &--sm {
         font-size: var(--font-size-02);
@@ -118,7 +116,8 @@
 
     // icons
     &--icon {
-        &-top, &-bottom {
+        &-top,
+        &-bottom {
             gap: var(--spacing-01);
             height: unset;
             padding-top: var(--spacing-01);
@@ -138,7 +137,7 @@
         }
     }
     &--icon-only {
-        border-radius: 50%;
+        border-radius: var(--spacing-07);
         margin-left: 0;
         &.#{$prefix}-btn {
             padding: 0;
@@ -154,7 +153,6 @@
             }
         }
     }
-    
 
     // skeleton
     &--skeleton#{&}--disabled {
@@ -200,6 +198,41 @@
             background-color: rgba(black, 0.25);
         }
     }
+
+    &--wrapper {
+        position: relative;
+    }
+
+    // counter
+    &--counter {
+        position: absolute;
+        top: calc(var(--spacing-02) * -1);
+        right: calc(var(--spacing-02) * -1);
+        background: var(--interactive-01);
+        width: var(--spacing-04);
+        height: var(--spacing-04);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        pointer-events: none;
+        font-size: var(--font-size-02);
+        color: var(--text-02);
+    }
+    &:disabled + &--counter,
+    &.#{$prefix}-btn--disabled + &--counter  {
+        background-color: var(--disabled-02);
+    }
+
+    &--md + &--counter,
+    &--lg + &--counter {
+        width: 1.25rem;
+        height: 1.25rem;
+        width: var(--spacing-05);
+        height: var(--spacing-05);
+    }
+    
+
     @keyframes ripple {
         to {
             transform: scale(4);

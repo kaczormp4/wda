@@ -18,7 +18,7 @@ const ButtonShowcase: FC = () =>
         <section className={parentStyles.section}>
             <dd>Different sizes and kinds</dd>
             <div className={styles.inlineFlex}>
-                <Button size='sm' kind='primary'>
+                <Button size='sm' kind='primary' counter="2">
                     Small primary
                 </Button>
                 <Button disabled size='sm' kind='primary'>
@@ -142,6 +142,54 @@ const ButtonShowcase: FC = () =>
                     Medium primary
                 </Button>
                 <Button skeleton size='lg' kind='teritiary' iconOnly icon={<FontAwesomeIcon icon="coffee" />} iconDescription="Coffe time">
+                    Large primary
+                </Button>
+            </div>
+        </section>
+
+        <section className={parentStyles.section}>
+            <dd>With counters</dd>
+            <span className={parentStyles.sectionDescription}>For small buttons counter should use 1 digit number and 2 digits for md/lg</span>
+            <div className={styles.inlineFlex}>
+                <Button size='sm' kind='primary' counter="2">
+                    Small primary
+                </Button>
+                <Button disabled size='sm' kind='primary' counter="2">
+                    Small primary disabled
+                </Button>
+            </div>
+            <div className={styles.inlineFlex}>
+                <Button size='md' kind='secondary' counter="2">
+                    Medium secondary
+                </Button>
+                <Button disabled size='md' kind='secondary' counter="2+">
+                    Medium secondary disabled
+                </Button>
+            </div>
+            <div className={styles.inlineFlex}>
+                <Button size='md' kind='teritiary' counter="2">
+                    Medium teritiary
+                </Button>
+                <Button disabled size='md' kind='teritiary' counter="2">
+                    Medium teritiary disabled
+                </Button>
+            </div>
+            <div className={styles.inlineFlex}>
+                <Button size='lg' kind='ghost' counter="21">
+                    Large ghost
+                </Button>
+                <Button disabled size='lg' kind='ghost' counter="21">
+                    Large ghost disabled
+                </Button>
+            </div>
+            <div className={styles.inlineFlex}>
+                <Button size='sm' kind='primary' iconOnly icon={<FontAwesomeIcon icon="coffee" />} iconDescription="Coffe time" iconPosition="top" counter="2">
+                    Small primary
+                </Button>
+                <Button size='md' kind='secondary' iconOnly icon={<FontAwesomeIcon icon="coffee" />} iconDescription="Coffe time" iconPosition="left" counter="2+">
+                    Medium primary
+                </Button>
+                <Button size='lg' kind='teritiary' iconOnly icon={<FontAwesomeIcon icon="coffee" />} iconDescription="Coffe time" iconPosition='bottom' counter="21">
                     Large primary
                 </Button>
             </div>
