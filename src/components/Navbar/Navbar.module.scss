@@ -233,10 +233,11 @@
                     }
                 }
             }
-            .FloatMenuLogout {
-                margin-top: auto;
+            .FloatMenuLogInLogout {
                 width: 100%;
                 display: flex;
+                justify-content: center;
+                margin: var(--spacing-03) 0;
             }
         }
     }
