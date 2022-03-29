@@ -1,0 +1,102 @@
+@import "../../../styles/variables.scss";
+
+.#{$prefix}-input {
+    $input: &;
+    border-radius: 0.25rem;
+    cursor: text;
+    outline: none;
+    text-align: left;
+    text-decoration: none;
+    border: 0;
+    margin: 0;
+    padding: var(--spacing-04);
+    font-size: var(--font-size-03);
+    max-width: 300px;
+    flex-shrink: 0;
+    color: var(--text-01);
+    border: 2px solid transparent;
+    box-sizing: border-box;
+    overflow: hidden;
+
+    &--wrapper {
+        position: relative;
+        padding: var(--spacing-04);
+    }
+    // states
+    &:disabled,
+    &--disabled {
+        background: var(--disabled-01);
+        color: var(--text-02);
+        cursor: not-allowed !important;
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 2px var(--focus);
+    }
+
+    // sizes
+    &--sm {
+        padding: var(--spacing-03);
+    }
+    &--md {
+        padding: var(--spacing-04);
+    }
+
+    // kinds
+    &--primary {
+        background: transparent;
+        border-bottom: 2px solid var(--disabled-01);
+        color: var(--text-01);
+        &:hover:not(:disabled) {
+            border-bottom: 2px solid var(--disabled-02);
+        }
+    }
+    &--outlined {
+        border: 1px solid var(--disabled-01);
+        color: var(--text-01);
+        &:hover:not(:disabled) {
+            border: 1px solid var(--disabled-02);
+        }
+    }
+    &--filled {
+        background-color: var(--background-01);
+        border-bottom: 2px solid var(--disabled-01);
+        color: var(--text-01);
+        &:hover:not(:disabled) {
+            border-bottom: 2px solid var(--disabled-02);
+        }
+    }
+    //error
+    &--error {
+        border-color: var(--danger) !important;
+    }
+    // label
+    &--label {
+        position: absolute;
+        left: var(--spacing-06);
+        top: calc(2 * var(--spacing-04) + 2px);
+        font-size: var(--font-size-03);
+        transform-origin: top left;
+        transition: all 0.2s ease-out;
+        color: var(--text-03);
+        cursor: text;
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Safari */
+        -khtml-user-select: none; /* Konqueror HTML */
+        -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        user-select: none;
+    }
+    &--active {
+        transform: translate(0, -2rem) scale(0.75);
+        background-color: var(--background-02);
+        padding: var(--spacing-02);
+        cursor: context-menu;
+    }
+    &--errorText {
+        position: absolute;
+        padding-left: var(--spacing-04);
+        margin-top: var(--spacing-01);
+        color: var(--danger);
+    }
+}
