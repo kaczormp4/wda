@@ -26,6 +26,7 @@ const Navbar: FC<NavbarProps> = (props) => {
     const [openMenu, setOpenMenu] = useState<boolean>(false);
     const [unhideNavbar, setUnhideNavbar] = useState<boolean>(true);
     const mobileNavbarHeight = useRef<HTMLDivElement>(null);
+    let lastScrollTop = 0;
 
     const navigate = useNavigate();
 
@@ -36,8 +37,7 @@ const Navbar: FC<NavbarProps> = (props) => {
     }, []);
 
     const handleScroll = useCallback(() => {
-        var lastScrollTop = 0;
-        var st = window.pageYOffset || document.documentElement.scrollTop;
+        let st = window.pageYOffset || document.documentElement.scrollTop;
         if (openMenu === false) {
             if (st > lastScrollTop) {
                 setUnhideNavbar(false);
@@ -165,12 +165,12 @@ const Navbar: FC<NavbarProps> = (props) => {
                             }
                         </div>
                         {
-                            openMenu && <div className={styles.FloatMenuLogout} style={{ marginBottom: mobileNavbarHeight.current.clientHeight }}>
+                            openMenu && <div className={styles.FloatMenuLogInLogout} style={{ marginBottom: mobileNavbarHeight.current.clientHeight }} >
                                 {
                                     loggedIn ?
-                                        <Button kind='ghost' size="lg" icon={<FontAwesomeIcon icon="sign-out" />} onClick={() => navigateTo('log-out')}>WYLOGUJ</Button>
+                                        <Button kind='teritiary' size="lg" icon={<FontAwesomeIcon icon="sign-out" />} onClick={() => navigateTo('log-out')}>WYLOGUJ</Button>
                                         :
-                                        <Button kind='ghost' size="lg" icon={<FontAwesomeIcon icon="sign-out" />} onClick={() => navigateTo('logowanie')}>ZALOGUJ</Button>
+                                        <Button kind='primary' size="lg" icon={<FontAwesomeIcon icon="sign-out" />} onClick={() => navigateTo('logowanie')}>ZALOGUJ</Button>
                                 }
                             </div>
                         }
