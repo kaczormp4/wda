@@ -128,7 +128,7 @@ const Input: FC<InputProps> = (props) => {
             id={autocompleteId}
             name={autocompleteId}
             disabled={disabled || skeleton}
-            placeholder={!isActive && label}
+            placeholder={!isActive && `${label} ${required && '*'}`}
             onBlur={(e) => handleBlur(e)}
             onClick={(e) => handleClick(e)}
             onFocus={(e) => handleFocus(e)}
