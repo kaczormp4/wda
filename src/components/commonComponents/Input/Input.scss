@@ -11,16 +11,21 @@
     margin: 0;
     padding: var(--spacing-04);
     font-size: var(--font-size-03);
+    position: relative;
     max-width: 300px;
     flex-shrink: 0;
     color: var(--text-01);
     border: 2px solid transparent;
     box-sizing: border-box;
     overflow: hidden;
-
     &--wrapper {
         position: relative;
         padding: var(--spacing-04);
+    }
+    //type
+    &--date {
+        width: 100%;
+        width: 229px; //default input width
     }
     // states
     &:disabled,
@@ -77,10 +82,9 @@
         top: calc(2 * var(--spacing-04) + 2px);
         font-size: var(--font-size-03);
         transform-origin: top left;
+        color: transparent;
         transition: all 0.2s ease-out;
-        color: var(--text-03);
         cursor: text;
-        -webkit-touch-callout: none; /* iOS Safari */
         -webkit-user-select: none; /* Safari */
         -khtml-user-select: none; /* Konqueror HTML */
         -moz-user-select: none; /* Old versions of Firefox */
@@ -88,15 +92,57 @@
         user-select: none;
     }
     &--active {
+        color: var(--text-03);
+        font-size: var(--font-size-03);
         transform: translate(0, -2rem) scale(0.75);
         background-color: var(--background-02);
         padding: var(--spacing-02);
         cursor: context-menu;
+        & > span {
+            color: var(--danger);
+        }
     }
+    // bottom text
     &--errorText {
         position: absolute;
         padding-left: var(--spacing-04);
         margin-top: var(--spacing-01);
         color: var(--danger);
+    }
+    &--helperText {
+        position: absolute;
+        padding-left: var(--spacing-04);
+        margin-top: var(--spacing-01);
+        color: var(--text-03);
+    }
+
+    // skeleton
+    &--skeleton#{&}--disabled {
+        color: transparent;
+        background: white;
+        border-color: transparent;
+        &::after {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            content: "";
+            transform: translateX(-100%);
+            animation: skeletonAnim 2s infinite;
+            background-image: linear-gradient(
+                90deg,
+                transparent 0,
+                var(--disabled-01) 20%,
+                transparent 60%,
+                var(--disabled-01)
+            );
+        }
+        &:hover {
+            background: transparent;
+        }
+        @keyframes skeletonAnim {
+            100% {
+                transform: translateX(100%);
+            }
+        }
     }
 }

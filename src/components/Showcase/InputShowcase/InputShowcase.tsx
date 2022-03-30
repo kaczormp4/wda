@@ -96,7 +96,7 @@ const InputShowcase: FC = () =>
         </section>
 
         <section className={parentStyles.section}>
-            <dd>Types (text , password, number)</dd>
+            <dd>Types (text , password, number, email, date)</dd>
             <div className={styles.inlineFlex}>
                 <Input
                     onChange={(e: any) => console.log(e.target.value)}
@@ -155,6 +155,46 @@ const InputShowcase: FC = () =>
                     kind="filled"
                     label="filled number"
                     type='number'
+                />
+            </div>
+            <div className={styles.inlineFlex}>
+                <Input
+                    onChange={(e: any) => console.log(e.target.value)}
+                    kind="primary"
+                    label="primary email"
+                    type='email'
+                />
+                <Input
+                    onChange={(e: any) => console.log(e.target.value)}
+                    kind="outlined"
+                    label="outlined email"
+                    type='email'
+                />
+                <Input
+                    onChange={(e: any) => console.log(e.target.value)}
+                    kind="filled"
+                    label="filled email"
+                    type='email'
+                />
+            </div>
+            <div className={styles.inlineFlex}>
+                <Input
+                    onChange={(e: any) => console.log(e.target.value)}
+                    kind="primary"
+                    label="primary date"
+                    type='date'
+                />
+                <Input
+                    onChange={(e: any) => console.log(e.target.value)}
+                    kind="outlined"
+                    label="outlined date"
+                    type='date'
+                />
+                <Input
+                    onChange={(e: any) => console.log(e.target.value)}
+                    kind="filled"
+                    label="filled date"
+                    type='date'
                 />
             </div>
         </section>
@@ -273,7 +313,149 @@ const InputShowcase: FC = () =>
                     readOnly
                 />
             </div>
-
+        </section>
+        <section className={parentStyles.section}>
+            <dd>Skeleton </dd>
+            <div className={styles.inlineFlex}>
+                <Input
+                    onChange={(e: any) => console.log(e.target.value)}
+                    kind="primary"
+                    label="primary readonly"
+                    defaultValue="primary readonly default value"
+                    skeleton
+                />
+                <Input
+                    onChange={(e: any) => console.log(e.target.value)}
+                    kind="outlined"
+                    label="outlined readonly"
+                    defaultValue="outlined readonly default value"
+                    type='date'
+                    skeleton
+                />
+                <Input
+                    onChange={(e: any) => console.log(e.target.value)}
+                    kind="filled"
+                    size='sm'
+                    type='date'
+                    skeleton
+                />
+            </div>
+        </section>
+        <section className={parentStyles.section}>
+            <dd>required </dd>
+            <div className={styles.inlineFlex}>
+                <Input
+                    onChange={(e: any) => console.log(e.target.value)}
+                    kind="primary"
+                    label="primary required"
+                    required
+                />
+                <Input
+                    onChange={(e: any) => console.log(e.target.value)}
+                    kind="outlined"
+                    label="outlined required"
+                    required
+                />
+                <Input
+                    onChange={(e: any) => console.log(e.target.value)}
+                    kind="filled"
+                    label="filled required"
+                    required
+                />
+            </div>
+        </section>
+        <section className={parentStyles.section}>
+            <dd>helperText </dd>
+            <div className={styles.inlineFlex}>
+                <Input
+                    onChange={(e: any) => console.log(e.target.value)}
+                    kind="primary"
+                    label="primary helperText"
+                    helperText="primary helperText"
+                />
+                <Input
+                    onChange={(e: any) => console.log(e.target.value)}
+                    kind="outlined"
+                    label="outlined helperText"
+                    helperText="outlined helperText"
+                />
+                <Input
+                    onChange={(e: any) => console.log(e.target.value)}
+                    kind="filled"
+                    label="filled helperText"
+                    helperText="filled helperText"
+                />
+            </div>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <dd>helperText + required (focus input)</dd>
+            <div className={styles.inlineFlex}>
+                <Input
+                    onChange={(e: any) => console.log(e.target.value)}
+                    kind="primary"
+                    label="primary helperText"
+                    helperText="primary helperText"
+                    required
+                    errorText='required'
+                />
+                <Input
+                    onChange={(e: any) => console.log(e.target.value)}
+                    kind="outlined"
+                    label="outlined helperText"
+                    helperText="outlined helperText"
+                    required
+                    errorText='required'
+                />
+                <Input
+                    onChange={(e: any) => console.log(e.target.value)}
+                    kind="filled"
+                    label="filled helperText"
+                    helperText="filled helperText"
+                    required
+                    errorText='required'
+                />
+            </div>
+        </section>
+        <section className={parentStyles.section}>
+            <dd>autocomplete</dd>
+            <div className={styles.inlineFlex}>
+                <form>
+                    <Input
+                        onChange={(e: any) => console.log(e.target.value)}
+                        kind="primary"
+                        label="NAME"
+                        autocompleteId='name'
+                    />
+                    <Input
+                        onChange={(e: any) => console.log(e.target.value)}
+                        kind="primary"
+                        label="SURNAME"
+                        autocompleteId='surname'
+                    />
+                    <Input
+                        onChange={(e: any) => console.log(e.target.value)}
+                        kind="primary"
+                        label="USERNAME"
+                        autocompleteId='username'
+                    />
+                    <Input
+                        onChange={(e: any) => console.log(e.target.value)}
+                        kind="primary"
+                        label="EMAIL"
+                        autocompleteId='email'
+                        type='email'
+                    />
+                    <Input
+                        onChange={(e: any) => console.log(e.target.value)}
+                        kind="primary"
+                        type="password"
+                        label="PASSWORD"
+                        autocompleteId='password'
+                    />
+                    <button type="submit">SUBMIT</button>
+                </form>
+            </div>
         </section>
     </div>
 
