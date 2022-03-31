@@ -25,37 +25,6 @@
             display: flex;
             gap: var(--spacing-05);
             align-items: center;
-            & > .Avatar {
-                width: 35px;
-                height: 35px;
-                border-radius: 35px;
-                background-color: var(--primary);
-                position: relative;
-                display: inline-block;
-                & > a > img,
-                svg {
-                    width: 100%;
-                    height: 100%;
-                    border-radius: inherit;
-                }
-                & > .FlyoutMenu {
-                    display: flex;
-                    visibility: hidden;
-                    flex-direction: column;
-                    position: absolute;
-                    background-color: var(--background-02);
-                    right: 0;
-                    min-width: 160px; // temporary?
-                    box-shadow: var(--box-shadow);
-                    padding: var(--spacing-04);
-                    z-index: 8;
-                    transition-delay: var(--transition-delay);
-                }
-                &:hover .FlyoutMenu {
-                    visibility: visible;
-                    transition-delay: 0s;
-                }
-            }
         }
     }
 }

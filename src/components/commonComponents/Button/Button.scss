@@ -61,14 +61,16 @@
         background: var(--primary);
         color: var(--text-02);
 
-        &:hover:not(:disabled) {
+        &:hover:not(:disabled),
+        &.active {
             background: var(--primary-hover);
         }
     }
     &--secondary {
         background: var(--secondary);
         color: var(--text-02);
-        &:hover:not(:disabled) {
+        &:hover:not(:disabled),
+        &.active {
             background: var(--secondary-hover);
         }
     }
@@ -77,7 +79,8 @@
         background: none;
         color: var(--primary);
         border: 2px solid var(--primary);
-        &:hover:not(:disabled) {
+        &:hover:not(:disabled),
+        &.active {
             background: var(--lt-overlay);
             border-color: transparent;
             // color: var(--text-02)
@@ -92,7 +95,8 @@
 
     &--ghost {
         background: none;
-        &:hover:not(:disabled) {
+        &:hover:not(:disabled),
+        &.active {
             background: var(--lt-overlay);
         }
     }
@@ -220,7 +224,7 @@
         color: var(--text-02);
     }
     &:disabled + &--counter,
-    &.#{$prefix}-btn--disabled + &--counter  {
+    &.#{$prefix}-btn--disabled + &--counter {
         background-color: var(--disabled-02);
     }
 
@@ -231,7 +235,6 @@
         width: var(--spacing-05);
         height: var(--spacing-05);
     }
-    
 
     @keyframes ripple {
         to {

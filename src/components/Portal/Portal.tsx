@@ -7,7 +7,7 @@ interface PortalProps {
 }
 
 export const Portal: FC<PortalProps> = ({ children, divId }) => {
-    return ReactDOM.createPortal(
+    return children && ReactDOM.createPortal(
         <div id={divId}>
             {children}
         </div>,
