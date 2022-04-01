@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import styles from "./Showcase.module.scss";
 import ButtonShowcase from './ButtonShowcase/ButtonShowcase';
 import FlyoutShowcase from './FlyoutShowcase/FlyoutShowcase';
+import InputShowcase from './InputShowcase/InputShowcase';
 
 type ShowcaseProps = {
 }
@@ -16,6 +17,10 @@ const Showcase: FC<ShowcaseProps> = () =>
         <div className={styles.componentWrapper}>
             <FlyoutShowcase />
         </div>
+        <div className={styles.componentWrapper}>
+            <InputShowcase />
+        </div>
+
     </section>
 
 
