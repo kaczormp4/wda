@@ -1,4 +1,4 @@
-import React, { FC, useRef } from 'react';
+import React, { useRef } from 'react';
 import "./Button.scss";
 import { cssPrefix } from '../../../config';
 import classNames from 'classnames';
@@ -11,16 +11,18 @@ enum POSITIONS {
     BOTTOM = 'bottom'
 };
 
-type ButtonProps = {
+export type ButtonProps = {
     className?: string,
     disabled?: boolean,
     skeleton?: boolean,
+    active?: boolean,
     kind?: 'primary' | 'secondary' | 'teritiary' | 'ghost',
     danger?: boolean,
     size?: 'sm' | 'md' | 'lg',
     onBlur?: Function,
     onClick?: Function,
     onFocus?: Function,
+    onKeyDown?: Function,
     icon?: any,
     iconOnly?: boolean,
     iconPosition?: string,
@@ -49,12 +51,14 @@ const handleRipple = (ev: React.MouseEvent, ripple: HTMLSpanElement) => {
 };
 
 const handleClick = (ev: React.MouseEvent, onClick: Function, ripple: HTMLSpanElement) => {
+    ev.stopPropagation();
+    ev.preventDefault();
     handleRipple(ev, ripple);
     onClick(ev);
 };
 
-const Button: FC<ButtonProps> = (props: React.PropsWithChildren<ButtonProps>) => {
-    const { className, disabled, skeleton, kind, danger, size, onBlur, onClick, onFocus, icon, iconOnly, iconDescription, iconPosition, counter, children, ...rest } = props;
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
+    const { className, disabled, skeleton, active, kind, danger, size, onBluronBlur, onClick, onBlur, onFocus, onKeyDown, icon, iconOnly, iconDescription, iconPosition, counter, children, ...rest } = props;
     const ripple = useRef<HTMLSpanElement>(null);
 
     const classes = classNames(className, {
@@ -65,6 +69,7 @@ const Button: FC<ButtonProps> = (props: React.PropsWithChildren<ButtonProps>) =>
         [`${cls}--icon-${iconPosition}`]: icon && !iconOnly,
         [`${cls}--skeleton`]: skeleton,
         [`${cls}--danger`]: danger,
+        [`active`]: active,
         [`${cls}--icon-only`]: iconOnly,
     });
 
@@ -72,9 +77,13 @@ const Button: FC<ButtonProps> = (props: React.PropsWithChildren<ButtonProps>) =>
         <button
             className={classes}
             disabled={disabled || skeleton}
-            title={iconOnly && iconDescription}
+            title={(iconOnly && iconDescription) ? iconDescription : ''}
             onClick={(e) => handleClick(e, onClick, ripple.current)}
             onFocus={(e) => onFocus(e)}
+            onBlur={(e) => onBlur(e)}
+            onKeyDown={(e) => onKeyDown(e)}
+            tabIndex={0}
+            ref={ref}
             {...rest}
         >
             {!iconOnly && <span className={`${cls}--text`}>
@@ -87,18 +96,20 @@ const Button: FC<ButtonProps> = (props: React.PropsWithChildren<ButtonProps>) =>
         </button>
         {counter && <div className={`${cls}--counter`}>{counter}</div>}
     </div>
-}
+});
 
 const defaultProps: ButtonProps = {
     className: '',
     disabled: false,
     skeleton: false,
+    active: false,
     kind: 'primary',
     danger: false,
     size: 'md',
     onBlur: () => { },
     onClick: () => { },
     onFocus: () => { },
+    onKeyDown: () => { },
     icon: null,
     iconPosition: POSITIONS.RIGHT,
     iconDescription: null,

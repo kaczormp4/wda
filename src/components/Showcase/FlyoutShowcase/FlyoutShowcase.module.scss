@@ -1,0 +1,21 @@
+.Flyouts {
+    .inlineFlex {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--spacing-02);
+        margin-bottom: var(--spacing-02);
+    }
+    .btnGrid {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        > div {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+            > div:not(:last-of-type) {
+                margin-bottom: 4rem;
+            }
+        }
+    }
+}

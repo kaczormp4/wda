@@ -6,6 +6,7 @@ import classnames from 'classnames';
 import Button from '../commonComponents/Button/Button';
 import { Portal } from '../Portal/Portal';
 import styles from "./Navbar.module.scss";
+import Flyout from '../commonComponents/Flyout/Flyout';
 
 interface NavbarProps {
     loggedIn: boolean,
@@ -94,8 +95,7 @@ const Navbar: FC<NavbarProps> = (props) => {
                     </Link>
                     {
                         loggedIn ?
-                            <div className={styles.Avatar}>
-                                {UserAvatar()}
+                            <Flyout direction='bottom-end' openOnHover useAbsolutePositioning focusTrap buttonProps={{kind: 'ghost', iconOnly: true}}>
                                 <div className={styles.FlyoutMenu}>
                                     {
                                         flyoutMenuList.map((item) =>
@@ -105,7 +105,7 @@ const Navbar: FC<NavbarProps> = (props) => {
                                         )
                                     }
                                 </div>
-                            </div>
+                            </Flyout>
                             :
                             <Link to='/logowanie'>
                                 <Button kind='primary'>Zaloguj Się</Button>

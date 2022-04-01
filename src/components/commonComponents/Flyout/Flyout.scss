@@ -1,0 +1,14 @@
+@import "../../../styles/variables.scss";
+
+.#{$prefix}-flyout {
+    $flyout: &;
+    position: absolute;
+    padding: var(--spacing-03);
+    background: var(--background-02);
+    box-shadow: var(--box-shadow);
+    border-radius: 0.5rem;
+    min-width: 5rem;
+    max-width: 14rem;
+    width: fit-content;
+    z-index: 1;
+}
