@@ -22,6 +22,7 @@ export type ButtonProps = {
     onBlur?: Function,
     onClick?: Function,
     onFocus?: Function,
+    onKeyDown?: Function,
     icon?: any,
     iconOnly?: boolean,
     iconPosition?: string,
@@ -51,12 +52,13 @@ const handleRipple = (ev: React.MouseEvent, ripple: HTMLSpanElement) => {
 
 const handleClick = (ev: React.MouseEvent, onClick: Function, ripple: HTMLSpanElement) => {
     ev.stopPropagation();
+    ev.preventDefault();
     handleRipple(ev, ripple);
     onClick(ev);
 };
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
-    const { className, disabled, skeleton, active, kind, danger, size, onBluronBlur, onClick, onBlur, onFocus, icon, iconOnly, iconDescription, iconPosition, counter, children, ...rest } = props;
+    const { className, disabled, skeleton, active, kind, danger, size, onBluronBlur, onClick, onBlur, onFocus, onKeyDown, icon, iconOnly, iconDescription, iconPosition, counter, children, ...rest } = props;
     const ripple = useRef<HTMLSpanElement>(null);
 
     const classes = classNames(className, {
@@ -79,6 +81,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => 
             onClick={(e) => handleClick(e, onClick, ripple.current)}
             onFocus={(e) => onFocus(e)}
             onBlur={(e) => onBlur(e)}
+            onKeyDown={(e) => onKeyDown(e)}
             tabIndex={0}
             ref={ref}
             {...rest}
@@ -106,6 +109,7 @@ const defaultProps: ButtonProps = {
     onBlur: () => { },
     onClick: () => { },
     onFocus: () => { },
+    onKeyDown: () => { },
     icon: null,
     iconPosition: POSITIONS.RIGHT,
     iconDescription: null,

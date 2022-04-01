@@ -19,6 +19,7 @@ type FlyoutProps = {
     direction?: string,
     disabled?: boolean,
     closeOnClickOutside?: boolean,
+    openOnHover?: boolean,
     onOpen?: Function,
     onClose?: Function,
     open?: boolean,
@@ -30,7 +31,7 @@ type FlyoutProps = {
 
 const Flyout: FC<FlyoutProps> = (props: React.PropsWithChildren<FlyoutProps>) => {
     const { buttonProps, buttonSize, CustomTrigger, icon, direction, disabled,
-        closeOnClickOutside, useAutoPositioning, renderInPortal,
+        closeOnClickOutside, useAutoPositioning, renderInPortal, openOnHover,
         children, onClose, onOpen, focusTrap, useAbsolutePositioning, open } = props;
     const [isOpen, setIsOpen] = useState<boolean>(open || false);
     const [id] = useState<string>(uniqueId('flyout_'));
@@ -60,22 +61,34 @@ const Flyout: FC<FlyoutProps> = (props: React.PropsWithChildren<FlyoutProps>) =>
             }
         };
 
-        const observeClickOutside = () => {
-            document.addEventListener('mouseup', clickOutsideFn);
+        const observeClickOutside = (enable: boolean) => {
+            if (enable) document.addEventListener('mouseup', clickOutsideFn);
+            else document.removeEventListener('mouseup', clickOutsideFn);
         }
 
         const observeEscEvent = () => {
             document.addEventListener('keydown', escFunction);
         }
 
+        const resizeObserver = new ResizeObserver(entries => {
+            setFlyoutPositionig(direction, useAutoPositioning, useAbsolutePositioning, buttonRef.current, flyoutRef.current);
+        });
+
+        const observeTriggerPosition = () => {
+            resizeObserver.observe(document.body);
+        }
+
         if (isOpen) {
             observeEscEvent();
+            observeTriggerPosition();
+            resizeObserver.observe(document.body);
             if (closeOnClickOutside)
-                observeClickOutside();
+                observeClickOutside(true);
             setFlyoutPositionig(direction, useAutoPositioning, useAbsolutePositioning, buttonRef.current, flyoutRef.current);
             onOpen && onOpen();
         } else {
-            document.removeEventListener('mouseup', clickOutsideFn);
+            observeClickOutside(false);
+            resizeObserver.unobserve(document.body);
             document.removeEventListener('keydown', escFunction);
             onClose && onClose();
         }
@@ -83,20 +96,20 @@ const Flyout: FC<FlyoutProps> = (props: React.PropsWithChildren<FlyoutProps>) =>
 
 
 
-    const positionMenu = (ev: React.MouseEvent) => {
+    const positionMenu = () => {
         setIsOpen(!isOpen);
     }
 
     const checkBlur = (ev: React.FocusEvent) => {
         if (!focusTrap && closeOnClickOutside) {
-            if (!ev.relatedTarget || !(ev.relatedTarget.id === id || ev.relatedTarget.id === triggerId))
+            if (ev.relatedTarget || !(ev.target.id === id || ev.target.id === triggerId))
                 setIsOpen(false);
         }
     }
 
 
     const renderFlyout = () => isOpen
-        && <FocusTrap active={focusTrap && isOpen} focusTrapOptions={{ allowOutsideClick: true }}>
+        && <FocusTrap active={focusTrap && isOpen} focusTrapOptions={{ allowOutsideClick: true, returnFocusOnDeactivate: false }}>
             <div className={`${cls}`} ref={flyoutRef} id={id}>
                 {children}
             </div>
@@ -105,11 +118,23 @@ const Flyout: FC<FlyoutProps> = (props: React.PropsWithChildren<FlyoutProps>) =>
     const triggerProps = {
         ref: buttonRef, id: `trigger_${id}`, active: isOpen,
         disabled: disabled, icon: icon, size: buttonSize, ...buttonProps,
-        onClick: (e: React.MouseEvent) => positionMenu(e),
         onBlur: (e: React.FocusEvent) => checkBlur(e)
     }
 
-    return <div className={`${cls}--wrapper`} >
+    const hoverProps = { onMouseEnter: (e: React.MouseEvent) => { }, onMouseLeave: (e: React.MouseEvent) => { } };
+
+    if (!openOnHover) {
+        triggerProps.onClick = (e: React.MouseEvent) => positionMenu();
+    } else {
+        hoverProps.onMouseEnter = (e: React.MouseEvent) => positionMenu();
+        hoverProps.onMouseLeave = (e: React.MouseEvent) => setIsOpen(false);
+        triggerProps.onKeyDown = (e: KeyboardEvent) => {
+            if (e.key === ' ' || e.key === 'Enter')
+                positionMenu()
+        };
+    }
+
+    return <div className={`${cls}--wrapper`} {...hoverProps}>
         <Button {...triggerProps} />
         <div
             className={`${cls}--anchor`}
@@ -131,6 +156,7 @@ const defaultProps: FlyoutProps = {
     onClose: null,
     open: undefined,
     closeOnClickOutside: true,
+    openOnHover: false,
     useAutoPositioning: true,
     useAbsolutePositioning: false,
     focusTrap: false,

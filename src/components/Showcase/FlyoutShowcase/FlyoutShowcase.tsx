@@ -43,6 +43,10 @@ const ButtonShowcase: FC = () =>
             <Flyout renderInPortal open={true}>Open/close controlled by prop</Flyout>
             <span className={parentStyles.sectionDescription}>Not closing on click outside</span>
             <Flyout closeOnClickOutside={false}>sad</Flyout>
+            <span className={parentStyles.sectionDescription}>Open on hover</span>
+            <Flyout openOnHover>test</Flyout>
+            <span className={parentStyles.sectionDescription}>Open on hover, renderInPortal</span>
+            <Flyout openOnHover renderInPortal>test</Flyout>
         </section>
         <section className={parentStyles.section}>
             <dd>Autopositioning</dd>

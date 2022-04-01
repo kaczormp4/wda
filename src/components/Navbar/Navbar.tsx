@@ -95,7 +95,7 @@ const Navbar: FC<NavbarProps> = (props) => {
                     </Link>
                     {
                         loggedIn ?
-                            <Flyout direction='bottom-end' useAbsolutePositioning focusTrap buttonProps={{kind: 'ghost', iconOnly: true}}>
+                            <Flyout direction='bottom-end' openOnHover useAbsolutePositioning focusTrap buttonProps={{kind: 'ghost', iconOnly: true}}>
                                 <div className={styles.FlyoutMenu}>
                                     {
                                         flyoutMenuList.map((item) =>
