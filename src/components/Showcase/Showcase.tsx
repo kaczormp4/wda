@@ -3,6 +3,7 @@ import styles from "./Showcase.module.scss";
 import ButtonShowcase from './ButtonShowcase/ButtonShowcase';
 import FlyoutShowcase from './FlyoutShowcase/FlyoutShowcase';
 import InputShowcase from './InputShowcase/InputShowcase';
+import CheckboxShowcase from './CheckboxShowcase/CheckboxShowcase';
 
 type ShowcaseProps = {
 }
@@ -20,7 +21,9 @@ const Showcase: FC<ShowcaseProps> = () =>
         <div className={styles.componentWrapper}>
             <InputShowcase />
         </div>
-
+        <div className={styles.componentWrapper}>
+            <CheckboxShowcase />
+        </div>
     </section>
 
 
