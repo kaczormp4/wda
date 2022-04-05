@@ -9,21 +9,27 @@ const cls = `${cssPrefix}-checkbox`;
 let uId: string;
 
 type CheckboxProps = {
-  className?: string,
-  label?: string,
-  disabled?: boolean,
-  defaultChecked?: boolean,
-  helperText?: string,
   labelPosition?: 'left' | 'right' | 'top' | 'bottom',
-  onChange?: Function,
-  error?: boolean,
-  errorText?: string,
   size?: 'sm' | 'md' | 'lg'
+  label?: string,
+  className?: string,
+  errorText?: string,
+  helperText?: string,
+  error?: boolean,
+  disabled?: boolean,
   required?: boolean,
+  defaultChecked?: boolean,
+  onChange?: Function,
 }
 
 const Checkbox: FC<CheckboxProps> = (props) => {
-  const { className, label, disabled, defaultChecked, labelPosition, onChange, error, errorText, helperText, size, required } = props;
+  const {
+    labelPosition, size, label, className, errorText, helperText,
+    error, disabled, required, defaultChecked,
+    onChange,
+  } = props;
+
+  // hooks
   const [isChecked, setIsChecked] = useState<boolean>(defaultChecked);
   const [isError, setIsError] = useState<boolean>(error);
   const [isDisabled, setIsDisabled] = useState<boolean>(disabled);
@@ -34,23 +40,13 @@ const Checkbox: FC<CheckboxProps> = (props) => {
 
   // classnames
   const classesRoot = classNames(`${cls}--root`, {
-    // [`${cls}--${kind}`]: true,
-    // [`${cls}--${size}`]: true,
     [`${cls}--disabled`]: disabled,
     [`${cls}--root-${labelPosition}`]: true,
-    // [`${cls}--error`]: isError && !isFocus,
-    // [`${cls}--date`]: type === 'date',
-    // [`${cls}--skeleton`]: skeleton,
   });
   const classesInput = classNames(className, {
     [`${cls}`]: true,
     [`${cls}--disabled`]: disabled,
-    // [`${cls}--${kind}`]: true,
     [`${cls}--${size}`]: true,
-    // [`${cls}--disabled`]: disabled || skeleton,
-    // [`${cls}--error`]: isError && !isFocus,
-    // [`${cls}--date`]: type === 'date',
-    // [`${cls}--skeleton`]: skeleton,
   });
 
   // handlers
@@ -68,9 +64,9 @@ const Checkbox: FC<CheckboxProps> = (props) => {
         <input
           id={uId}
           type="checkbox"
-          className={classesInput}
           checked={isChecked}
           disabled={disabled}
+          className={classesInput}
           onChange={(e) => handleChange(e)}
         />
       </div>
@@ -86,16 +82,16 @@ const Checkbox: FC<CheckboxProps> = (props) => {
 }
 
 const defaultProps: CheckboxProps = {
-  label: '',
-  disabled: false,
-  defaultChecked: false,
+  size: 'md',
   labelPosition: 'right',
-  error: false,
-  required: false,
+  label: '',
   errorText: '',
   helperText: '',
+  error: false,
+  disabled: false,
+  required: false,
+  defaultChecked: false,
   onChange: () => { },
-  size: 'md'
 }
 
 Checkbox.defaultProps = defaultProps;
