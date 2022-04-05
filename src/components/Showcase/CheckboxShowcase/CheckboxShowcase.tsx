@@ -1,20 +1,44 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import Checkbox from '../../commonComponents/Checkbox/Checkbox';
 import parentStyles from "./../Showcase.module.scss";
 import styles from "./CheckboxShowcase.module.scss";
 
-const CheckboxShowcase: FC = () =>
-    <div className={styles.Checkbox}>
+const CheckboxShowcase: FC = () => {
+
+
+    const [isChecked, setChecked] = useState<any>(false);
+    return <div className={styles.Checkbox}>
         <h2>Checkbox</h2>
         <section className={parentStyles.section}>
             <dd>Basic (no label)</dd>
+            <div className={styles.inlineFlex}>
+                <Checkbox label="Check all" >
+                    <Checkbox label="child" />
+                    <Checkbox label="child" />
+                    <Checkbox label="child" />
+                </Checkbox>
+            </div>
             <div className={styles.inlineFlex}>
                 <Checkbox />
                 <Checkbox defaultChecked={true} />
                 <Checkbox disabled={true} />
                 <Checkbox disabled={true} defaultChecked={true} />
             </div>
-        </section>
+            <dd>Basic primary (no label)</dd>
+            <div className={styles.inlineFlex}>
+                <Checkbox kind="primary" />
+                <Checkbox kind="primary" defaultChecked={true} />
+                <Checkbox kind="primary" disabled={true} />
+                <Checkbox kind="primary" disabled={true} defaultChecked={true} />
+            </div>
+            <dd>Basic secondary (no label)</dd>
+            <div className={styles.inlineFlex}>
+                <Checkbox kind="secondary" />
+                <Checkbox kind="secondary" defaultChecked={true} />
+                <Checkbox kind="secondary" disabled={true} />
+                <Checkbox kind="secondary" disabled={true} defaultChecked={true} />
+            </div>
+        </section >
         <section className={parentStyles.section}>
             <dd>Different sizes</dd>
             <div className={styles.inlineFlex}>
@@ -46,17 +70,17 @@ const CheckboxShowcase: FC = () =>
         <section className={parentStyles.section}>
             <dd>error</dd>
             <div className={styles.inlineFlex}>
-                <Checkbox error={true} />
-                <Checkbox defaultChecked={true} error={true} />
-                <Checkbox disabled={true} error={true} />
-                <Checkbox disabled={true} defaultChecked={true} error={true} />
+                <Checkbox error={true} label='error={true}' />
+                <Checkbox defaultChecked={true} error={true} label='error={true}' />
+                <Checkbox disabled={true} error={true} label='error={true}' />
+                <Checkbox disabled={true} defaultChecked={true} error={true} label='error={true}' />
             </div>
             <dd>error with errorText</dd>
             <div className={styles.inlineFlex}>
                 <Checkbox error={true} errorText='Error msg' />
                 <Checkbox defaultChecked={true} error={true} errorText='Error msg' />
-                <Checkbox disabled={true} error={true} errorText='Error msg' />
-                <Checkbox disabled={true} defaultChecked={true} error={true} errorText='Error msg' />
+                <Checkbox disabled={true} error={true} errorText='Error msg' label='Label' />
+                <Checkbox disabled={true} defaultChecked={true} error={true} errorText='Error msg' label='Label' />
             </div>
         </section>
         <section className={parentStyles.section}>
@@ -77,6 +101,6 @@ const CheckboxShowcase: FC = () =>
             </div>
         </section>
 
-    </div>
-
+    </div >
+}
 export default CheckboxShowcase;

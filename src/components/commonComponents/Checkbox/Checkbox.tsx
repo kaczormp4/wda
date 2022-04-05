@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, ReactNode, useEffect, useRef, useState } from 'react';
 import _ from 'lodash';
 
 import { cssPrefix } from '../../../config';
@@ -10,7 +10,8 @@ let uId: string;
 
 type CheckboxProps = {
   labelPosition?: 'left' | 'right' | 'top' | 'bottom',
-  size?: 'sm' | 'md' | 'lg'
+  kind?: 'primary' | 'secondary',
+  size?: 'sm' | 'md' | 'lg',
   label?: string,
   className?: string,
   errorText?: string,
@@ -24,7 +25,8 @@ type CheckboxProps = {
 
 const Checkbox: FC<CheckboxProps> = (props) => {
   const {
-    labelPosition, size, label, className, errorText, helperText,
+    children,
+    labelPosition, kind, size, label, className, errorText, helperText,
     error, disabled, required, defaultChecked,
     onChange,
   } = props;
@@ -34,40 +36,60 @@ const Checkbox: FC<CheckboxProps> = (props) => {
   const [isError, setIsError] = useState<boolean>(error);
   const [isDisabled, setIsDisabled] = useState<boolean>(disabled);
 
+  const focusRef = useRef<any>(null);
+
   useEffect(() => {
-    uId = _.uniqueId(cls)
+    uId = _.uniqueId(cls);
   }, [isChecked]);
 
   // classnames
   const classesRoot = classNames(`${cls}--root`, {
     [`${cls}--disabled`]: disabled,
     [`${cls}--root-${labelPosition}`]: true,
+    [`${cls}--error`]: isError,
+  });
+  const classesBg = classNames(`${cls}--bg`, {
+    [`${cls}--${kind}`]: true,
   });
   const classesInput = classNames(className, {
     [`${cls}`]: true,
     [`${cls}--disabled`]: disabled,
     [`${cls}--${size}`]: true,
+    [`${cls}:focus`]: false,
+
   });
 
   // handlers
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.checked, e);
     if (!isDisabled) {
-      setIsChecked(!isChecked)
+      setIsChecked(!isChecked);
     }
   }
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" || e.keyCode === 13) {
+      setIsChecked(!isChecked);
+    }
+  }
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    focusRef.current.blur();
+  }
+
 
   return <div className={`${cls}--wrapper`}>
     <label htmlFor={uId} className={classesRoot}>
-      <div className={`${cls}--bg`}>
+      <div className={classesBg}>
         <div className={`${cls}--required`}>{required ? '*' : ''}</div>
         <input
           id={uId}
+          ref={focusRef}
           type="checkbox"
           checked={isChecked}
           disabled={disabled}
           className={classesInput}
+          onClick={(e) => handleClick(e)}
           onChange={(e) => handleChange(e)}
+          onKeyPress={(e) => handleKeyPress(e)}
         />
       </div>
       {label && <span className={`${cls}--label`}>{label}</span>}
@@ -83,6 +105,7 @@ const Checkbox: FC<CheckboxProps> = (props) => {
 
 const defaultProps: CheckboxProps = {
   size: 'md',
+  kind: 'secondary',
   labelPosition: 'right',
   label: '',
   errorText: '',

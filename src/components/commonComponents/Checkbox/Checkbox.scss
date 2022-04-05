@@ -14,10 +14,8 @@
     box-sizing: border-box;
     overflow: hidden;
     outline: none;
-
     &--wrapper {
         padding: var(--spacing-02);
-        background-color: white;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -43,9 +41,6 @@
         padding: var(--spacing-02);
         position: relative;
         border-radius: 100%;
-        &:hover {
-            background-color: var(--background-01);
-        }
     }
 
     &--required {
@@ -54,15 +49,15 @@
         left: 0;
         color: var(--danger);
     }
-    // // states
+    // states
     &:disabled,
     &--disabled {
         color: var(--disabled-02);
         cursor: not-allowed !important;
     }
-    // &:focus {
-    //     box-shadow: 0 0 0 2px var(--focus);
-    // }
+    &:focus {
+        box-shadow: 0 0 0 2px var(--focus);
+    }
 
     // sizes
     &--sm {
@@ -77,34 +72,26 @@
         width: 25px;
         height: 25px;
     }
-    // // kinds
-    // &--primary {
-    //     background: transparent;
-    //     border-bottom: 2px solid var(--disabled-01);
-    //     color: var(--text-01);
-    //     &:hover:not(:disabled) {
-    //         border-bottom: 2px solid var(--disabled-02);
-    //     }
-    // }
-    // &--outlined {
-    //     border: 1px solid var(--disabled-01);
-    //     color: var(--text-01);
-    //     &:hover:not(:disabled) {
-    //         border: 1px solid var(--disabled-02);
-    //     }
-    // }
-    // &--filled {
-    //     background-color: var(--background-01);
-    //     border-bottom: 2px solid var(--disabled-01);
-    //     color: var(--text-01);
-    //     &:hover:not(:disabled) {
-    //         border-bottom: 2px solid var(--disabled-02);
-    //     }
-    // }
-    // //error
-    // &--error {
-    //     border-color: var(--danger) !important;
-    // }
+    // kinds
+    &--primary {
+        background-color: var(--primary);
+        &:hover:not(:disabled) {
+            background-color: var(--primary-hover);
+        }
+    }
+    &--secondary {
+        &:hover:not(:disabled) {
+            background-color: var(--background-01);
+        }
+    }
+
+    //error
+    &--error {
+        box-shadow: 0 0 2px 0px var(--danger);
+        border-radius: 0.25rem;
+        color: var(--danger);
+    }
+
     // // label
     &--label {
         margin: 0 var(--spacing-02);
@@ -112,32 +99,6 @@
             color: var(--danger);
         }
     }
-    // &--label {
-    //     position: absolute;
-    //     left: var(--spacing-06);
-    //     top: calc(2 * var(--spacing-04) + 2px);
-    //     font-size: var(--font-size-03);
-    //     transform-origin: top left;
-    //     color: transparent;
-    //     transition: all 0.2s ease-out;
-    //     cursor: text;
-    //     -webkit-user-select: none; /* Safari */
-    //     -khtml-user-select: none; /* Konqueror HTML */
-    //     -moz-user-select: none; /* Old versions of Firefox */
-    //     -ms-user-select: none; /* Internet Explorer/Edge */
-    //     user-select: none;
-    // }
-    // &--active {
-    //     color: var(--text-03);
-    //     font-size: var(--font-size-03);
-    //     transform: translate(0, -2rem) scale(0.75);
-    //     background-color: var(--background-02);
-    //     padding: var(--spacing-02);
-    //     cursor: context-menu;
-    //     & > span {
-    //         color: var(--danger);
-    //     }
-    // }
 
     // bottom text
     &--errorText {
@@ -148,34 +109,4 @@
         margin: 0 var(--spacing-02);
         color: var(--text-03);
     }
-
-    // // skeleton
-    // &--skeleton#{&}--disabled {
-    //     color: transparent;
-    //     background: white;
-    //     border-color: transparent;
-    //     &::after {
-    //         position: absolute;
-    //         inset: 0;
-    //         z-index: 1;
-    //         content: "";
-    //         transform: translateX(-100%);
-    //         animation: skeletonAnim 2s infinite;
-    //         background-image: linear-gradient(
-    //             90deg,
-    //             transparent 0,
-    //             var(--disabled-01) 20%,
-    //             transparent 60%,
-    //             var(--disabled-01)
-    //         );
-    //     }
-    //     &:hover {
-    //         background: transparent;
-    //     }
-    //     @keyframes skeletonAnim {
-    //         100% {
-    //             transform: translateX(100%);
-    //         }
-    //     }
-    // }
 }
