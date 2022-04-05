@@ -38,6 +38,18 @@ const Flyout: FC<FlyoutProps> = (props: React.PropsWithChildren<FlyoutProps>) =>
     const triggerId = `trigger_${id}`;
     const buttonRef = useRef<any>(null);
     const flyoutRef = useRef<any>(null);
+    const resizeObserver = useRef(null);
+
+    useEffect(() => {
+        if(isOpen) {
+            resizeObserver.current = new ResizeObserver((entries) => {
+                setFlyoutPositionig(direction, useAutoPositioning, useAbsolutePositioning, buttonRef.current, flyoutRef.current);
+            });
+            resizeObserver.current.observe(document.body);
+        }
+        return () => resizeObserver?.current?.unobserve(document.body);
+    }, [isOpen]);
+
     useEffect(() => {
         // isOpen callback 
         // - used to trigger positioning function
@@ -70,25 +82,15 @@ const Flyout: FC<FlyoutProps> = (props: React.PropsWithChildren<FlyoutProps>) =>
             document.addEventListener('keydown', escFunction);
         }
 
-        const resizeObserver = new ResizeObserver(entries => {
-            setFlyoutPositionig(direction, useAutoPositioning, useAbsolutePositioning, buttonRef.current, flyoutRef.current);
-        });
-
-        const observeTriggerPosition = () => {
-            resizeObserver.observe(document.body);
-        }
 
         if (isOpen) {
             observeEscEvent();
-            observeTriggerPosition();
-            resizeObserver.observe(document.body);
             if (closeOnClickOutside)
                 observeClickOutside(true);
             setFlyoutPositionig(direction, useAutoPositioning, useAbsolutePositioning, buttonRef.current, flyoutRef.current);
             onOpen && onOpen();
         } else {
             observeClickOutside(false);
-            resizeObserver.unobserve(document.body);
             document.removeEventListener('keydown', escFunction);
             onClose && onClose();
         }

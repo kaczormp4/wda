@@ -29,8 +29,8 @@ function isOutOfBounds(el: HTMLElement): string[] {
     const rect = el.getBoundingClientRect();
 
     const T = rect.top >= 0 ? '' : 'top';
-    const R = rect.right <= (window.innerWidth || document.documentElement.clientWidth) ? '' : 'right';
-    const B = rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) ? '' : 'bottom';
+    const R = rect.right <= (document.documentElement.clientWidth || window.innerWidth) ? '' : 'right';
+    const B = rect.bottom <= (document.documentElement.clientHeight || window.innerHeight) ? '' : 'bottom';
     const L = rect.left >= 0 ? '' : 'left';
     return [T, R, B, L].filter(Boolean);
 }
