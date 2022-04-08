@@ -9,6 +9,8 @@ import {
   Route
 } from "react-router-dom";
 import Navbar from './components/Navbar/Navbar';
+import APITest from './api/APITest';
+import { ToastContainer } from 'react-toastify';
 
 
 const routes = [
@@ -19,6 +21,10 @@ const routes = [
   {
     path: "/components",
     element: Showcase
+  },
+  {
+    path: "/apitest",
+    element: APITest
   },
   {
     path: "/*",
@@ -66,6 +72,7 @@ function App() {
           </Routes>
         </div>
       </Router>
+      <ToastContainer/>
     </div>
   );
 }

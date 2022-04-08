@@ -14,7 +14,7 @@ type InputProps = {
     errorText?: string,
     className?: string,
     helperText?: string,
-    defaultValue?: string,
+    defaultValue?: string | number,
     error?: boolean,
     required?: boolean,
     disabled?: boolean,
@@ -38,12 +38,12 @@ const Input: FC<InputProps> = (props) => {
     const [isError, setError] = useState<boolean>(error);
     const [isActive, setIsActive] = useState<boolean>(false);
     const [isFocus, setIsFocus] = useState<boolean>(false);
-    const [isText, setText] = useState<string>(defaultValue);
+    const [isText, setText] = useState<typeof defaultValue>(defaultValue);
 
     const labelRef = useRef<any>(null);
 
     useEffect(() => {
-        if (isText.length > 0 || type === 'date') {
+        if (isText.toString().length > 0 || type === 'date') {
             setIsActive(true);
         }
     }, [])
@@ -82,7 +82,7 @@ const Input: FC<InputProps> = (props) => {
         onBlur(e);
         setIsFocus(false);
 
-        if (isText.length > 0 || type === 'date') {
+        if (isText.toString().length > 0 || type === 'date') {
             setIsActive(true);
         } else {
             setIsActive(false);
@@ -90,7 +90,7 @@ const Input: FC<InputProps> = (props) => {
 
         if (required && isText === "") {
             setError(true);
-        } else if (required && isText.length > 0) {
+        } else if (required && isText.toString().length > 0) {
             setError(false);
         }
     }
