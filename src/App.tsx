@@ -2,6 +2,7 @@ import './App.scss';
 import Home from './pages/Home/Home';
 import NotFound from './pages/NotFound/NotFound';
 import Showcase from './components/Showcase/Showcase';
+import NewAd from './pages/NewAd/NewAd';
 import './utils/icons';
 import {
   BrowserRouter as Router,
@@ -21,6 +22,10 @@ const routes = [
   {
     path: "/components",
     element: Showcase
+  }, 
+  {
+    path: "/nowe-ogloszenie",
+    element: NewAd
   },
   {
     path: "/apitest",

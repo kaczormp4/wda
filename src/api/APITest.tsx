@@ -4,7 +4,7 @@ import Button from '../components/commonComponents/Button/Button';
 import Input from '../components/commonComponents/Input/Input';
 import styles from "./../components/Showcase/Showcase.module.scss";
 import Buggy from './Buggy';
-import Categories from './Categories';
+import { Categories } from './Categories';
 
 const Showcase: FC = () => {
     const [data, setData] = React.useState(null);

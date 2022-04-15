@@ -28,4 +28,7 @@ class Categories {
     }
 }
 
-export default Categories;
+export {
+    ICategory,
+    Categories,
+}

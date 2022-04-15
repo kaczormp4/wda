@@ -1,0 +1,52 @@
+@import "../../../styles/variables.scss";
+
+.#{$prefix}-modal {
+    $modal: &;
+    &--wrapper {
+        position: absolute;
+        inset: 0;
+        z-index: 10;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        background: var(--modal-overlay);
+    }
+    &--modal-container {
+        width: 52rem;
+        max-width: calc(100% - 4rem);
+        max-height: calc(100% - 8rem);
+        margin-top: var(--spacing-06);
+        background: var(--background-02);
+        border-radius: var(--spacing-02);
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: auto 1fr auto;
+    }
+    &--header {
+        margin-bottom: var(--spacing-04);
+        padding-left: var(--spacing-04);
+        padding-right: var(--spacing-01);
+        padding-top: var(--spacing-01);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        &--text {
+            margin-top: var(--spacing-02);
+            font-size: var(--font-size-04);
+        }
+    }
+    &--body {
+        padding-bottom: var(--spacing-03);
+        overflow-y: auto;
+        padding-left: var(--spacing-04);
+        padding-right: var(--spacing-04);
+        padding-top: var(--spacing-02);
+        position: relative;
+    }
+}
+
+:global {
+    .alert-enter {
+        color: red;
+    }
+}

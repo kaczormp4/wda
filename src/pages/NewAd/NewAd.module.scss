@@ -1,0 +1,105 @@
+@import "../../styles/variables.scss";
+
+.NewAd {
+    width: var(--width-desktop-1250);
+    max-width: calc(100% - var(--spacing-05));
+    margin: auto;
+    .Header {
+        margin-top: var(--spacing-05);
+        font-size: var(--font-size-05);
+        font-weight: bold;
+    }
+    .FormSection {
+        padding: var(--spacing-05);
+        background-color: var(--background-02);
+        margin-top: var(--spacing-03);
+        border-radius: var(--spacing-02);
+        .Section {
+            &Header {
+                margin-bottom: var(--spacing-02);
+                font-size: var(--font-size-04);
+            }
+            &Desc {
+                font-size: var(--font-size-02);
+            }
+        }
+    }
+    .LongInput {
+        width: 40rem;
+        max-width: 100%;
+    }
+
+    .BtnLabel {
+        margin-bottom: var(--spacing-01);
+        font-size: var(--font-size-02);
+    }
+}
+
+.CategoriesModal {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: var(--spacing-03);
+    :global {
+        .#{$prefix}-btn {
+            width: 100%;
+        }
+    }
+}
+
+.PhotoAdder {
+    display: flex;
+    gap: var(--spacing-05);
+    flex-wrap: wrap;
+    padding: var(--spacing-03) 0;
+
+    .PhotoInput {
+        opacity: 0;
+        width: 0;
+        height: 0;
+        position: absolute;
+        top: -999px;
+        left: -99px;
+
+        &:focus + .Photo {
+            outline: 2px solid var(--focus);
+        }
+        &:hover + .Photo {
+            color: var(--interactive-01);
+        }
+    }
+    .Photo {
+        width: 160px;
+        height: 120px;
+        background: var(--background-01);
+        border-radius: var(--spacing-02);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: var(--font-size-05);
+        color: var(--text-03);
+        cursor: pointer;
+        border: 0;
+        overflow: hidden;
+        position: relative;
+        &Img {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+        }
+
+        &Overlay {
+            position: absolute;
+            opacity: 0;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-03);
+            background: var(--modal-overlay);
+            backdrop-filter: blur(2px);
+            &:hover, &:focus-within {
+                opacity: 1;
+            }
+        }
+    }
+}

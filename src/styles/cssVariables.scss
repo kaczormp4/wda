@@ -18,6 +18,7 @@
 
     --lt-overlay: rgba(0, 0, 0, 0.02);
     --md-overlay: rgba(0, 0, 0, 0.1);
+    --modal-overlay: rgba(0, 0, 0, 0.3);
 
     // spacings
     --spacing-01: 0.25rem;
@@ -39,6 +40,7 @@
 
     // width
     --width-desktop-1600: 1600px;
+    --width-desktop-1250: 1250px;
     --width-mobile-460: 460px;
     --width-mobile-360: 360px;
     --width-mobile-280: 280px;
@@ -49,3 +51,4 @@
     // shadow
     --box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
+
