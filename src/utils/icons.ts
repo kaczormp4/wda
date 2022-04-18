@@ -3,7 +3,8 @@ import {
     faCoffee, faMessage, faBars,
     faList, faCirclePlus, faHouse,
     faUser, faXmark, faArrowRightFromBracket,
-    faAdjust
+    faAdjust, faChevronRight, faImage,
+    faTrash
 } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faCoffee, faMessage, faBars, faList, faCirclePlus, faHouse, faUser, faXmark, faArrowRightFromBracket, faAdjust);
+library.add(faCoffee, faMessage, faBars, faList, faCirclePlus, faHouse, faUser, faXmark, faArrowRightFromBracket, faAdjust, faChevronRight, faImage, faTrash);

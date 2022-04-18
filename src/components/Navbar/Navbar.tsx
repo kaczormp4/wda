@@ -84,18 +84,12 @@ const Navbar: FC<NavbarProps> = (props) => {
                     <Link to='/'>WEDD LOGO</Link>
                 </div>
                 <nav className={styles.NavMenu}>
-                    <Link to='/wiadomosci'>
-                        <Button kind='teritiary' icon={<FontAwesomeIcon icon="comment-alt" />} iconPosition="left">Wiadomości</Button>
-                    </Link>
-                    <Link to='/moja-lista'>
-                        <Button kind='teritiary' icon={<FontAwesomeIcon icon="list-squares" />} iconPosition="left">Moja Lista</Button>
-                    </Link>
-                    <Link to='/nowe-ogloszenie'>
-                        <Button kind='teritiary' icon={<FontAwesomeIcon icon="circle-plus" />}>Dodaj ogłoszenie</Button>
-                    </Link>
+                    <Button kind='teritiary' onClick={() => navigateTo('wiadomosci')} icon={<FontAwesomeIcon icon="comment-alt" />} iconPosition="left">Wiadomości</Button>
+                    <Button kind='teritiary' onClick={() => navigateTo('moja-lista')} icon={<FontAwesomeIcon icon="list-squares" />} iconPosition="left">Moja Lista</Button>
+                    <Button kind='teritiary' onClick={() => navigateTo('nowe-ogloszenie')} icon={<FontAwesomeIcon icon="circle-plus" />}>Dodaj ogłoszenie</Button>
                     {
                         loggedIn ?
-                            <Flyout direction='bottom-end' openOnHover useAbsolutePositioning focusTrap buttonProps={{kind: 'ghost', iconOnly: true}}>
+                            <Flyout direction='bottom-end' openOnHover useAbsolutePositioning focusTrap buttonProps={{ kind: 'ghost', iconOnly: true }}>
                                 <div className={styles.FlyoutMenu}>
                                     {
                                         flyoutMenuList.map((item) =>
