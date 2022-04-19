@@ -4,6 +4,7 @@ import ButtonShowcase from './ButtonShowcase/ButtonShowcase';
 import FlyoutShowcase from './FlyoutShowcase/FlyoutShowcase';
 import InputShowcase from './InputShowcase/InputShowcase';
 import CheckboxShowcase from './CheckboxShowcase/CheckboxShowcase';
+import TextFieldShowcase from './TextFieldShowcase/TextFieldShowcase';
 
 type ShowcaseProps = {
 }
@@ -20,6 +21,9 @@ const Showcase: FC<ShowcaseProps> = () =>
         </div>
         <div className={styles.componentWrapper}>
             <InputShowcase />
+        </div>
+        <div className={styles.componentWrapper}>
+            <TextFieldShowcase />
         </div>
         <div className={styles.componentWrapper}>
             <CheckboxShowcase />

@@ -3,6 +3,7 @@ import { argsToString, get, post, remove } from "./rest";
 const url = '/categories';
 
 interface ICategory {
+    id?: number,
     name: string
 }
 
