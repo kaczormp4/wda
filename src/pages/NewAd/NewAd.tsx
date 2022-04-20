@@ -67,7 +67,7 @@ const NewAd: FC = () => {
                     <Input className={styles.LongInput} kind="filled" type="text" label="Tytuł ogłoszenia" required errorText='Hej, twoje ogłoszenie musi posiadać tytuł'
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => { modifyNewAd({ ...newAd, title: e.target.value }) }} />
                     <p className={styles.BtnLabel}>Dodaj krótki opis ogłoszenia, będzie on widoczny z poziomu wyszukiwania ogłoszeń</p>
-                    <TextField id="newAdShortDesc" className={styles.ShortDesc} kind="filled" label="Krótki opis ogłoszenia" required errorText='Hej, twoje ogłoszenie musi posiadać opis' maxLength={150}
+                    <TextField id="newAdShortDesc" className={styles.ShortDesc} kind="filled" label="Krótki opis ogłoszenia" required errorText='Hej, twoje ogłoszenie musi posiadać opis' maxLength={1000}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => { modifyNewAd({ ...newAd, shortDescription: e.target.value }) }} />
                     <Button type="button" size="lg" icon={<FontAwesomeIcon icon="chevron-right" />} onClick={() => setCategoryModalOpen(true)}>{selectedCategory ? selectedCategory.name : 'Wybierz kategorię'}</Button>
                     {categoryModalOpen && <CategoriesModal categories={categories} onClose={() => setCategoryModalOpen(false)} onBtnClick={applyCategory} />}
@@ -80,7 +80,7 @@ const NewAd: FC = () => {
                 <section className={styles.FormSection}>
                     <h2 className={styles.SectionHeader}>Dodaj opis ogłoszenia</h2>
                     <p className={styles.BtnLabel}>Opisz szczegółowo przedmiot ogłoszenia</p>
-                    <TextField id="newAdDesc" className={styles.ShortDesc} kind="filled" label="Opis ogłoszenia" required errorText='Hej, twoje ogłoszenie musi posiadać opis' maxLength={500}
+                    <TextField id="newAdDesc" className={styles.ShortDesc} kind="filled" label="Opis ogłoszenia" required errorText='Hej, twoje ogłoszenie musi posiadać opis' maxLength={8000}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => { modifyNewAd({ ...newAd, description: e.target.value }) }} />
                 </section>
                 <section className={classNames(styles.FormSection, styles.SubmitSection)}>
