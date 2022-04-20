@@ -29,7 +29,7 @@ const NewAd: FC = () => {
         new Categories().get().then((cats) => {
             setCategories(cats);
         });
-    });
+    }, []);
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
