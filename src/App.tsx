@@ -12,6 +12,7 @@ import {
 import Navbar from './components/Navbar/Navbar';
 import APITest from './api/APITest';
 import { ToastContainer } from 'react-toastify';
+import Offer from './pages/Offer/Offer';
 
 
 const routes = [
@@ -22,7 +23,7 @@ const routes = [
   {
     path: "/components",
     element: Showcase
-  }, 
+  },
   {
     path: "/nowe-ogloszenie",
     element: NewAd
@@ -34,6 +35,10 @@ const routes = [
   {
     path: "/*",
     element: NotFound
+  },
+  {
+    path: "/oferta",
+    element: Offer
   }
 ];
 
@@ -77,7 +82,7 @@ function App() {
           </Routes>
         </div>
       </Router>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 }
