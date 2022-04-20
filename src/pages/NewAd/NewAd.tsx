@@ -50,9 +50,7 @@ const NewAd: FC = () => {
 
     const applyCategory = (category: ICategory) => {
         setNewAd((ad) => {
-            const newAd = { ...ad };
-            ad.categoryId = category.id;
-
+            const newAd = { ...ad, categoryId: category.id };            
             return newAd;
         });
         setCategoryModalOpen(false);
