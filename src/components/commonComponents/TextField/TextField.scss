@@ -1,6 +1,6 @@
 @import "../../../styles/variables.scss";
 
-.#{$prefix}-input {
+.#{$prefix}-text-field {
     $input: &;
     border-radius: 0.25rem;
     cursor: text;
@@ -12,21 +12,21 @@
     padding: var(--spacing-04);
     font-size: var(--font-size-03);
     position: relative;
-    max-width: 300px;
+    min-width: 300px;
+    max-width: 100%;
+    min-height: 4rem;
     flex-shrink: 0;
     color: var(--text-01);
     border: 2px solid transparent;
     box-sizing: border-box;
-    overflow: hidden;
+    overflow-x: hidden;
+    resize: vertical;
+    font-family: inherit;
     &--wrapper {
         position: relative;
         padding-top: var(--spacing-02);
         padding-bottom: var(--spacing-05);
-    }
-    //type
-    &--date {
-        width: 100%;
-        width: 229px; //default input width
+        font-family: inherit;
     }
     // states
     &:disabled,
@@ -120,10 +120,14 @@
     }
 
     // skeleton
-    &--skeleton#{&}--disabled {
+    &--skeleton {
         color: transparent;
         background: white;
         border-color: transparent;
+        overflow: hidden;
+        cursor: not-allowed !important;
+        border-radius: 0.25rem;
+
         &::after {
             position: absolute;
             inset: 0;
@@ -146,6 +150,9 @@
             100% {
                 transform: translateX(100%);
             }
+        }
+        * {
+            opacity: 0;
         }
     }
 }

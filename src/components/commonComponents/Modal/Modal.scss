@@ -21,6 +21,7 @@
         display: grid;
         grid-template-columns: 100%;
         grid-template-rows: auto 1fr auto;
+        overflow: hidden;
     }
     &--header {
         margin-bottom: var(--spacing-04);
@@ -31,7 +32,7 @@
         align-items: center;
         justify-content: space-between;
         &--text {
-            margin-top: var(--spacing-02);
+            margin-top: var(--spacing-03);
             font-size: var(--font-size-04);
         }
     }
@@ -42,6 +43,16 @@
         padding-right: var(--spacing-04);
         padding-top: var(--spacing-02);
         position: relative;
+    }
+
+    &--footer {
+        display: grid;
+        grid-template-columns: 75% 25%;
+        .#{$prefix}-btn {
+            width: 100%;
+            border-radius: 0;
+            max-width: unset;
+        }
     }
 }
 

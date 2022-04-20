@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const apiURL = 'https://weddings.azurewebsites.net/api';
 

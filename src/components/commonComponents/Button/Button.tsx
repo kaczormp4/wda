@@ -19,6 +19,7 @@ export type ButtonProps = {
     kind?: 'primary' | 'secondary' | 'teritiary' | 'ghost',
     danger?: boolean,
     size?: 'sm' | 'md' | 'lg',
+    type?: "button" | "submit" | "reset",
     onBlur?: Function,
     onClick?: Function,
     onFocus?: Function,
@@ -58,7 +59,7 @@ const handleClick = (ev: React.MouseEvent, onClick: Function, ripple: HTMLSpanEl
 };
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
-    const { className, disabled, skeleton, active, kind, danger, size, onBluronBlur, onClick, onBlur, onFocus, onKeyDown, icon, iconOnly, iconDescription, iconPosition, counter, children, ...rest } = props;
+    const { className, disabled, skeleton, active, type, kind, danger, size, onBlur, onClick, onFocus, onKeyDown, icon, iconOnly, iconDescription, iconPosition, counter, children, ...rest } = props;
     const ripple = useRef<HTMLSpanElement>(null);
 
     const classes = classNames(className, {
@@ -84,6 +85,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => 
             onKeyDown={(e) => onKeyDown(e)}
             tabIndex={0}
             ref={ref}
+            type={type}
             {...rest}
         >
             {!iconOnly && <span className={`${cls}--text`}>
@@ -106,6 +108,7 @@ const defaultProps: ButtonProps = {
     kind: 'primary',
     danger: false,
     size: 'md',
+    type: 'button',
     onBlur: () => { },
     onClick: () => { },
     onFocus: () => { },

@@ -2,19 +2,17 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 
 import { cssPrefix } from '../../../config';
-import "./Input.scss";
+import "./TextField.scss";
 
-const cls = `${cssPrefix}-input`;
-type InputProps = {
-    autocompleteId?: 'name' | 'surname' | 'username' | 'email' | 'password' | string,
+const cls = `${cssPrefix}-text-field`;
+type TextFieldProps = {
+    id?: string,
     kind?: 'primary' | 'outlined' | 'filled',
-    type?: 'text' | 'password' | 'number' | 'email' | 'date',
-    size?: 'sm' | 'md',
     label?: string,
     errorText?: string,
     className?: string,
-    helperText?: string,
-    defaultValue?: string | number,
+    defaultValue?: string,
+    maxLength?: number,
     error?: boolean,
     required?: boolean,
     disabled?: boolean,
@@ -24,16 +22,14 @@ type InputProps = {
     onClick?: Function,
     onFocus?: Function,
     onChange?: Function,
-    onKeyDown?: Function,
-    [rest: string]: any;
+    onKeyDown?: Function
 }
 
-const Input: FC<InputProps> = (props) => {
+const TextField: FC<TextFieldProps> = (props) => {
     const {
-        autocompleteId, kind, type, size, label, errorText, className, helperText, defaultValue,
-        error, required, disabled, skeleton, readOnly,
+        id, kind, label, errorText, className, defaultValue,
+        error, required, disabled, skeleton, readOnly, maxLength,
         onBlur, onClick, onFocus, onChange, onKeyDown,
-        ...rest
     } = props;
 
     // hooks
@@ -45,20 +41,21 @@ const Input: FC<InputProps> = (props) => {
     const labelRef = useRef<any>(null);
 
     useEffect(() => {
-        if (isText.toString().length > 0 || type === 'date') {
+        if (isText.toString().length > 0) {
             setIsActive(true);
         }
     }, [])
 
     // classnames
+    const wrapperClasses = classNames(className, {
+        [`${cls}--wrapper`]: true,
+        [`${cls}--skeleton`]: skeleton,
+    });
     const classes = classNames(className, {
         [`${cls}`]: true,
         [`${cls}--${kind}`]: true,
-        [`${cls}--${size}`]: true,
         [`${cls}--disabled`]: disabled || skeleton,
         [`${cls}--error`]: isError && !isFocus,
-        [`${cls}--date`]: type === 'date',
-        [`${cls}--skeleton`]: skeleton,
     });
     const labelClassnames = classNames(`${cls}--label`, {
         [`${cls}--active`]: isActive,
@@ -74,17 +71,17 @@ const Input: FC<InputProps> = (props) => {
     }
 
     // handlers
-    const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    const handleFocus = (e: React.FocusEvent<HTMLTextAreaElement>) => {
         onFocus(e);
         setIsActive(true);
         setIsFocus(true);
         setError(false);
     }
-    const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const handleBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
         onBlur(e);
         setIsFocus(false);
 
-        if (isText.toString().length > 0 || type === 'date') {
+        if (isText.toString().length > 0) {
             setIsActive(true);
         } else {
             setIsActive(false);
@@ -96,7 +93,7 @@ const Input: FC<InputProps> = (props) => {
             setError(false);
         }
     }
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         if (!readOnly) {
             onChange(e);
             setText(e.target.value);
@@ -106,29 +103,17 @@ const Input: FC<InputProps> = (props) => {
         onClick(e);
     }
 
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         onKeyDown(e);
-        // input type='number' edge case bug fixed
-        if (type === 'number') {
-            if (e.key === "e" || e.key === ".") {
-                e.preventDefault();
-            }
-            if (e.currentTarget.value.length > 0) {
-                if (e.key === "+" || e.key === "-") {
-                    e.preventDefault();
-                }
-            }
-        }
     }
 
-    return <div className={`${cls}--wrapper`}>
-        <input
-            type={type}
+    return <div className={wrapperClasses}>
+        <textarea
             value={isText}
             ref={labelRef}
             className={classes}
-            id={autocompleteId}
-            name={autocompleteId}
+            id={id}
+            maxLength={maxLength}
             disabled={disabled || skeleton}
             placeholder={!isActive && `${label} ${required ? '*' : ''}`}
             onBlur={(e) => handleBlur(e)}
@@ -136,7 +121,6 @@ const Input: FC<InputProps> = (props) => {
             onFocus={(e) => handleFocus(e)}
             onChange={(e) => handleChange(e)}
             onKeyDown={(e) => handleKeyDown(e)}
-            {...rest}
         />
         {
             label && !skeleton && <label className={labelClassnames} onClick={(e) => setActiveLabel()}>{label} {required && <span>*</span>}</label>
@@ -145,25 +129,23 @@ const Input: FC<InputProps> = (props) => {
             isError && <p className={`${cls}--errorText`} onClick={(e) => setActiveLabel()}>{errorText}</p>
         }
         {
-            !isError && helperText && <p className={`${cls}--helperText`} onClick={(e) => setActiveLabel()}>{helperText}</p>
+            !isError && maxLength && <p className={`${cls}--helperText`} onClick={(e) => setActiveLabel()}>{`${isText.length} / ${maxLength}`}</p>
         }
     </div>
 }
 
-const defaultProps: InputProps = {
-    size: 'md',
-    type: 'text',
+const defaultProps: TextFieldProps = {
+    id: 'textfield',
     kind: 'primary',
-    autocompleteId: 'on',
     label: '',
     errorText: '',
     className: '',
-    helperText: '',
     defaultValue: '',
     error: false,
     required: false,
     disabled: false,
     skeleton: false,
+    maxLength: null,
     readOnly: false,
     onBlur: () => { },
     onClick: () => { },
@@ -172,6 +154,6 @@ const defaultProps: InputProps = {
     onKeyDown: () => { },
 }
 
-Input.defaultProps = defaultProps;
+TextField.defaultProps = defaultProps;
 
-export default Input;
+export default TextField;

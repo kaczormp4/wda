@@ -21,14 +21,13 @@ class CategoriesModal extends Component<P> {
         return <Modal
             heading="Wybierz kategorię"
             open={true}
+            passive
             onClose={onClose}
-            primaryButtonText="Pick"
-            secondaryButtonText="Cancel"
         >
             <div className={styles.CategoriesModal}>
                 {categories
                     ? categories.map((cat) =>
-                        <Button key={cat.name} size="lg" kind="secondary" onClick={() => onBtnClick(cat)}>{cat.name}</Button>
+                        <Button key={cat.id} size="lg" kind="secondary" onClick={() => onBtnClick(cat)}>{cat.name}</Button>
                     )
                     : fill(Array(12), null).map((x, i) => <Button key={i} size="lg" skeleton></Button>)}
             </div>

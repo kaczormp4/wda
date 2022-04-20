@@ -5,6 +5,7 @@ import { Portal } from '../../Portal/Portal';
 import FocusTrap from 'focus-trap-react';
 import Button from '../Button/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
 
 const cls = `${cssPrefix}-modal`;
 
@@ -13,13 +14,15 @@ export type ModalProps = {
     className?: string,
     open: boolean,
     onClose?: Function,
+    action?: Function,
     primaryButtonText?: string,
     secondaryButtonText?: string,
     passive?: boolean
+    disabled?: boolean
 }
 
 const Modal: FC<ModalProps> = (props: React.PropsWithChildren<ModalProps>) => {
-    const { className, heading, open, passive, onClose, primaryButtonText, secondaryButtonText, children } = props;
+    const { className, heading, open, passive, onClose, action, primaryButtonText, secondaryButtonText, disabled, children } = props;
 
     const closeModal = () => {
         onClose();
@@ -28,15 +31,16 @@ const Modal: FC<ModalProps> = (props: React.PropsWithChildren<ModalProps>) => {
 
     return <Portal divId="categoryModal">
         <FocusTrap active={open} focusTrapOptions={{ allowOutsideClick: true, returnFocusOnDeactivate: false }}>
-                <div className={`${cls}--wrapper`}>
+                <div className={classNames(`${cls}--wrapper`, className)}>
                     <div className={`${cls}--modal-container`}>
                         <header className={`${cls}--header`}>
                             <span className={`${cls}--header--text`}>{heading}</span>
-                            <Button kind="ghost" iconOnly onClick={() => closeModal()} icon={<FontAwesomeIcon icon="xmark" />}></Button>
+                            <Button kind="ghost" iconOnly disabled={disabled} onClick={() => closeModal()} icon={<FontAwesomeIcon icon="xmark" />}></Button>
                         </header>
                         <div className={`${cls}--body`}>{children}</div>
-                        {!passive && <footer>
-                            {/* TODO buttons */}
+                        {!passive && <footer className={`${cls}--footer`}>
+                            <Button kind="ghost" size="lg" onClick={() => closeModal()}>{secondaryButtonText}</Button>
+                            <Button kind="primary" size="lg" disabled={disabled} onClick={action}>{primaryButtonText}</Button>
                         </footer>}
                     </div>
                 </div>
@@ -49,7 +53,9 @@ const defaultProps: ModalProps = {
     className: null,
     open: true,
     passive: false,
+    disabled: false,
     onClose: () => { },
+    action: () => { },
     primaryButtonText: "OK",
     secondaryButtonText: "Zamknij"
 }
