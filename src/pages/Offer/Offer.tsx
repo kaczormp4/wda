@@ -1,10 +1,10 @@
 import React, { FC, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link } from "react-router-dom";
 
 import styles from "./Offer.module.scss";
 import Button from '../../components/commonComponents/Button/Button';
 import { get } from '../../api/rest';
+import { useNavigate, useParams } from 'react-router-dom';
 
 type OfferProps = {
 }
@@ -12,17 +12,25 @@ type OfferProps = {
 const Offer: FC<OfferProps> = () => {
     const [data, setData] = useState(null);
     const [isFavourite, setisFavourite] = useState(false);
+    const [isShowPhoneNumber, setShowPhoneNumber] = useState(false);
+
+    const navigate = useNavigate();
+    let { offerId } = useParams();
+
     useEffect(() => {
-        get('/Advertisements', '/1')
+        get('/Advertisements', `/${offerId}`)
             .then((data) => {
                 setData(data)
             });
     }, [])
-    console.log(data);
 
+    const navigateTo = (route: string) => {
+        navigate(`/${route}`);
+    }
     const addToFavourite = () => {
         setisFavourite(!isFavourite)
     }
+
     return <>
         <main className={styles.Container}>
             <div className={styles.OfferInfoContainer}>
@@ -34,19 +42,28 @@ const Offer: FC<OfferProps> = () => {
                 <section className={styles.Description}>
                     <div className={styles.DateAndFavourite}>
                         <span> Dodano : 1 lipca 18:00</span>
-                        <Button kind='ghost' onClick={() => addToFavourite()}>
-                            {
+                        <Button
+                            kind='ghost'
+                            onClick={() => addToFavourite()}
+                            iconOnly
+                            iconDescription={
+                                isFavourite ?
+                                    'Usuń z "Moja Lista"'
+                                    :
+                                    'Dodaj do "Moja Lista"'
+                            }
+                            icon={
                                 isFavourite ?
                                     <FontAwesomeIcon icon="heart" />
                                     :
                                     <FontAwesomeIcon icon="heart" className={styles.unfilled} />
                             }
-                        </Button>
+                        />
                     </div>
                     <h1>{data?.title}</h1>
                     <div className={styles.PriceAndInfo}>
                         <h1>500zł/h</h1>
-                        <span>dostępne terminy</span>
+                        {/* <span>dostępne terminy</span> */}
                     </div>
                     <div className={styles.AdditionalInfo}>
                         <div className={styles.singleLine}>
@@ -86,7 +103,7 @@ const Offer: FC<OfferProps> = () => {
             </div>
             <div className={styles.MainUseInfoContainer}>
                 <section className={styles.UserInfo}>
-                    <div className={styles.MainUserInfo}>
+                    <div className={styles.MainUserInfo} onClick={() => navigateTo('user')}>
                         <div className={styles.UserAvatar}>
                             <img src={'https://mir-s3-cdn-cf.behance.net/project_modules/disp/ea7a3c32163929.567197ac70bda.png'} />
                         </div>
@@ -97,9 +114,14 @@ const Offer: FC<OfferProps> = () => {
                         </div>
                     </div>
                     <div className={styles.ButtonsContainer}>
-                        <Button kind="teritiary">Zadzwoń</Button>
+                        <Button kind="teritiary" onClick={() => setShowPhoneNumber(!isShowPhoneNumber)}>Zadzwoń</Button>
                         <Button>Wyślij Wiadomość</Button>
                     </div>
+                    {
+                        isShowPhoneNumber && <div className={styles.PhoneNumber}>
+                            723 333 222  <FontAwesomeIcon icon="clone" />
+                        </div>
+                    }
                 </section>
                 {/* <section className={styles.Calendar}>
                     <h1>calendar</h1>

@@ -15,32 +15,32 @@ import { ToastContainer } from 'react-toastify';
 import Offer from './pages/Offer/Offer';
 
 
-const routes = [
-  {
-    path: "/",
-    element: Home
-  },
-  {
-    path: "/components",
-    element: Showcase
-  },
-  {
-    path: "/nowe-ogloszenie",
-    element: NewAd
-  },
-  {
-    path: "/apitest",
-    element: APITest
-  },
-  {
-    path: "/*",
-    element: NotFound
-  },
-  {
-    path: "/oferta",
-    element: Offer
-  }
-];
+// const routes = [
+//   {
+//     path: "/",
+//     element: Home
+//   },
+//   {
+//     path: "/components",
+//     element: Showcase
+//   },
+//   {
+//     path: "/nowe-ogloszenie",
+//     element: NewAd
+//   },
+//   {
+//     path: "/apitest",
+//     element: APITest
+//   },
+//   {
+//     path: "/*",
+//     element: NotFound
+//   },
+//   {
+//     path: "/oferta",
+//     element: Offer,
+//   }
+// ];
 
 const temporaryFlyoutMenuList = [
   {
@@ -75,15 +75,25 @@ function App() {
       <Router>
         <Navbar loggedIn={true} flyoutMenuList={temporaryFlyoutMenuList} userInfo={{ name: "Jan Kowalski", avatar: null }} />
         <div className="app">
-          <Routes >
+          {/* <Routes >
             {routes.map((route, i) => (
               <Route key={i} path={route.path} element={<route.element />} />
             ))}
+          </Routes> */}
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/*" element={<NotFound />} />
+            {/* <Route path="/nowe-ogloszenie" element={<NewAd />} /> */}
+            <Route path="/apitest" element={<APITest />} />
+            <Route path="/components" element={<Showcase />} />
+            <Route path="/oferta">
+              <Route path=":offerId" element={<Offer />} />
+            </Route>
           </Routes>
         </div>
-      </Router>
+      </Router >
       <ToastContainer />
-    </div>
+    </div >
   );
 }
 

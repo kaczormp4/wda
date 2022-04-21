@@ -4,8 +4,8 @@
     margin: auto;
     margin-bottom: var(--spacing-03);
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-column-gap: 16px;
+    grid-template-columns: repeat(10, 1fr);
+    grid-column-gap: var(--spacing-04);
     -webkit-align-items: stretch;
     -webkit-box-align: stretch;
     -ms-flex-align: stretch;
@@ -48,7 +48,7 @@
                 margin-top: var(--spacing-05);
                 display: flex;
                 align-items: center;
-                gap: 1rem;
+                gap: var(--spacing-04);
                 & > h1 {
                     font-size: var(--font-size-04);
                     font-weight: bold;
@@ -61,7 +61,7 @@
                 margin-top: var(--spacing-05);
                 display: flex;
                 flex-wrap: wrap;
-                gap: 1rem;
+                gap: var(--spacing-04);
                 .singleLine {
                     & > img,
                     svg {
@@ -86,7 +86,7 @@
     }
     .MainUseInfoContainer {
         height: max-content;
-        grid-column: span 3;
+        // grid-column: 360px;
         position: sticky;
         top: 80px;
         .UserInfo {
@@ -96,7 +96,8 @@
             border-radius: var(--spacing-02);
             .MainUserInfo {
                 display: flex;
-                gap: 1rem;
+                gap: var(--spacing-04);
+                cursor: pointer;
                 .UserAvatar {
                     width: max-content;
                     & > img {
@@ -107,10 +108,10 @@
                 .NameAndRate {
                     display: flex;
                     flex-direction: column;
-                    gap: 0.5rem;
+                    gap: var(--spacing-02);
                     & > div {
                         display: flex;
-                        gap: 0.5rem;
+                        gap: var(--spacing-02);
                         & > svg,
                         img {
                             color: var(--positive-01);
@@ -126,9 +127,12 @@
                 }
             }
             .ButtonsContainer {
-                margin-top: 2rem;
+                margin-top: var(--spacing-06);
                 display: flex;
-                gap: 0.5rem;
+                gap: var(--spacing-02);
+            }
+            .PhoneNumber {
+                margin-top: var(--spacing-06);
             }
         }
         .Calendar {
@@ -165,16 +169,7 @@
         stroke-width: 2rem;
     }
 }
-@media only screen and (max-width: 1300px) {
-    .Container {
-        .OfferInfoContainer {
-            grid-column: span 8;
-        }
-        .MainUseInfoContainer {
-            grid-column: span 4;
-        }
-    }
-}
+
 @media only screen and (max-width: 1000px) {
     .Container {
         grid-template-columns: repeat(9, 1fr);
