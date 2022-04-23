@@ -27,6 +27,8 @@ const Offer: FC<OfferProps> = () => {
         get('/Advertisements', `/${offerId}`)
             .then((data) => {
                 setData(data)
+                console.log(data);
+
             }).catch((error) => {
                 navigateTo('notfound');
             });
@@ -35,7 +37,19 @@ const Offer: FC<OfferProps> = () => {
     const addToFavourite = () => {
         setisFavourite(!isFavourite)
     }
+    const PriceAndUnit = (d: any) => {
+        if (d === null || d === undefined) return;
+        const currency = 'zł';
+        let priceUnit = d.priceUnit === null ? '' : d.priceUnit
 
+        if (d.minPrice === d.maxPrice) {
+            return `${d.minPrice} ${currency} ${priceUnit}`
+        } else if (d.minPrice < d.maxPrice) {
+            return `od ${d.minPrice} do ${d.maxPrice} ${currency} ${priceUnit}`
+        } else if (d.minPrice === 0 && d.maxPrice === 0) {
+            return `za darmo`
+        }
+    }
     return <>
         <main className={styles.Container}>
             <div className={styles.OfferInfoContainer}>
@@ -67,7 +81,7 @@ const Offer: FC<OfferProps> = () => {
                     </div>
                     <h1>{data?.title}</h1>
                     <div className={styles.PriceAndInfo}>
-                        <h1>500zł/h</h1>
+                        <h1>{PriceAndUnit(data)}</h1>
                         {/* <span>dostępne terminy</span> */}
                     </div>
                     <div className={styles.AdditionalInfo}>
