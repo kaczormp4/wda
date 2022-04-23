@@ -4,7 +4,13 @@ import {
     faList, faCirclePlus, faHouse,
     faUser, faXmark, faArrowRightFromBracket,
     faAdjust, faChevronRight, faImage,
-    faTrash
+    faTrash, faCircleCheck, faHeart,
+    faFlag, faClone
 } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faCoffee, faMessage, faBars, faList, faCirclePlus, faHouse, faUser, faXmark, faArrowRightFromBracket, faAdjust, faChevronRight, faImage, faTrash);
+library.add(
+    faCoffee, faMessage, faBars, faList, faCirclePlus,
+    faHouse, faUser, faXmark, faArrowRightFromBracket,
+    faAdjust, faChevronRight, faImage, faTrash, faCircleCheck,
+    faHeart, faFlag, faClone
+);

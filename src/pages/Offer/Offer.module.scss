@@ -1,0 +1,180 @@
+.Container {
+    width: var(--width-desktop-1250);
+    max-width: calc(100% - var(--spacing-05));
+    margin: auto;
+    margin-bottom: var(--spacing-03);
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-column-gap: var(--spacing-04);
+    align-items: stretch;
+    .OfferInfoContainer {
+        height: max-content;
+        grid-column: span 9;
+        .Slider {
+            padding: var(--spacing-05);
+            background-color: var(--background-02);
+            margin-top: var(--spacing-03);
+            border-radius: var(--spacing-02);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            .Photo > img {
+                width: max-content;
+                height: 500px;
+            }
+        }
+        .Description {
+            padding: var(--spacing-05);
+            background-color: var(--background-02);
+            margin-top: var(--spacing-03);
+            border-radius: var(--spacing-02);
+            .DateAndFavourite {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                & > span {
+                    color: var(--text-03);
+                    font-size: var(--font-size-02);
+                }
+            }
+            & > h1 {
+                font-size: var(--font-size-04);
+                margin-top: var(--spacing-05);
+            }
+            .PriceAndInfo {
+                margin-top: var(--spacing-05);
+                display: flex;
+                align-items: center;
+                gap: var(--spacing-04);
+                & > h1 {
+                    font-size: var(--font-size-04);
+                    font-weight: bold;
+                }
+                & > span {
+                    color: var(--positive-01);
+                }
+            }
+            .AdditionalInfo {
+                margin-top: var(--spacing-05);
+                display: flex;
+                flex-wrap: wrap;
+                gap: var(--spacing-04);
+                .singleLine {
+                    & > img,
+                    svg {
+                        color: var(--primary);
+                    }
+                }
+            }
+            .MainDescription {
+                margin-top: var(--spacing-05);
+            }
+            .DescriptionFooter {
+                margin-top: var(--spacing-05);
+                padding-top: var(--spacing-03);
+                border-top: 1px solid var(--disabled-01);
+                color: var(--text-03);
+                font-size: var(--font-size-03);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+    }
+    .MainUseInfoContainer {
+        height: max-content;
+        // grid-column: 360px;
+        position: sticky;
+        top: 80px;
+        .UserInfo {
+            padding: var(--spacing-05);
+            background-color: var(--background-02);
+            margin-top: var(--spacing-03);
+            border-radius: var(--spacing-02);
+            .MainUserInfo {
+                display: flex;
+                gap: var(--spacing-04);
+                cursor: pointer;
+                .UserAvatar {
+                    width: max-content;
+                    & > img {
+                        width: 60px;
+                        height: 60px;
+                    }
+                }
+                .NameAndRate {
+                    display: flex;
+                    flex-direction: column;
+                    gap: var(--spacing-02);
+                    & > div {
+                        display: flex;
+                        gap: var(--spacing-02);
+                        & > svg,
+                        img {
+                            color: var(--positive-01);
+                        }
+                        & > h3 {
+                            color: var(--interactive-01);
+                            cursor: pointer;
+                        }
+                        &:last-child {
+                            color: var(--text-03);
+                        }
+                    }
+                }
+            }
+            .ButtonsContainer {
+                margin-top: var(--spacing-06);
+                display: flex;
+                gap: var(--spacing-02);
+            }
+            .PhoneNumber {
+                margin-top: var(--spacing-06);
+            }
+        }
+        .Calendar {
+            grid-column: span 4;
+            padding: var(--spacing-05);
+            background-color: var(--background-02);
+            margin-top: var(--spacing-03);
+            border-radius: var(--spacing-02);
+        }
+        .MiniMapContainer {
+            grid-column: span 4;
+            padding: var(--spacing-05);
+            background-color: var(--background-02);
+            margin-top: var(--spacing-03);
+            border-radius: var(--spacing-02);
+            .LocationInfo {
+                color: var(--text-03);
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+            }
+            .MiniMap {
+                & > img {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+.unfilled {
+    & > path {
+        fill: none;
+        stroke: rgb(0, 0, 0);
+        stroke-width: 2rem;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .Container {
+        grid-template-columns: repeat(9, 1fr);
+        .OfferInfoContainer {
+            grid-column: span 9;
+        }
+        .MainUseInfoContainer {
+            grid-column: span 9;
+        }
+    }
+}
