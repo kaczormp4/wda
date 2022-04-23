@@ -86,7 +86,7 @@ function App() {
             {/* <Route path="/nowe-ogloszenie" element={<NewAd />} /> */}
             <Route path="/apitest" element={<APITest />} />
             <Route path="/components" element={<Showcase />} />
-            <Route path="/oferta">
+            <Route path="/ogloszenie" element={<Offer />}  >
               <Route path=":offerId" element={<Offer />} />
             </Route>
           </Routes>

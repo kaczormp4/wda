@@ -6,9 +6,6 @@
     display: grid;
     grid-template-columns: repeat(10, 1fr);
     grid-column-gap: var(--spacing-04);
-    -webkit-align-items: stretch;
-    -webkit-box-align: stretch;
-    -ms-flex-align: stretch;
     align-items: stretch;
     .OfferInfoContainer {
         height: max-content;

@@ -17,16 +17,21 @@ const Offer: FC<OfferProps> = () => {
     const navigate = useNavigate();
     let { offerId } = useParams();
 
-    useEffect(() => {
-        get('/Advertisements', `/${offerId}`)
-            .then((data) => {
-                setData(data)
-            });
-    }, [])
-
     const navigateTo = (route: string) => {
         navigate(`/${route}`);
     }
+
+    useEffect(() => {
+        if (offerId === undefined) navigateTo('notfound');
+
+        get('/Advertisements', `/${offerId}`)
+            .then((data) => {
+                setData(data)
+            }).catch((error) => {
+                navigateTo('notfound');
+            });
+    }, [])
+
     const addToFavourite = () => {
         setisFavourite(!isFavourite)
     }
