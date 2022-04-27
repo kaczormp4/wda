@@ -41,8 +41,6 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>((props, ref) => 
 
     useEffect(() => {
         if (isOpen) {
-            console.log(selectListRef.current);
-            console.log(isOutOfBounds(selectListRef.current));
             if (isOutOfBounds(selectListRef.current).includes(Directions.BOTTOM)) {
                 selectListRef.current.classList.add(`${cls}--top`);
             };
@@ -112,10 +110,6 @@ const defaultProps: SelectProps = {
     items: [],
     defaultSelected: null,
     onChange: () => { },
-    // onBlur: () => { },
-    // onClick: () => { },
-    // onFocus: () => { },
-    // onKeyDown: () => { },
     buttonProps: {}
 }
 
