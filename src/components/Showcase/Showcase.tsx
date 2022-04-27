@@ -18,9 +18,6 @@ const Showcase: FC<ShowcaseProps> = () =>
             <ButtonShowcase />
         </div>
         <div className={styles.componentWrapper}>
-            <SelectShowcase />
-        </div>
-        {/* <div className={styles.componentWrapper}>
             <FlyoutShowcase />
         </div>
         <div className={styles.componentWrapper}>
@@ -31,7 +28,10 @@ const Showcase: FC<ShowcaseProps> = () =>
         </div>
         <div className={styles.componentWrapper}>
             <CheckboxShowcase />
-        </div> */}
+        </div>
+        <div className={styles.componentWrapper}>
+            <SelectShowcase />
+        </div>
     </section>
 
 
