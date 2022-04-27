@@ -58,6 +58,14 @@
         }
     }
 
+    &--icon {
+        transition: transform var(--transition-short);
+        transform: rotate(0);
+        &--rotated {
+            transform: rotateX(180deg);
+        }
+    }
+
     // sizes and kinds
     &--sm {
         .#{$prefix}-select-list--item {

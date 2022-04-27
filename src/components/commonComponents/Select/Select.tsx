@@ -74,14 +74,19 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>((props, ref) => 
         [`${cls}--${size}`]: true,
     });
 
+    const chevronCls = classNames({
+        [`${cls}--icon`]: true,
+        [`${cls}--icon--rotated`]: isOpen,
+    });
+
     const isSelected = (itemId: string) => {
         return itemId === selectedItem.id;
     }
 
     return <div className={`${cls}--wrapper`} id={id}>
         <Button
-            disabled={disabled} skeleton={skeleton} kind={kind}
-            size={size} type={'button'} icon={<FontAwesomeIcon icon="chevron-down" />} iconDescription={'Otwórz'}
+            disabled={disabled} skeleton={skeleton} kind={kind} 
+            size={size} type={'button'} icon={<FontAwesomeIcon className={chevronCls} icon="chevron-down" />} iconDescription={'Otwórz'}
             onClick={openSelect} active={isOpen}
             {...buttonProps}
         >{selectedItem.text}</Button>
