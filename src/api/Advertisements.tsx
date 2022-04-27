@@ -7,7 +7,10 @@ interface IAdvertisement {
     title: string,
     shortDescription: string,
     description: string,
-    categoryId: number, 
+    categoryId: number,
+    minPrice: number,
+    maxPrice: number,
+    priceUnitId: number
 }
 
 class Advertisements {

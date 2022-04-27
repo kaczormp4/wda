@@ -14,6 +14,9 @@
         background-color: var(--background-02);
         margin-top: var(--spacing-03);
         border-radius: var(--spacing-02);
+        &:last-of-type {
+            margin-bottom: var(--spacing-05);
+        }
         .Section {
             &Header {
                 margin-bottom: var(--spacing-02);
@@ -23,12 +26,14 @@
                 font-size: var(--font-size-02);
             }
         }
+        
     }
     .SubmitSection {
         display: flex;
         justify-content: flex-end;
     }
-    .LongInput, .ShortDesc {
+    .LongInput,
+    .ShortDesc {
         width: 40rem;
         max-width: 100%;
     }
@@ -36,13 +41,35 @@
     .BtnLabel {
         margin-bottom: var(--spacing-01);
         font-size: var(--font-size-02);
+
+        &.Error {
+            color: var(--danger);
+            margin-top: var(--spacing-04);
+        }
+    }
+
+    .PriceInputs {
+        display: flex;
+        flex-wrap: wrap;
+        column-gap: var(--spacing-04);
+        :global {
+            .#{$prefix}-input--wrapper {
+
+            }
+        }
+    }
+
+    .PriceSection {
+        display: flex;
+        gap: 1rem;
     }
 }
 
 .CategoriesModal {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
     grid-gap: var(--spacing-03);
+    grid-template-columns: repeat(auto-fill, 16rem);
+    justify-content: center;
     :global {
         .#{$prefix}-btn {
             width: 100%;
@@ -87,7 +114,7 @@
         border: 0;
         overflow: hidden;
         position: relative;
-        &:hover  {
+        &:hover {
             color: var(--interactive-01);
         }
         &Img {
@@ -106,7 +133,8 @@
             gap: var(--spacing-03);
             background: var(--modal-overlay);
             backdrop-filter: blur(2px);
-            &:hover, &:focus-within {
+            &:hover,
+            &:focus-within {
                 opacity: 1;
             }
         }
