@@ -11,6 +11,8 @@ import Input from '../../components/commonComponents/Input/Input';
 import Select, { ISelectItem } from '../../components/commonComponents/Select/Select';
 import TextField from '../../components/commonComponents/TextField/TextField';
 import CategoriesModal from './CategoriesModal';
+import { useForm, Controller } from "react-hook-form";
+
 
 import styles from "./NewAd.module.scss";
 import PhotoAdder from './PhotoAdder';
@@ -39,21 +41,26 @@ const NewAd: FC = () => {
     // REST
     const [categories, setCategories] = useState<ICategory[]>(null);
     const [priceUnits, setPriceUnits] = useState<ISelectItem[]>(null);
+    // form validation
+    const { control, handleSubmit, formState: { errors, isValid }, formState, getValues } = useForm({
+        mode: 'all',
+        defaultValues: {
+            title: '',
+            shortDescription: '',
+            description: '',
+            categoryId: null,
+            priceUnitId: 0,
+            minPrice: null,
+            maxPrice: null
+        }
+    });
     // form
     const [photos, setPhotos] = useState<string[]>([]);
     const [selectedCategory, setSelectedCategory] = useState<ICategory>(null);
     const [categoryModalOpen, setCategoryModalOpen] = useState<boolean>(false);
-    const [priceType, setPriceType] = useState<string>(PRICE_TYPES.UNIT);
+    const [priceType, setPriceType] = useState<string | number>(PRICE_TYPES.UNIT);
     const formRef = useRef<HTMLFormElement>(null);
-    const [newAd, setNewAd] = useState<IAdvertisement>({
-        title: '',
-        shortDescription: '',
-        description: '',
-        categoryId: null,
-        priceUnitId: null,
-        minPrice: null,
-        maxPrice: null
-    });
+    const formValues = getValues();
 
     useEffect(() => {
         new Categories().get().then((cats) => {
@@ -61,7 +68,7 @@ const NewAd: FC = () => {
         });
         new PriceUnits().get().then((data) => {
             const firstItem = {
-                id: '0',
+                id: 0,
                 text: 'Za darmo'
             }
             const selectItems = data.map((v) => {
@@ -74,11 +81,8 @@ const NewAd: FC = () => {
         })
     }, []);
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        console.log('submit');
-
-        new Advertisements().post(newAd)
+    const onSubmit = (values: IAdvertisement) => {
+        new Advertisements().post(values)
             .then(adId => {
                 console.info(adId);
                 navigate(`/ogloszenie/${adId}`);
@@ -87,45 +91,65 @@ const NewAd: FC = () => {
             .catch(err => console.error(err));
     }
 
-    const modifyNewAd = (val: IAdvertisement) => {
-        setNewAd(val);
-    }
-
     const isPriceWrongErr = () => {
-        if (newAd.minPrice !== null && newAd.maxPrice !== null) {
-            if (newAd.minPrice > newAd.maxPrice) {
-                return PRICE_ERRORS.RANGE;
-            } else if ((newAd.minPrice < 0 || newAd.maxPrice < 0)) {
-                return PRICE_ERRORS.NEGATIVE;
+        const { minPrice, maxPrice } = getValues();
+        if (formValues.priceUnitId && priceType === PRICE_TYPES.RANGE) {
+            if (minPrice !== null && maxPrice !== null) {
+                if (minPrice > maxPrice) {
+                    return PRICE_ERRORS.RANGE;
+                } else if ((minPrice < 0 || maxPrice < 0)) {
+                    return PRICE_ERRORS.NEGATIVE;
+                } else {
+                    return null;
+                }
             } else {
-                return false;
+                return null;
             }
         } else {
-            return false;
+            return null;
         }
     }
 
-    const applyCategory = (category: ICategory) => {
-        setNewAd((ad) => {
-            const newAd = { ...ad, categoryId: category.id };
-            return newAd;
-        });
+    const applyCategory = (category: ICategory, field: { onChange: any, name?: "categoryId" }) => {
         setCategoryModalOpen(false);
+        field.onChange(category.id);
         setSelectedCategory(category);
     }
 
     return <>
         <main className={styles.NewAd}>
             <h1 className={styles.Header}>Dodaj ogłoszenie</h1>
-            <form ref={formRef}>
+            <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
                 <section className={styles.FormSection}>
-                    <Input className={styles.LongInput} kind="filled" type="text" label="Tytuł ogłoszenia" required errorText='Hej, twoje ogłoszenie musi posiadać tytuł'
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => { modifyNewAd({ ...newAd, title: e.target.value }) }} />
+                    <Controller
+                        name="title"
+                        control={control}
+                        rules={{ required: "Hej, musisz podać tytuł ogłoszenia", maxLength: { value: 120, message: "Tytuł nie może mieć więcej niż 120 znaków" } }}
+                        render={({ field }) => <Input className={styles.LongInput} kind="filled" type="text" label="Tytuł ogłoszenia"
+                            required errorText={errors.title?.message} error={Boolean(errors.title)}
+                            {...field}
+                        />}
+                    />
                     <p className={styles.BtnLabel}>Dodaj krótki opis ogłoszenia, będzie on widoczny z poziomu wyszukiwania ogłoszeń</p>
-                    <TextField id="newAdShortDesc" className={styles.ShortDesc} kind="filled" label="Krótki opis ogłoszenia" required errorText='Hej, twoje ogłoszenie musi posiadać opis' maxLength={1000}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => { modifyNewAd({ ...newAd, shortDescription: e.target.value }) }} />
-                    <Button type="button" size="lg" icon={<FontAwesomeIcon icon="chevron-right" />} onClick={() => setCategoryModalOpen(true)}>{selectedCategory ? selectedCategory.name : 'Wybierz kategorię'}</Button>
-                    {categoryModalOpen && <CategoriesModal categories={categories} onClose={() => setCategoryModalOpen(false)} onBtnClick={applyCategory} />}
+                    <Controller
+                        name="shortDescription"
+                        control={control}
+                        rules={{ required: "Hej, twoje ogłoszenie musi posiadać opis", maxLength: { value: 1000, message: "Krótki opis ogłoszenia może mieć maksymalnie 1000 znaków" } }}
+                        render={({ field }) => <TextField id="newAdShortDesc" className={styles.ShortDesc} kind="filled" label="Krótki opis ogłoszenia"
+                            required errorText={errors.shortDescription?.message} maxLength={1000} error={Boolean(errors.shortDescription)}
+                            {...field}
+                        />}
+                    />
+                    <Controller
+                        name="categoryId"
+                        control={control}
+                        rules={{ required: "Musisz wybrać kategorię ogłoszenia" }}
+                        render={({ field }) => <>
+                            <Button type="button" size="lg" icon={<FontAwesomeIcon icon="chevron-right" />} onClick={() => setCategoryModalOpen(true)}>{selectedCategory ? selectedCategory.name : 'Wybierz kategorię'}</Button>
+                            {categoryModalOpen && <CategoriesModal categories={categories} onClose={() => setCategoryModalOpen(false)} onBtnClick={(category: ICategory) => applyCategory(category, field)} />}
+                            {errors.categoryId && <p className={classNames(styles.BtnLabel, styles.Error)}>{errors.categoryId?.message}</p>}
+                        </>}
+                    />
                 </section>
                 <section className={styles.FormSection}>
                     <h2 className={styles.SectionHeader}>Dodaj zdjęcia</h2>
@@ -135,35 +159,77 @@ const NewAd: FC = () => {
                 <section className={styles.FormSection}>
                     <h2 className={styles.SectionHeader}>Dodaj opis ogłoszenia</h2>
                     <p className={styles.BtnLabel}>Opisz szczegółowo przedmiot ogłoszenia</p>
-                    <TextField id="newAdDesc" className={styles.ShortDesc} kind="filled" label="Opis ogłoszenia" required errorText='Hej, twoje ogłoszenie musi posiadać opis' maxLength={8000}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => { modifyNewAd({ ...newAd, description: e.target.value }) }} />
+                    <Controller
+                        name="description"
+                        control={control}
+                        rules={{ required: "Hej, twoje ogłoszenie musi posiadać opis", minLength: { value: 50, message: "Opis ogłoszenia może mieć co najmniej 50 znaków" }, maxLength: { value: 1000, message: "Opis ogłoszenia może mieć maksymalnie 8000 znaków" } }}
+                        render={({ field }) => <TextField id="newAdDesc" className={styles.ShortDesc} kind="filled" label="Opis ogłoszenia"
+                            required errorText={errors.description?.message} maxLength={8000} error={Boolean(errors.description)}
+                            {...field}
+                        />}
+                    />
                 </section>
-                {newAd.categoryId !== null &&
+                {formValues.categoryId !== null &&
                     <section className={styles.FormSection}>
                         <h2 className={styles.SectionHeader}>Określ cenę</h2>
                         <p className={styles.BtnLabel}>Dzięki określonej cenie pozwolisz dotrzeć klientom do swojej oferty </p>
                         <div className={styles.PriceSection}>
-                            <Select items={priceUnits} onChange={(e: ISelectItem) => { modifyNewAd({ ...newAd, priceUnitId: Number(e.id) }) }} />
-                            {newAd.priceUnitId ? <Select items={priceTypes} defaultSelected={priceType} onChange={(e: ISelectItem) => { setPriceType(e.id) }} /> : <></>}
+                            <Controller
+                                name="priceUnitId"
+                                control={control}
+                                defaultValue={Number(priceUnits[0].id)}
+                                rules={{ required: "Wybierz kategorię cenową ogłoszenia" }}
+                                render={({ field }) => <Select items={priceUnits}
+                                    error={Boolean(errors.description)} errorText={errors.priceUnitId?.message}
+                                    {...field} onChange={(e: ISelectItem) => field.onChange(e.id)}
+                                />}
+                            />
+                            {formValues.priceUnitId ? <Select items={priceTypes} defaultSelected={priceType} onChange={(e: ISelectItem) => { setPriceType(e.id) }} /> : <></>}
                         </div>
                         {isPriceWrongErr() && <p className={classNames(styles.BtnLabel, styles.Error)}>{isPriceWrongErr()}</p>}
-                        {(newAd.priceUnitId && priceType === PRICE_TYPES.UNIT
-                            && <Input kind="filled" type="number" label="Cena" required errorText='Podaj cenę' defaultValue={newAd.minPrice || ''}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => { modifyNewAd({ ...newAd, minPrice: Number(e.target.value), maxPrice: Number(e.target.value) }) }} />)}
-                        {(newAd.priceUnitId && priceType === PRICE_TYPES.RANGE
+                        {(formValues.priceUnitId !== 0 && priceType === PRICE_TYPES.UNIT
+                            && <Controller
+                                name="minPrice"
+                                control={control}
+                                shouldUnregister
+                                rules={{ required: "Podaj cenę", min: { value: 0, message: "Cena nie może być mniejsza niż 0" }, max: { value: 99999, message: "Cena nie może być większa niż 99999" } }}
+                                render={({ field }) => <Input kind="filled" type="number" label="Cena" required defaultValue={formValues.minPrice || ''}
+                                    error={errors.minPrice} errorText={errors.minPrice?.message}
+                                    {...field} onChange={(e: React.ChangeEvent<HTMLInputElement>) => field.onChange(Number(e.target.value))}
+                                />}
+                            />
+                        )}
+                        {(formValues.priceUnitId !== 0 && priceType === PRICE_TYPES.RANGE
                             && <>
                                 <div className={styles.PriceInputs}>
-                                    <Input kind="filled" type="number" label="Cena minimalna" required errorText={!isPriceWrongErr() && 'Podaj minimalną cenę'} defaultValue={newAd.minPrice || ''}
-                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => { modifyNewAd({ ...newAd, minPrice: Number(e.target.value) }) }} error={Boolean(isPriceWrongErr())} />
-                                    <Input kind="filled" type="number" label="Cena maksymalna" required errorText={!isPriceWrongErr() && 'Podaj minimalną cenę'} defaultValue={newAd.maxPrice || ''}
-                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => { modifyNewAd({ ...newAd, maxPrice: Number(e.target.value) }) }} error={Boolean(isPriceWrongErr())} />
+                                    <Controller
+                                        name="minPrice"
+                                        control={control}
+                                        shouldUnregister
+                                        rules={{ required: "Podaj cenę", min: { value: 0, message: "Cena nie może być mniejsza niż 0" }, max: { value: 99999, message: "Cena nie może być większa niż 99999" }, validate: isPriceWrongErr }}
+                                        render={({ field }) => <Input kind="filled" type="number" label="Cena minimalna" defaultValue={formValues.minPrice || ''}
+                                            required error={errors.minPrice} errorText={errors.minPrice?.type !== 'validate' && errors.minPrice?.message}
+                                            {...field} onChange={(e: React.ChangeEvent<HTMLInputElement>) => field.onChange(Number(e.target.value))}
+                                        />}
+                                    />
+                                    <Controller
+                                        name="maxPrice"
+                                        control={control}
+                                        shouldUnregister
+                                        rules={{ required: "Podaj cenę", min: { value: 0, message: "Cena nie może być mniejsza niż 0" }, max: { value: 99999, message: "Cena nie może być większa niż 99999" }, validate: isPriceWrongErr }}
+                                        render={({ field }) => <Input kind="filled" type="number" label="Cena maksymalna" defaultValue={formValues.maxPrice || ''}
+                                            required error={errors.maxPrice} errorText={errors.maxPrice?.type !== 'validate' && errors.maxPrice?.message}
+                                            {...field} onChange={(e: React.ChangeEvent<HTMLInputElement>) => field.onChange(Number(e.target.value))}
+                                        />}
+                                    />
                                 </div>
                             </>
                         )}
                     </section>
                 }
                 <section className={classNames(styles.FormSection, styles.SubmitSection)}>
-                    <Button type="submit" size="lg" kind="secondary" onClick={handleSubmit} value="Submit" disabled={true}>Dodaj ogłoszenie</Button>
+                    <Button type="submit" size="lg" kind="secondary" value="Submit" onClick={handleSubmit(onSubmit)} >Dodaj ogłoszenie</Button>
+                    {/* <button type="submit">asd</button> */}
                 </section>
             </form>
         </main>

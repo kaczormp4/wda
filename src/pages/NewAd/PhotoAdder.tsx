@@ -3,7 +3,7 @@ import { fill } from 'lodash';
 import React, { FC, useState } from 'react';
 import { toast } from 'react-toastify';
 import Button from '../../components/commonComponents/Button/Button';
-import { useDropzone, FileRejection, ErrorCode } from 'react-dropzone'
+import { useDropzone, FileRejection, ErrorCode } from 'react-dropzone';
 
 import styles from "./NewAd.module.scss";
 import classNames from 'classnames';

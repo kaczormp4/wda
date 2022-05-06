@@ -11,7 +11,7 @@ import { Directions, isOutOfBounds } from '../hooks/flyoutUtils';
 const cls = `${cssPrefix}-select`;
 
 export interface ISelectItem {
-    id: string,
+    id: string | number,
     text: string
 }
 
@@ -19,17 +19,19 @@ export type SelectProps = {
     className?: string,
     disabled?: boolean,
     skeleton?: boolean,
+    error?: boolean,
+    errorText?: string,
     kind?: 'primary' | 'secondary' | 'teritiary' | 'ghost',
     size?: 'sm' | 'md' | 'lg',
     items: ISelectItem[],
-    defaultSelected?: string,
+    defaultSelected?: string | number,
     onChange: Function,
     [rest: string]: any;
     buttonProps: ButtonProps;
 }
 
 const Select = React.forwardRef<HTMLButtonElement, SelectProps>((props, ref) => {
-    const { className, disabled, skeleton, kind, size, onBlur, onClick, onFocus, onKeyDown, children, items, buttonProps, onChange, defaultSelected, ...rest } = props;
+    const { className, disabled, skeleton, error, errorText, kind, size, onBlur, onClick, onFocus, onKeyDown, children, items, buttonProps, onChange, defaultSelected, ...rest } = props;
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [id] = useState<string>(uniqueId('select_'));
     const [selectedItem, setSelectedItem] = useState<ISelectItem>(items.find((v) => v.id === defaultSelected) || items[0]);
@@ -79,7 +81,7 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>((props, ref) => 
         [`${cls}--icon--rotated`]: isOpen,
     });
 
-    const isSelected = (itemId: string) => {
+    const isSelected = (itemId: ISelectItem["id"]) => {
         return itemId === selectedItem.id;
     }
 
@@ -90,11 +92,14 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>((props, ref) => 
             onClick={openSelect} active={isOpen}
             {...buttonProps}
         >{selectedItem.text}</Button>
+        {
+            error && <p className={`${cls}--errorText`}>{errorText}</p>
+        }
         {isOpen &&
             <FocusTrap active={isOpen} focusTrapOptions={{ allowOutsideClick: true, returnFocusOnDeactivate: false }}>
                 <div role="listbox" className={classes} ref={selectListRef}>
                     {items.map((v) => {
-                        return <button key={v.id} id={v.id} className={`${cls}-list--item`} title={v.text}
+                        return <button key={v.id} id={String(v.id)} className={`${cls}-list--item`} title={v.text}
                             role="option" aria-selected={isSelected(v.id)} tabIndex={0}
                             onClick={() => selectItem(v)}>
                                 <span>{v.text}</span>
@@ -110,6 +115,8 @@ const defaultProps: SelectProps = {
     className: '',
     disabled: false,
     skeleton: false,
+    error: false,
+    errorText: '',
     kind: 'ghost',
     size: 'md',
     items: [],

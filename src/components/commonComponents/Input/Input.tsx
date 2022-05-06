@@ -145,7 +145,7 @@ const Input: FC<InputProps> = (props) => {
             (isError || error) && <p className={`${cls}--errorText`} onClick={(e) => setActiveLabel()}>{errorText}</p>
         }
         {
-            !isError && helperText && <p className={`${cls}--helperText`} onClick={(e) => setActiveLabel()}>{helperText}</p>
+            (!isError && !error)  && helperText && <p className={`${cls}--helperText`} onClick={(e) => setActiveLabel()}>{helperText}</p>
         }
     </div>
 }

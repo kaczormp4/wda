@@ -8,8 +8,8 @@ interface IAdvertisement {
     shortDescription: string,
     description: string,
     categoryId: number,
-    minPrice: number,
-    maxPrice: number,
+    minPrice?: number,
+    maxPrice?: number,
     priceUnitId: number
 }
 

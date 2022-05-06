@@ -58,6 +58,12 @@
         }
     }
 
+    &--errorText {
+        padding-left: var(--spacing-04);
+        margin-top: var(--spacing-01);
+        color: var(--danger);
+    }
+
     &--icon {
         transition: transform var(--transition-short);
         transform: rotate(0);
