@@ -55,7 +55,7 @@ const TextField: FC<TextFieldProps> = (props) => {
         [`${cls}`]: true,
         [`${cls}--${kind}`]: true,
         [`${cls}--disabled`]: disabled || skeleton,
-        [`${cls}--error`]: isError && !isFocus,
+        [`${cls}--error`]: (isError && !isFocus) || error,
     });
     const labelClassnames = classNames(`${cls}--label`, {
         [`${cls}--active`]: isActive,
@@ -126,10 +126,10 @@ const TextField: FC<TextFieldProps> = (props) => {
             label && !skeleton && <label className={labelClassnames} onClick={(e) => setActiveLabel()}>{label} {required && <span>*</span>}</label>
         }
         {
-            isError && <p className={`${cls}--errorText`} onClick={(e) => setActiveLabel()}>{errorText}</p>
+            (isError || error) && <p className={`${cls}--errorText`} onClick={(e) => setActiveLabel()}>{errorText}</p>
         }
         {
-            !isError && maxLength && <p className={`${cls}--helperText`} onClick={(e) => setActiveLabel()}>{`${isText.length} / ${maxLength}`}</p>
+            (!isError && !error) && maxLength && <p className={`${cls}--helperText`} onClick={(e) => setActiveLabel()}>{`${isText.length} / ${maxLength}`}</p>
         }
     </div>
 }

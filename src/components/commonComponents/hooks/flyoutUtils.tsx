@@ -12,7 +12,7 @@ export enum FlyoutDirection {
     RightEnd = 'right-end',
 };
 
-const Directions = {
+export const Directions = {
     BOTTOM: 'bottom',
     TOP: 'top',
     LEFT: 'left',
@@ -25,7 +25,7 @@ const Directions = {
  * If element is not fully visible in viewport, it returns in which directions
  * element sticks out
  */
-function isOutOfBounds(el: HTMLElement): string[] {
+export function isOutOfBounds(el: HTMLElement): string[] {
     const rect = el.getBoundingClientRect();
 
     const T = rect.top >= 0 ? '' : 'top';
@@ -35,7 +35,7 @@ function isOutOfBounds(el: HTMLElement): string[] {
     return [T, R, B, L].filter(Boolean);
 }
 
-function getCoords(el: HTMLElement, useAbsolutePositioning = false) {
+export function getCoords(el: HTMLElement, useAbsolutePositioning = false) {
     const box = el.getBoundingClientRect();
 
     const body = document.body;

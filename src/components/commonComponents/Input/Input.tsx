@@ -56,7 +56,7 @@ const Input: FC<InputProps> = (props) => {
         [`${cls}--${kind}`]: true,
         [`${cls}--${size}`]: true,
         [`${cls}--disabled`]: disabled || skeleton,
-        [`${cls}--error`]: isError && !isFocus,
+        [`${cls}--error`]: (isError && !isFocus) || error,
         [`${cls}--date`]: type === 'date',
         [`${cls}--skeleton`]: skeleton,
     });
@@ -142,10 +142,10 @@ const Input: FC<InputProps> = (props) => {
             label && !skeleton && <label className={labelClassnames} onClick={(e) => setActiveLabel()}>{label} {required && <span>*</span>}</label>
         }
         {
-            isError && <p className={`${cls}--errorText`} onClick={(e) => setActiveLabel()}>{errorText}</p>
+            (isError || error) && <p className={`${cls}--errorText`} onClick={(e) => setActiveLabel()}>{errorText}</p>
         }
         {
-            !isError && helperText && <p className={`${cls}--helperText`} onClick={(e) => setActiveLabel()}>{helperText}</p>
+            (!isError && !error)  && helperText && <p className={`${cls}--helperText`} onClick={(e) => setActiveLabel()}>{helperText}</p>
         }
     </div>
 }

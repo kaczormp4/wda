@@ -1,0 +1,86 @@
+@import "../../../styles/variables.scss";
+
+.#{$prefix}-select {
+    $slct: &;
+    // position: relative;
+
+    &--wrapper {
+        position: relative;
+        display: inline-block;
+        padding-top: var(--spacing-02);
+        .#{$prefix}-btn {
+            border: 1px solid var(--text-02);
+            min-width: 10rem;
+        }
+    }
+    &-list {
+        position: absolute;
+        background: var(--background-02);
+        padding: var(--spacing-01) 0;
+        min-width: 100%;
+        box-sizing: border-box;
+        box-shadow: var(--box-shadow);
+        border-radius: 0.25rem;
+        z-index: 2;
+        animation: listEntrance var(--transition-short) forwards;
+        transform-origin: top;
+        &--item {
+            padding: var(--spacing-02) var(--spacing-03);
+            border: 0;
+            min-width: 100%;
+            background: initial;
+            width: max-content;
+            max-width: 14rem;
+            font-size: var(--font-size-03);
+            text-align: left;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            > span {
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+            &:hover,
+            &:focus {
+                background-color: var(--md-overlay);
+                outline: 0;
+            }
+        }
+
+        @keyframes listEntrance {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    }
+
+    &--errorText {
+        padding-left: var(--spacing-04);
+        margin-top: var(--spacing-01);
+        color: var(--danger);
+    }
+
+    &--icon {
+        transition: transform var(--transition-short);
+        transform: rotate(0);
+        &--rotated {
+            transform: rotateX(180deg);
+        }
+    }
+
+    // sizes and kinds
+    &--sm {
+        .#{$prefix}-select-list--item {
+            font-size: var(--font-size-02);
+            padding: var(--spacing-01) var(--spacing-02);
+        }
+    }
+
+    &--top {
+        bottom: 100%;
+    }
+}

@@ -5,6 +5,7 @@ import FlyoutShowcase from './FlyoutShowcase/FlyoutShowcase';
 import InputShowcase from './InputShowcase/InputShowcase';
 import CheckboxShowcase from './CheckboxShowcase/CheckboxShowcase';
 import TextFieldShowcase from './TextFieldShowcase/TextFieldShowcase';
+import SelectShowcase from './SelectShowcase/SelectShowcase';
 
 type ShowcaseProps = {
 }
@@ -27,6 +28,9 @@ const Showcase: FC<ShowcaseProps> = () =>
         </div>
         <div className={styles.componentWrapper}>
             <CheckboxShowcase />
+        </div>
+        <div className={styles.componentWrapper}>
+            <SelectShowcase />
         </div>
     </section>
 
