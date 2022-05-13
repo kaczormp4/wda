@@ -1,16 +1,23 @@
-import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import { FC, useEffect, useState } from 'react';
+import { Categories, ICategory } from '../../api/Categories';
+import { CategoriesView } from './CategoriesView/CategoriesView';
 
 import styles from "./Home.module.scss";
 
-class Home extends Component {
+export const Home: FC = () => {
 
-    render() {
-        return <>
-        <div className={styles.Home}>SSS</div>
-        <Link to="/asdsaaisouygdas">Go to not found</Link>
-    </>    
-}
-}
+    const [categories, setCategories] = useState<ICategory[]>(null);
 
-export default Home;
+    useEffect(() => {
+        new Categories().get().then((cats) => {
+            setCategories(cats);
+        });
+    }, []);
+
+    return <>
+        <div className={styles.Home}>
+            <div className={styles.Search}>Placeholder dla wyszukiwarki</div>
+            <CategoriesView categories={categories} />
+        </div>
+    </>
+}

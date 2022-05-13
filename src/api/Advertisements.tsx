@@ -6,6 +6,7 @@ interface IAdvertisement {
     id?: number,
     title: string,
     shortDescription: string,
+    priceUnit: string,
     description: string,
     categoryId: number,
     minPrice?: number,
@@ -15,8 +16,8 @@ interface IAdvertisement {
 
 class Advertisements {
 
-    public get(): Promise<IAdvertisement[]> {
-        return get(url);
+    public get(id: IAdvertisement['id']): Promise<IAdvertisement[]> {
+        return get(url, `?categoryId=${id}`);
     }
 
     public post(ad: IAdvertisement): Promise<number> {

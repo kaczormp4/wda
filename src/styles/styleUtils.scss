@@ -1,0 +1,5 @@
+@mixin centerSection($width, $verticalMargin: var(--spacing-04)) {
+    width: calc(100% - var(--spacing-05));
+    max-width: $width;
+    margin: $verticalMargin auto;
+}

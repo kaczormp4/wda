@@ -1,5 +1,5 @@
 import './App.scss';
-import Home from './pages/Home/Home';
+import { Home } from './pages/Home/Home';
 import NotFound from './pages/NotFound/NotFound';
 import Showcase from './components/Showcase/Showcase';
 import NewAd from './pages/NewAd/NewAd';
@@ -13,6 +13,7 @@ import Navbar from './components/Navbar/Navbar';
 import APITest from './api/APITest';
 import { ToastContainer } from 'react-toastify';
 import Offer from './pages/Offer/Offer';
+import { Offers } from './pages/Offers/Offers';
 
 
 // const routes = [
@@ -86,6 +87,9 @@ function App() {
             <Route path="/nowe-ogloszenie" element={<NewAd />} />
             <Route path="/apitest" element={<APITest />} />
             <Route path="/components" element={<Showcase />} />
+            <Route path="/ogloszenia" element={<Offers />}  >
+              <Route path=":id" element={<Offers />} />
+            </Route>
             <Route path="/ogloszenie" element={<Offer />}  >
               <Route path=":offerId" element={<Offer />} />
             </Route>
