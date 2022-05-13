@@ -39,7 +39,7 @@ const Slider: FC<SliderProps> = ({ photos, maxNumOfPhotos }) => {
                 </div>
                 <div className={styles.Circles}>
                     {
-                        photos.slice(0, maxNumOfPhotos).map((photo, index) =>
+                        photos.slice(0, maxNumOfPhotos).map((_, index) =>
                             <Button
                                 key={index}
                                 kind={index === isCurrentPhoto ? 'primary' : 'ghost'}
