@@ -1,3 +1,12 @@
+@import '.././../styles/styleUtils.scss';
 .Home {
-    background-color: red;
+    .Search {
+        @include centerSection(var(--width-desktop-1600));
+        background: var(--background-02);
+        border-radius: var(--spacing-02);
+        height: 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }

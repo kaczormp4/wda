@@ -6,6 +6,7 @@ import Button from '../../components/commonComponents/Button/Button';
 import { get } from '../../api/rest';
 import { useNavigate, useParams } from 'react-router-dom';
 import Slider from './Slider/Slider';
+import { getAdvPrice } from '../../utils/offersUtils';
 
 const arrayPhotos = [
     'https://ckis.tczew.pl/imagecache/max_1800/orkiestra-jubileusz.jpg',
@@ -46,19 +47,7 @@ const Offer: FC<OfferProps> = () => {
     const addToFavourite = () => {
         setisFavourite(!isFavourite)
     }
-    const PriceAndUnit = (d: any) => {
-        if (d === null || d === undefined) return;
-        const currency = 'zł';
-        let priceUnit = d.priceUnit === null ? '' : d.priceUnit
 
-        if (d.minPrice === d.maxPrice) {
-            return `${d.minPrice} ${currency} ${priceUnit}`
-        } else if (d.minPrice < d.maxPrice) {
-            return `od ${d.minPrice} do ${d.maxPrice} ${currency} ${priceUnit}`
-        } else if (d.minPrice === 0 && d.maxPrice === 0) {
-            return `za darmo`
-        }
-    }
     return <>
         <main className={styles.Container}>
             <div className={styles.OfferInfoContainer}>
@@ -88,7 +77,7 @@ const Offer: FC<OfferProps> = () => {
                     </div>
                     <h1>{data?.title}</h1>
                     <div className={styles.PriceAndInfo}>
-                        <h1>{PriceAndUnit(data)}</h1>
+                        <h1>{getAdvPrice(data)}</h1>
                         {/* <span>dostępne terminy NEW FUTURE</span> */}
                     </div>
                     <div className={styles.AdditionalInfo}>

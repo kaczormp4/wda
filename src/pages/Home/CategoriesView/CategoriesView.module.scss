@@ -1,0 +1,21 @@
+@import '../../../styles/styleUtils.scss';
+@import "../../../styles/variables.scss";
+
+.Categories {
+    @include centerSection(100%);
+    background: var(--background-02);
+    .CatList {
+        display: grid;
+        grid-gap: var(--spacing-03);
+        grid-template-columns: repeat(auto-fill, 16rem);
+        justify-content: center;
+        padding: var(--spacing-03) 0;
+        max-width: var(--width-desktop-1600);
+        margin: auto;
+        :global {
+            .#{$prefix}-btn {
+                width: 100%;
+            }
+        }
+    }
+}

@@ -48,6 +48,7 @@ const NewAd: FC = () => {
             title: '',
             shortDescription: '',
             description: '',
+            priceUnit: null,
             categoryId: null,
             priceUnitId: 0,
             minPrice: null,
@@ -82,6 +83,9 @@ const NewAd: FC = () => {
     }, []);
 
     const onSubmit = (values: IAdvertisement) => {
+        if(priceType === PRICE_TYPES.UNIT) {
+            values.maxPrice = values.minPrice;
+        }
         new Advertisements().post(values)
             .then(adId => {
                 console.info(adId);
@@ -162,7 +166,7 @@ const NewAd: FC = () => {
                     <Controller
                         name="description"
                         control={control}
-                        rules={{ required: "Hej, twoje ogłoszenie musi posiadać opis", minLength: { value: 50, message: "Opis ogłoszenia może mieć co najmniej 50 znaków" }, maxLength: { value: 1000, message: "Opis ogłoszenia może mieć maksymalnie 8000 znaków" } }}
+                        rules={{ required: "Hej, twoje ogłoszenie musi posiadać opis", minLength: { value: 50, message: "Opis ogłoszenia może mieć co najmniej 50 znaków" }, maxLength: { value: 8000, message: "Opis ogłoszenia może mieć maksymalnie 8000 znaków" } }}
                         render={({ field }) => <TextField id="newAdDesc" className={styles.ShortDesc} kind="filled" label="Opis ogłoszenia"
                             required errorText={errors.description?.message} maxLength={8000} error={Boolean(errors.description)}
                             {...field}
