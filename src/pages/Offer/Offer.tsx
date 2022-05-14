@@ -7,6 +7,7 @@ import { get } from '../../api/rest';
 import { useNavigate, useParams } from 'react-router-dom';
 import Slider from './Slider/Slider';
 import { getAdvPrice } from '../../utils/offersUtils';
+import Skeleton from './Skeleton/Skeleton';
 
 const arrayPhotos = [
     'https://ckis.tczew.pl/imagecache/max_1800/orkiestra-jubileusz.jpg',
@@ -46,6 +47,10 @@ const Offer: FC<OfferProps> = () => {
 
     const addToFavourite = () => {
         setisFavourite(!isFavourite)
+    }
+
+    if (data === null) {
+        return <Skeleton />
     }
 
     return <>
