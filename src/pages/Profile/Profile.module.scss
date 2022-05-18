@@ -1,0 +1,80 @@
+.Container {
+    width: var(--width-desktop-1250);
+    max-width: calc(100% - var(--spacing-05));
+    margin: auto;
+    margin-bottom: var(--spacing-03);
+    .MainProfileInfoContainer {
+        height: max-content;
+        padding: var(--spacing-05);
+        background-color: var(--background-02);
+        margin-top: var(--spacing-03);
+        border-radius: var(--spacing-02);
+        display: flex;
+        .UserAvatar {
+            margin-right: var(--spacing-05);
+            width: 150px;
+            height: 150px;
+            & > img {
+                width: 150px;
+                height: 150px;
+            }
+        }
+        .MainUserInfoContainer {
+            display: flex;
+            justify-content: space-between;
+            width: calc(100% - var(--spacing-05));
+            .UserNameAndRate {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                & > div {
+                    gap: var(--spacing-02);
+                    display: flex;
+                    align-items: center;
+                    & > svg,
+                    img {
+                        color: var(--positive-01);
+                    }
+                    & > h1 {
+                        font-size: var(--font-size-04);
+                    }
+                }
+            }
+            .Buttons {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                & button {
+                    width: 200px;
+                }
+            }
+        }
+    }
+    .SearchEngineAndFilter {
+        height: max-content;
+        padding: var(--spacing-05);
+        background-color: var(--background-02);
+        margin-top: var(--spacing-03);
+        border-radius: var(--spacing-02);
+    }
+    .ActiveOffers {
+        height: max-content;
+        padding: var(--spacing-05);
+        background-color: var(--background-02);
+        margin-top: var(--spacing-03);
+        border-radius: var(--spacing-02);
+    }
+}
+@media only screen and (max-width: 700px) {
+    .Container {
+        .MainProfileInfoContainer {
+            .MainUserInfoContainer {
+                flex-direction: column;
+                align-items: center;
+                .Buttons {
+                    margin-top: 2rem;
+                }
+            }
+        }
+    }
+}

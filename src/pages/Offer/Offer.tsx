@@ -19,13 +19,18 @@ const arrayPhotos = [
     'https://wedding.pl/lovestory/wp-content/uploads/menu-weselne-propozycje-dania-godziny.png',
     'https://wesele123.pl/_upload/blog/2016/12/12/min_1.jpg'
 ]
+type TOfferData = {
+    id: number;
+    title: string;
+    description: string;
+}
 type OfferProps = {
 }
 
 const Offer: FC<OfferProps> = () => {
-    const [data, setData] = useState(null);
-    const [isFavourite, setisFavourite] = useState(false);
-    const [isShowPhoneNumber, setShowPhoneNumber] = useState(false);
+    const [data, setData] = useState<TOfferData | null>(null);
+    const [isFavourite, setisFavourite] = useState<boolean>(false);
+    const [isShowPhoneNumber, setShowPhoneNumber] = useState<boolean>(false);
 
     const navigate = useNavigate();
     let { offerId } = useParams();
@@ -82,7 +87,7 @@ const Offer: FC<OfferProps> = () => {
                     </div>
                     <h1>{data?.title}</h1>
                     <div className={styles.PriceAndInfo}>
-                        <h1>{getAdvPrice(data)}</h1>
+                        <h1>{getAdvPrice(data as any)}</h1>
                         {/* <span>dostępne terminy NEW FUTURE</span> */}
                     </div>
                     <div className={styles.AdditionalInfo}>
@@ -123,7 +128,7 @@ const Offer: FC<OfferProps> = () => {
             </div>
             <div className={styles.MainUseInfoContainer}>
                 <section className={styles.UserInfo}>
-                    <div className={styles.MainUserInfo} onClick={() => navigateTo('user')}>
+                    <div className={styles.MainUserInfo} onClick={() => navigateTo(`profil/${22}`)}>
                         <div className={styles.UserAvatar}>
                             <img src={'https://mir-s3-cdn-cf.behance.net/project_modules/disp/ea7a3c32163929.567197ac70bda.png'} />
                         </div>

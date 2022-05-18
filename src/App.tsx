@@ -14,6 +14,7 @@ import APITest from './api/APITest';
 import { ToastContainer } from 'react-toastify';
 import Offer from './pages/Offer/Offer';
 import { Offers } from './pages/Offers/Offers';
+import Profile from './pages/Profile/Profile';
 
 
 // const routes = [
@@ -87,6 +88,9 @@ function App() {
             <Route path="/nowe-ogloszenie" element={<NewAd />} />
             <Route path="/apitest" element={<APITest />} />
             <Route path="/components" element={<Showcase />} />
+            <Route path="/profil" element={<Profile />} >
+              <Route path=":id" element={<Profile />} />
+            </Route>
             <Route path="/ogloszenia" element={<Offers />}  >
               <Route path=":id" element={<Offers />} />
             </Route>
