@@ -1,6 +1,5 @@
 
 import React, { FC } from 'react';
-import Button from './../../commonComponents/Button/Button';
 import Select from '../../commonComponents/Select/Select';
 import parentStyles from "./../Showcase.module.scss";
 import styles from "./SelectShowcase.module.scss";

@@ -1,0 +1,57 @@
+@import "../../../styles/variables.scss";
+
+// use .styledText class to render the output
+.styledText,
+.ql-editor {
+    h1 {
+        font-size: var(--font-size-04);
+    }
+    h2 {
+        font-size: 1.25rem;
+    }
+    p {
+        font-size: var(--font-size-03);
+    }
+    strong {
+        font-weight: bold;
+    }
+    em {
+        font-style: italic;
+    }
+    u {
+        text-decoration: underline;
+    }
+}
+.#{$prefix}-text-editor {
+    &--errorText {
+        position: absolute;
+        padding-left: var(--spacing-04);
+        margin-top: var(--spacing-01);
+        color: var(--danger);
+    }
+    &--helperText {
+        position: absolute;
+        padding-left: var(--spacing-04);
+        margin-top: var(--spacing-01);
+        color: var(--text-03);
+    }
+
+    .ql-snow {
+        &.ql-toolbar {
+            background: var(--background-01);
+            border-radius: var(--spacing-01) var(--spacing-01) 0 0;
+            border: 0;
+        }
+        &.ql-container {
+            background: var(--background-02);
+            border: 2px solid var(--background-01);
+            border-radius: 0 0 var(--spacing-01) var(--spacing-01);
+        }
+    }
+
+    &--error {
+        .ql-snow.ql-container {
+            border-color: var(--danger);
+        }
+    }
+}

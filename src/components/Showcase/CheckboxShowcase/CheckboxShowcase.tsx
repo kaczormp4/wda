@@ -4,9 +4,6 @@ import parentStyles from "./../Showcase.module.scss";
 import styles from "./CheckboxShowcase.module.scss";
 
 const CheckboxShowcase: FC = () => {
-
-
-    const [isChecked, setChecked] = useState<any>(false);
     return <div className={styles.Checkbox}>
         <h2>Checkbox</h2>
         <section className={parentStyles.section}>

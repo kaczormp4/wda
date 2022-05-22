@@ -100,7 +100,7 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>((props, ref) => 
                 <div role="listbox" className={classes} ref={selectListRef}>
                     {items.map((v) => {
                         return <button key={v.id} id={String(v.id)} className={`${cls}-list--item`} title={v.text}
-                            role="option" aria-selected={isSelected(v.id)} tabIndex={0}
+                            role="option" aria-selected={isSelected(v.id)} tabIndex={0} value={v.id}
                             onClick={() => selectItem(v)}>
                                 <span>{v.text}</span>
                                 {isSelected(v.id) ? <FontAwesomeIcon icon="check" /> : <></>}</button>

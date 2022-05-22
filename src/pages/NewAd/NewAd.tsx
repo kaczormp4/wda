@@ -1,11 +1,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import React, { FC, FormEvent, useEffect, useRef, useState, } from 'react';
+import React, { FC, useEffect, useRef, useState, } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Advertisements, IAdvertisement } from '../../api/Advertisements';
 import { Categories, ICategory } from '../../api/Categories';
-import { IPriceUnit, PriceUnits } from '../../api/PriceUnits';
+import { PriceUnits } from '../../api/PriceUnits';
 import Button from '../../components/commonComponents/Button/Button';
 import Input from '../../components/commonComponents/Input/Input';
 import Select, { ISelectItem } from '../../components/commonComponents/Select/Select';
@@ -16,6 +16,7 @@ import { useForm, Controller } from "react-hook-form";
 
 import styles from "./NewAd.module.scss";
 import PhotoAdder from './PhotoAdder';
+import { TextEditor } from '../../components/commonComponents/TextEditor/TextEditor';
 
 enum PRICE_TYPES {
     UNIT = "UNIT",
@@ -83,7 +84,7 @@ const NewAd: FC = () => {
     }, []);
 
     const onSubmit = (values: IAdvertisement) => {
-        if(priceType === PRICE_TYPES.UNIT) {
+        if (priceType === PRICE_TYPES.UNIT) {
             values.maxPrice = values.minPrice;
         }
         new Advertisements().post(values)
@@ -167,10 +168,7 @@ const NewAd: FC = () => {
                         name="description"
                         control={control}
                         rules={{ required: "Hej, twoje ogłoszenie musi posiadać opis", minLength: { value: 50, message: "Opis ogłoszenia może mieć co najmniej 50 znaków" }, maxLength: { value: 8000, message: "Opis ogłoszenia może mieć maksymalnie 8000 znaków" } }}
-                        render={({ field }) => <TextField id="newAdDesc" className={styles.ShortDesc} kind="filled" label="Opis ogłoszenia"
-                            required errorText={errors.description?.message} maxLength={8000} error={Boolean(errors.description)}
-                            {...field}
-                        />}
+                        render={({ field }) => <TextEditor className={styles.TextEditor}  label="Opis ogłoszenia" required errorText={errors.description?.message} maxLength={8000} error={Boolean(errors.description)} {...field} />}
                     />
                 </section>
                 {formValues.categoryId !== null &&
