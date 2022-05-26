@@ -39,7 +39,8 @@
         }
     }
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
         transform: scale(1.005);
     }
     .Image {
