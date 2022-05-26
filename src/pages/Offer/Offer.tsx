@@ -8,6 +8,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Slider from './Slider/Slider';
 import { getAdvPrice } from '../../utils/offersUtils';
 import Skeleton from './Skeleton/Skeleton';
+import classNames from 'classnames';
+import DOMPurify from 'dompurify';
 
 const arrayPhotos = [
     'https://ckis.tczew.pl/imagecache/max_1800/orkiestra-jubileusz.jpg',
@@ -117,8 +119,7 @@ const Offer: FC<OfferProps> = () => {
                         </div>
                     </div>
                     <h1>OPIS</h1>
-                    <div className={styles.MainDescription}>
-                        {data?.description}
+                    <div className={classNames(styles.MainDescription, 'styledText')} dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(data?.description)}}>
                     </div>
                     <div className={styles.DescriptionFooter}>
                         <div>ID: {data?.id}</div>

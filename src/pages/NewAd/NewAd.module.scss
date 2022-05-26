@@ -63,6 +63,10 @@
         display: flex;
         gap: 1rem;
     }
+
+    .TextEditor {
+        margin: var(--spacing-03) 0 var(--spacing-05);
+    }
 }
 
 .CategoriesModal {
