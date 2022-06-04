@@ -54,11 +54,13 @@
                     svg {
                         width: 60px;
                         height: 60px;
+                        border-radius: 60px;
                     }
                 }
                 .OneMessageInfoAndMessage {
                     width: 100%;
                     display: flex;
+                    justify-content: space-between;
                     .NameAndMessage {
                         padding: 0 var(--spacing-02);
                         box-sizing: border-box;
@@ -88,99 +90,31 @@
         background-color: var(--background-02);
         display: flex;
         flex-direction: column;
-        .ConversationInfoNavbar {
-            width: 100%;
-            background-color: var(--background-02);
-            padding: var(--spacing-02);
-            box-sizing: border-box;
-            top: 0;
-            display: flex;
-            box-shadow: 0 2px 4px 0 rgb(0 0 0 / 10%);
-            .ConversationInfoNavbarAvatar {
-                width: 50px;
-                height: 50px;
-                margin-right: var(--spacing-02);
-                & > img,
-                svg {
-                    width: 50px;
-                    height: 50px;
-                }
-            }
-            .ConversationInfoAndButtonsContainer {
-                width: 100%;
-                display: flex;
-                justify-content: space-between;
-                .ConversationInfoNameAndStatus {
-                    width: auto;
-                    & > h3 {
-                        color: var(--text-03);
-                    }
-                    & > div {
-                        margin-top: var(--spacing-02);
-                        display: flex;
-                        & > div {
-                            color: var(--positive-01);
-                        }
-                    }
-                }
-                .ConversationInfoButtons {
-                    width: auto;
-                    margin-right: var(--spacing-02);
-                    font-size: var(--font-size-04);
-                    display: flex;
-                    align-items: center;
-                    gap: 1rem;
-                    color: var(--text-03);
-                    & > svg {
-                        &:hover {
-                            color: var(--text-01);
-                            cursor: pointer;
-                        }
-                    }
-                }
-            }
-        }
-        .ConversationContent {
-            height: 100%;
-            overflow: auto;
-            overflow-x: none;
-            /// POPRAWIC TO !!!!!!!!!!!!!!
-            .ConwerstionOnelineContainerRight {
-                width: 100%;
-                display: flex;
-                justify-content: flex-end;
-                .ConwerstionOnelineContentRight {
-                    max-width: 50%;
-                    background-color: var(--primary);
-                    margin: var(--spacing-04);
-                    padding: var(--spacing-04);
-                    border-radius: var(--spacing-02) var(--spacing-02) 0 var(--spacing-02);
-                }
-            }
-            /// POPRAWIC TO !!!!!!!!!!!!!!
-            .ConwerstionOnelineContainerLeft {
-                width: 100%;
-                display: flex;
-                justify-content: flex-start;
-                .ConwerstionOnelineContentLeft {
-                    max-width: 50%;
-                    background-color: var(--primary);
-                    margin: var(--spacing-04);
-                    padding: var(--spacing-04);
-                    border-radius: var(--spacing-02) var(--spacing-02) var(--spacing-02) 0;
-                }
-            }
-        }
-        .WriteMessageContainer {
-            margin-top: auto;
-            width: 100%;
-            background-color: var(--background-02);
+    }
+}
 
-            .SearchEngineInput {
-                width: 96%;
-                max-width: 98%;
-                margin: 0 10px;
-            }
+@media only screen and (max-width: 1155px) {
+    .Container {
+        .UserAndMessgesContainer {
+            grid-column: span 4;
+        }
+        .ExactConversationContainer {
+            grid-column: span 6;
+        }
+    }
+}
+@media only screen and (max-width: 700px) {
+    .Container {
+        // margin: 0;
+        .UserAndMessgesContainer {
+            grid-column: span 10;
+        }
+        .ExactConversationContainer {
+            display: block;
+            position: fixed;
+            top: 0;
+            z-index: 3;
+            height: 85vh;
         }
     }
 }
