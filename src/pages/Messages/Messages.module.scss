@@ -1,0 +1,120 @@
+.Container {
+    width: var(--width-desktop-1250);
+    max-width: calc(100% - var(--spacing-05));
+    margin: auto;
+    margin-bottom: var(--spacing-03);
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-column-gap: var(--spacing-04);
+    align-items: stretch;
+    .UserAndMessgesContainer {
+        margin-top: var(--spacing-03);
+        grid-column: span 3;
+        min-height: 80vh; // temporary
+        max-height: 80vh; // temporary
+        overflow: auto;
+        overflow-x: none;
+        box-sizing: border-box;
+        padding-bottom: var(--spacing-03);
+        .SearchEngineAndFilter {
+            background-color: var(--background-01);
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            & > div {
+                width: 98%; //nadpisane style wrapera //temporary
+            }
+            .SearchEngineInput {
+                width: 98%;
+                max-width: 98%;
+            }
+        }
+        .AllMessages {
+            width: 98%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            .OneMessageContainer {
+                width: 100%;
+                padding: var(--spacing-02);
+                box-sizing: border-box;
+                background-color: var(--background-02);
+                box-shadow: 0 2px 4px 0 rgb(0 0 0 / 10%);
+                border-radius: var(--spacing-02);
+                display: flex;
+                transition-duration: 0.1s;
+
+                .OneMessageAvatar {
+                    width: 60px;
+                    height: 60px;
+                    & > img,
+                    svg {
+                        width: 60px;
+                        height: 60px;
+                        border-radius: 60px;
+                    }
+                }
+                .OneMessageInfoAndMessage {
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    .NameAndMessage {
+                        padding: 0 var(--spacing-02);
+                        box-sizing: border-box;
+                        overflow: hidden;
+                        h3 {
+                            color: var(--text-03);
+                            margin-bottom: var(--spacing-01);
+                        }
+                    }
+                    .DateAndInfo {
+                        color: var(--text-03);
+                    }
+                }
+                &:hover,
+                &:focus {
+                    transform: scale(1.005);
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+    .ExactConversationContainer {
+        margin-top: var(--spacing-03);
+        grid-column: span 7;
+        height: 80vh;
+        position: relative;
+        background-color: var(--background-02);
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media only screen and (max-width: 1155px) {
+    .Container {
+        .UserAndMessgesContainer {
+            grid-column: span 4;
+        }
+        .ExactConversationContainer {
+            grid-column: span 6;
+        }
+    }
+}
+@media only screen and (max-width: 700px) {
+    .Container {
+        // margin: 0;
+        .UserAndMessgesContainer {
+            grid-column: span 10;
+        }
+        .ExactConversationContainer {
+            display: block;
+            position: fixed;
+            top: 0;
+            z-index: 3;
+            height: 85vh;
+        }
+    }
+}

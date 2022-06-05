@@ -15,6 +15,7 @@ import { ToastContainer } from 'react-toastify';
 import Offer from './pages/Offer/Offer';
 import { Offers } from './pages/Offers/Offers';
 import Profile from './pages/Profile/Profile';
+import Messages from './pages/Messages/Messages';
 
 
 // const routes = [
@@ -85,6 +86,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/*" element={<NotFound />} />
+            <Route path="/wiadomosci" element={<Messages />} />
             <Route path="/nowe-ogloszenie" element={<NewAd />} />
             <Route path="/apitest" element={<APITest />} />
             <Route path="/components" element={<Showcase />} />

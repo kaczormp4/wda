@@ -6,7 +6,7 @@ import {
     faAdjust, faChevronRight, faImage,
     faTrash, faCircleCheck, faHeart,
     faFlag, faClone, faChevronDown,
-    faCheck, faCircleDot, faChevronLeft
+    faCheck, faCircleDot, faChevronLeft, faTrashCan
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -14,5 +14,5 @@ library.add(
     faHouse, faUser, faXmark, faArrowRightFromBracket,
     faAdjust, faChevronRight, faImage, faTrash, faCircleCheck,
     faHeart, faFlag, faClone, faChevronDown, faCheck,
-    faCircleDot, faChevronLeft
+    faCircleDot, faChevronLeft, faTrashCan
 );
