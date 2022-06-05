@@ -20,7 +20,7 @@ export const OfferCard: FC<P> = (props) => {
     if (skeleton) return skeletonCard();
 
     return <Link className={s.OfferCard} to={`/ogloszenie/${offer.id}`}>
-        <img className={s.Image} alt={`Przedmiot ogłoszenia ${offer.title}`} src={`https://i.4wzk.pl/gallery/617/46487_34.jpg`} />
+        <img className={s.Image} alt={`Przedmiot ogłoszenia ${offer.title}`} src={offer.image ? offer.image.imageUrl : ''} />
         <div className={s.InfoWrap}>
             <div>
                 <h6 className={s.Title}>{offer.title}</h6>

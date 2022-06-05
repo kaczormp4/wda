@@ -8,6 +8,7 @@ axios.interceptors.request.use(
     function (req) {
         const token = "no-token";
         req.headers['Authorization'] = `Bearer ${token}`;
+        req.headers['Content-Type'] = `multipart/form-data; boundary=--14737809831466499882746641449`;
         return req;
     },
     function (error) {

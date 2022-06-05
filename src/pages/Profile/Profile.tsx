@@ -23,7 +23,7 @@ const Profile: FC<ProfileProps> = () => {
 
     useEffect(() => {
         // if (id === undefined) navigateTo('notfound');
-        new AdvAPI().get(31).then((off) => {
+        new AdvAPI().getByCategory(31).then((off) => {
             setOffers(off);
             console.log(offers);
         });

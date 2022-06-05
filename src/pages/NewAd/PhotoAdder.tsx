@@ -16,7 +16,8 @@ type P = {
 }
 
 interface Photo {
-    blob: string
+    fakeUrl: string,
+    data: File
 }
 
 
@@ -55,7 +56,8 @@ const PhotoAdder: FC<P> = (props) => {
         addFiles(files);
     }
 
-    const addFiles = (files: FileList | File[]) => {
+
+    const addFiles = async (files: FileList | File[]) => {
         const maxFiles = props.count - photos.filter((v) => v).length;
         console.log(files.length, maxFiles);
         if (files) {
@@ -75,7 +77,8 @@ const PhotoAdder: FC<P> = (props) => {
                         const newPhotos = [...oldPhotos];
                         const firstEmpty = newPhotos.findIndex((v) => !v);
                         newPhotos[firstEmpty] = {
-                            blob: x
+                            fakeUrl: x,
+                            data: file
                         }
                         props.onChange([...newPhotos]);
                         return [...newPhotos];
@@ -113,7 +116,7 @@ const PhotoAdder: FC<P> = (props) => {
                     <div className={styles.PhotoOverlay}>
                         <Button iconOnly danger icon={<FontAwesomeIcon icon="trash" />} onClick={() => removePhoto(i)}>Usuń</Button>
                     </div>
-                    <img src={photo.blob} className={styles.PhotoImg} alt={`Zdjęcie ogłoszenia ${i}`} />
+                    <img src={photo.fakeUrl} className={styles.PhotoImg} alt={`Zdjęcie ogłoszenia ${i}`} />
                 </div>
             }
 
