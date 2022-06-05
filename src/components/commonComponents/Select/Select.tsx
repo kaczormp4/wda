@@ -12,6 +12,7 @@ const cls = `${cssPrefix}-select`;
 
 export interface ISelectItem {
     id: string | number,
+    value: any,
     text: string
 }
 
@@ -85,30 +86,34 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>((props, ref) => 
         return itemId === selectedItem.id;
     }
 
-    return <div className={`${cls}--wrapper`} id={id}>
-        <Button
-            disabled={disabled} skeleton={skeleton} kind={kind} 
-            size={size} type={'button'} icon={<FontAwesomeIcon className={chevronCls} icon="chevron-down" />} iconDescription={'Otwórz'}
-            onClick={openSelect} active={isOpen}
-            {...buttonProps}
-        >{selectedItem.text}</Button>
-        {
-            error && <p className={`${cls}--errorText`}>{errorText}</p>
-        }
-        {isOpen &&
-            <FocusTrap active={isOpen} focusTrapOptions={{ allowOutsideClick: true, returnFocusOnDeactivate: false }}>
-                <div role="listbox" className={classes} ref={selectListRef}>
-                    {items.map((v) => {
-                        return <button key={v.id} id={String(v.id)} className={`${cls}-list--item`} title={v.text}
-                            role="option" aria-selected={isSelected(v.id)} tabIndex={0}
-                            onClick={() => selectItem(v)}>
+    return <>
+        <div className={`${cls}--wrapper`} >
+            <div id={id}>
+                <Button
+                    disabled={disabled} skeleton={skeleton} kind={kind}
+                    size={size} type={'button'} icon={<FontAwesomeIcon className={chevronCls} icon="chevron-down" />} iconDescription={'Otwórz'}
+                    onClick={openSelect} active={isOpen}
+                    {...buttonProps}
+                >{selectedItem.text}</Button>
+            </div>
+            {isOpen &&
+                <FocusTrap active={isOpen} focusTrapOptions={{ allowOutsideClick: true, returnFocusOnDeactivate: false }}>
+                    <div role="listbox" className={classes} ref={selectListRef}>
+                        {items.map((v) => {
+                            return <button key={v.id} id={String(v.id)} className={`${cls}-list--item`} title={v.text}
+                                role="option" aria-selected={isSelected(v.id)} tabIndex={0} value={v.id}
+                                onClick={() => selectItem(v)}>
                                 <span>{v.text}</span>
                                 {isSelected(v.id) ? <FontAwesomeIcon icon="check" /> : <></>}</button>
-                    })}
-                </div>
-            </FocusTrap>
-        }
-    </div>
+                        })}
+                    </div>
+                </FocusTrap>
+            }
+            {
+                error && <p className={`${cls}--errorText`}>{errorText}</p>
+            }
+        </div>
+    </>
 });
 
 const defaultProps: SelectProps = {

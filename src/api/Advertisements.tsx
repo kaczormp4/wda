@@ -1,22 +1,33 @@
 import { get, post } from "./rest";
 
-const url = '/Advertisements';
+const url = '/Offers';
+
+interface IImage {
+    id?: number, 
+    imageUrl: string
+} 
 
 interface IAdvertisement {
-    id?: number,
+    id?: number | string,
     title: string,
     shortDescription: string,
     priceUnit: string,
     description: string,
     categoryId: number,
-    minPrice?: number,
-    maxPrice?: number,
-    priceUnitId: number
+    minPrice: number,
+    maxPrice: number,
+    priceUnitId: number,
+    image?: IImage
+    images?: Blob[] | IImage[]
 }
 
 class Advertisements {
 
-    public get(id: IAdvertisement['id']): Promise<IAdvertisement[]> {
+    public get(id: IAdvertisement['id']): Promise<IAdvertisement> {
+        return get(url, `/${id}`);
+    }
+    
+    public getByCategory(id: IAdvertisement['id']): Promise<IAdvertisement[]> {
         return get(url, `?categoryId=${id}`);
     }
 
@@ -26,6 +37,7 @@ class Advertisements {
 }
 
 export {
+    IImage,
     IAdvertisement,
     Advertisements,
 }
