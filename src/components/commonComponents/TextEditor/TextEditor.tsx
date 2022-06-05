@@ -43,7 +43,6 @@ export function TextEditor(props: any) {
     const [isError, setError] = useState<boolean>(error);
     const editorRef = useRef(null);
     useEffect(() => {
-        console.log(editorRef);
         onChange(value);
     }, [value]);
 

@@ -30,9 +30,11 @@ enum PRICE_ERRORS {
 
 const priceTypes: ISelectItem[] = [{
     id: PRICE_TYPES.UNIT,
+    value: PRICE_TYPES.UNIT,
     text: 'Cena jednostkowa'
 }, {
     id: PRICE_TYPES.RANGE,
+    value: PRICE_TYPES.RANGE,
     text: 'Zakres cen'
 }]
 
@@ -51,16 +53,16 @@ const NewAd: FC = () => {
             description: '',
             priceUnit: null,
             categoryId: null,
-            priceUnitId: 0,
-            minPrice: null,
-            maxPrice: null
+            priceUnitId: null,
+            minPrice: 0,
+            maxPrice: 0,
+            images: []
         }
     });
     // form
-    const [photos, setPhotos] = useState<string[]>([]);
     const [selectedCategory, setSelectedCategory] = useState<ICategory>(null);
     const [categoryModalOpen, setCategoryModalOpen] = useState<boolean>(false);
-    const [priceType, setPriceType] = useState<string | number>(PRICE_TYPES.UNIT);
+    const [priceType, setPriceType] = useState<string | number>(null);
     const formRef = useRef<HTMLFormElement>(null);
     const formValues = getValues();
 
@@ -69,13 +71,15 @@ const NewAd: FC = () => {
             setCategories(cats);
         });
         new PriceUnits().get().then((data) => {
-            const firstItem = {
+            const firstItem : ISelectItem = {
                 id: 0,
+                value: null,
                 text: 'Za darmo'
             }
             const selectItems = data.map((v) => {
                 return {
                     id: v.id.toString(),
+                    value: v.id.toString(),
                     text: v.unit
                 }
             });
@@ -84,10 +88,20 @@ const NewAd: FC = () => {
     }, []);
 
     const onSubmit = (values: IAdvertisement) => {
+        const formData = new FormData();
         if (priceType === PRICE_TYPES.UNIT) {
             values.maxPrice = values.minPrice;
         }
-        new Advertisements().post(values)
+        Object.entries(values).forEach((v) => {
+            formData.set(v[0], v[1] || '');
+        })
+        if (values.images) {
+            for (const img of values.images) {
+                formData.append('images', img as Blob);
+            }
+        }
+        // sadly, formData cannot be string typed
+        new Advertisements().post(formData as any)
             .then(adId => {
                 console.info(adId);
                 navigate(`/ogloszenie/${adId}`);
@@ -119,6 +133,11 @@ const NewAd: FC = () => {
         setCategoryModalOpen(false);
         field.onChange(category.id);
         setSelectedCategory(category);
+    }
+
+    const setPhotos = (photos: { data: File }[], field: { onChange: any, name?: "images" }) => {
+        const data = photos.filter((v) => v);
+        field.onChange(data.map((v: { data: File }) => v.data));
     }
 
     return <>
@@ -159,7 +178,13 @@ const NewAd: FC = () => {
                 <section className={styles.FormSection}>
                     <h2 className={styles.SectionHeader}>Dodaj zdjęcia</h2>
                     <p className={styles.SectionDesc}>Dodaj zdjęcia jak najlepiej oddające przedmiot ogłoszenia. Pierwsze zdjęcie będzie miniaturą ogłoszenia.</p>
-                    <PhotoAdder count={5} onChange={(photos: string[]) => { setPhotos(photos) }} />
+                    <Controller
+                        name="images"
+                        control={control}
+                        render={({ field }) => <>
+                            <PhotoAdder count={3} {...field} onChange={(photos: { data: File }[]) => { setPhotos(photos, field) }} />
+                        </>}
+                    />
                 </section>
                 <section className={styles.FormSection}>
                     <h2 className={styles.SectionHeader}>Dodaj opis ogłoszenia</h2>
@@ -168,7 +193,7 @@ const NewAd: FC = () => {
                         name="description"
                         control={control}
                         rules={{ required: "Hej, twoje ogłoszenie musi posiadać opis", minLength: { value: 50, message: "Opis ogłoszenia może mieć co najmniej 50 znaków" }, maxLength: { value: 8000, message: "Opis ogłoszenia może mieć maksymalnie 8000 znaków" } }}
-                        render={({ field }) => <TextEditor className={styles.TextEditor}  label="Opis ogłoszenia" required errorText={errors.description?.message} maxLength={8000} error={Boolean(errors.description)} {...field} />}
+                        render={({ field }) => <TextEditor className={styles.TextEditor} label="Opis ogłoszenia" required errorText={errors.description?.message} maxLength={8000} error={Boolean(errors.description)} {...field} />}
                     />
                 </section>
                 {formValues.categoryId !== null &&
@@ -180,28 +205,27 @@ const NewAd: FC = () => {
                                 name="priceUnitId"
                                 control={control}
                                 defaultValue={Number(priceUnits[0].id)}
-                                rules={{ required: "Wybierz kategorię cenową ogłoszenia" }}
                                 render={({ field }) => <Select items={priceUnits}
-                                    error={Boolean(errors.description)} errorText={errors.priceUnitId?.message}
-                                    {...field} onChange={(e: ISelectItem) => field.onChange(e.id)}
+                                    error={Boolean(errors.priceUnitId)} errorText={errors.priceUnitId?.message}
+                                    {...field} onChange={(e: ISelectItem) => field.onChange(e.value)}
                                 />}
                             />
                             {formValues.priceUnitId ? <Select items={priceTypes} defaultSelected={priceType} onChange={(e: ISelectItem) => { setPriceType(e.id) }} /> : <></>}
                         </div>
                         {isPriceWrongErr() && <p className={classNames(styles.BtnLabel, styles.Error)}>{isPriceWrongErr()}</p>}
-                        {(formValues.priceUnitId !== 0 && priceType === PRICE_TYPES.UNIT
+                        {(!formValues.priceUnitId && priceType === PRICE_TYPES.UNIT
                             && <Controller
                                 name="minPrice"
                                 control={control}
                                 shouldUnregister
                                 rules={{ required: "Podaj cenę", min: { value: 0, message: "Cena nie może być mniejsza niż 0" }, max: { value: 99999, message: "Cena nie może być większa niż 99999" } }}
                                 render={({ field }) => <Input kind="filled" type="number" label="Cena" required defaultValue={formValues.minPrice || ''}
-                                    error={errors.minPrice} errorText={errors.minPrice?.message}
+                                    error={Boolean(errors.minPrice)} errorText={errors.minPrice?.message}
                                     {...field} onChange={(e: React.ChangeEvent<HTMLInputElement>) => field.onChange(Number(e.target.value))}
                                 />}
                             />
                         )}
-                        {(formValues.priceUnitId !== 0 && priceType === PRICE_TYPES.RANGE
+                        {(!formValues.priceUnitId && priceType === PRICE_TYPES.RANGE
                             && <>
                                 <div className={styles.PriceInputs}>
                                     <Controller
@@ -210,7 +234,7 @@ const NewAd: FC = () => {
                                         shouldUnregister
                                         rules={{ required: "Podaj cenę", min: { value: 0, message: "Cena nie może być mniejsza niż 0" }, max: { value: 99999, message: "Cena nie może być większa niż 99999" }, validate: isPriceWrongErr }}
                                         render={({ field }) => <Input kind="filled" type="number" label="Cena minimalna" defaultValue={formValues.minPrice || ''}
-                                            required error={errors.minPrice} errorText={errors.minPrice?.type !== 'validate' && errors.minPrice?.message}
+                                            required error={Boolean(errors.minPrice)} errorText={errors.minPrice?.type !== 'validate' && errors.minPrice?.message}
                                             {...field} onChange={(e: React.ChangeEvent<HTMLInputElement>) => field.onChange(Number(e.target.value))}
                                         />}
                                     />
@@ -220,7 +244,7 @@ const NewAd: FC = () => {
                                         shouldUnregister
                                         rules={{ required: "Podaj cenę", min: { value: 0, message: "Cena nie może być mniejsza niż 0" }, max: { value: 99999, message: "Cena nie może być większa niż 99999" }, validate: isPriceWrongErr }}
                                         render={({ field }) => <Input kind="filled" type="number" label="Cena maksymalna" defaultValue={formValues.maxPrice || ''}
-                                            required error={errors.maxPrice} errorText={errors.maxPrice?.type !== 'validate' && errors.maxPrice?.message}
+                                            required error={Boolean(errors.maxPrice)} errorText={errors.maxPrice?.type !== 'validate' && errors.maxPrice?.message}
                                             {...field} onChange={(e: React.ChangeEvent<HTMLInputElement>) => field.onChange(Number(e.target.value))}
                                         />}
                                     />

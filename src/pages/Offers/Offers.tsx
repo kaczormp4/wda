@@ -20,7 +20,7 @@ export const Offers: FC = () => {
     const navigate = useNavigate();
     useEffect(() => {
         if (id === undefined) navigate('notfound');
-        new AdvAPI().get(categoryId).then((off) => {
+        new AdvAPI().getByCategory(categoryId).then((off) => {
             setOffers(off);
         });
         new Categories().get().then((cats) => {

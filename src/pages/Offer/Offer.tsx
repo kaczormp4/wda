@@ -10,6 +10,7 @@ import { getAdvPrice } from '../../utils/offersUtils';
 import Skeleton from './Skeleton/Skeleton';
 import classNames from 'classnames';
 import DOMPurify from 'dompurify';
+import { Advertisements, IAdvertisement, IImage } from '../../api/Advertisements';
 
 const arrayPhotos = [
     'https://ckis.tczew.pl/imagecache/max_1800/orkiestra-jubileusz.jpg',
@@ -21,16 +22,12 @@ const arrayPhotos = [
     'https://wedding.pl/lovestory/wp-content/uploads/menu-weselne-propozycje-dania-godziny.png',
     'https://wesele123.pl/_upload/blog/2016/12/12/min_1.jpg'
 ]
-type TOfferData = {
-    id: number;
-    title: string;
-    description: string;
-}
+
 type OfferProps = {
 }
 
 const Offer: FC<OfferProps> = () => {
-    const [data, setData] = useState<TOfferData | null>(null);
+    const [data, setData] = useState<IAdvertisement | null>(null);
     const [isFavourite, setisFavourite] = useState<boolean>(false);
     const [isShowPhoneNumber, setShowPhoneNumber] = useState<boolean>(false);
 
@@ -44,9 +41,10 @@ const Offer: FC<OfferProps> = () => {
     useEffect(() => {
         if (offerId === undefined) navigateTo('notfound');
 
-        get('/Advertisements', `/${offerId}`)
+        new Advertisements().get(offerId)
             .then((data) => {
                 setData(data)
+
             }).catch((error) => {
                 navigateTo('notfound');
             });
@@ -64,7 +62,9 @@ const Offer: FC<OfferProps> = () => {
         <main className={styles.Container}>
             <div className={styles.OfferInfoContainer}>
                 <section className={styles.Slider}>
-                    <Slider photos={arrayPhotos} maxNumOfPhotos={3} />
+                    {data.images &&
+                        <Slider photos={data.images as IImage[]} maxNumOfPhotos={3} />
+                    }
                 </section>
                 <section className={styles.Description}>
                     <div className={styles.DateAndFavourite}>
@@ -119,7 +119,7 @@ const Offer: FC<OfferProps> = () => {
                         </div>
                     </div>
                     <h1>OPIS</h1>
-                    <div className={classNames(styles.MainDescription, 'styledText')} dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(data?.description)}}>
+                    <div className={classNames(styles.MainDescription, 'styledText')} dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data?.description) }}>
                     </div>
                     <div className={styles.DescriptionFooter}>
                         <div>ID: {data?.id}</div>
