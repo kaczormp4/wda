@@ -62,16 +62,17 @@ const NewAd: FC = () => {
     // form
     const [selectedCategory, setSelectedCategory] = useState<ICategory>(null);
     const [categoryModalOpen, setCategoryModalOpen] = useState<boolean>(false);
-    const [priceType, setPriceType] = useState<string | number>(null);
+    const [priceType, setPriceType] = useState<string | number>();
     const formRef = useRef<HTMLFormElement>(null);
     const formValues = getValues();
+    console.log({formState, formValues});
 
     useEffect(() => {
         new Categories().get().then((cats) => {
             setCategories(cats);
         });
         new PriceUnits().get().then((data) => {
-            const firstItem : ISelectItem = {
+            const firstItem: ISelectItem = {
                 id: 0,
                 value: null,
                 text: 'Za darmo'
@@ -207,13 +208,16 @@ const NewAd: FC = () => {
                                 defaultValue={Number(priceUnits[0].id)}
                                 render={({ field }) => <Select items={priceUnits}
                                     error={Boolean(errors.priceUnitId)} errorText={errors.priceUnitId?.message}
-                                    {...field} onChange={(e: ISelectItem) => field.onChange(e.value)}
+                                    {...field} onChange={(e: ISelectItem) => {
+                                        field.onChange(e.value)
+                                        setPriceType(!e.value ? null : priceType ? priceType : priceTypes[0].value);
+                                    }}
                                 />}
                             />
-                            {formValues.priceUnitId ? <Select items={priceTypes} defaultSelected={priceType} onChange={(e: ISelectItem) => { setPriceType(e.id) }} /> : <></>}
+                            {formValues.priceUnitId ? <Select items={priceTypes} defaultSelected={priceType} onChange={(e: ISelectItem) => { setPriceType(e.value) }} /> : <></>}
                         </div>
                         {isPriceWrongErr() && <p className={classNames(styles.BtnLabel, styles.Error)}>{isPriceWrongErr()}</p>}
-                        {(!formValues.priceUnitId && priceType === PRICE_TYPES.UNIT
+                        {(priceType === PRICE_TYPES.UNIT
                             && <Controller
                                 name="minPrice"
                                 control={control}
@@ -225,7 +229,7 @@ const NewAd: FC = () => {
                                 />}
                             />
                         )}
-                        {(!formValues.priceUnitId && priceType === PRICE_TYPES.RANGE
+                        {(priceType === PRICE_TYPES.RANGE
                             && <>
                                 <div className={styles.PriceInputs}>
                                     <Controller
