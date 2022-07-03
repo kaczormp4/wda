@@ -7,7 +7,8 @@ const apiURL = 'https://weddings.azurewebsites.net/api';
 
 // cache setup
 const cache = setupCache({
-    maxAge: 3 * 60 * 1000 // 3min
+    maxAge: 3 * 60 * 1000, // 3min
+    clearOnError: true
 });
 
 const api = axios.create({

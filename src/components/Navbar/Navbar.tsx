@@ -8,7 +8,6 @@ import { Portal } from '../Portal/Portal';
 import styles from "./Navbar.module.scss";
 import Flyout from '../commonComponents/Flyout/Flyout';
 import AuthenticationContext from '../../api/Authentication/AuthenticationContext';
-import { MSALInstance } from '../../api/Authentication/MSALConfig';
 
 interface NavbarProps {
     flyoutMenuList: {

@@ -17,6 +17,7 @@ interface IAdvertisement {
     minPrice: number,
     maxPrice: number,
     priceUnitId: number,
+    selectedFilterValueIds?: number[],
     image?: IImage
     images?: Blob[] | IImage[]
 }

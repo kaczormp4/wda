@@ -4,7 +4,7 @@ import React, { FC, useEffect, useRef, useState, } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Advertisements, IAdvertisement } from '../../api/Advertisements';
-import { Categories, ICategory } from '../../api/Categories';
+import { Categories, FilterType, ICategory, ICategoryFilter } from '../../api/Categories';
 import { PriceUnits } from '../../api/PriceUnits';
 import Button from '../../components/commonComponents/Button/Button';
 import Input from '../../components/commonComponents/Input/Input';
@@ -56,11 +56,12 @@ const NewAd: FC = () => {
             priceUnitId: null,
             minPrice: 0,
             maxPrice: 0,
+            selectedFilterValueIds: [],
             images: []
         }
     });
     // form
-    const [selectedCategory, setSelectedCategory] = useState<ICategory>(null);
+    const [selectedCategory, setSelectedCategory] = useState<ICategoryFilter>(null);
     const [categoryModalOpen, setCategoryModalOpen] = useState<boolean>(false);
     const [priceType, setPriceType] = useState<string | number>();
     const formRef = useRef<HTMLFormElement>(null);
@@ -133,12 +134,118 @@ const NewAd: FC = () => {
     const applyCategory = (category: ICategory, field: { onChange: any, name?: "categoryId" }) => {
         setCategoryModalOpen(false);
         field.onChange(category.id);
-        setSelectedCategory(category);
+        new Categories().getById(category.id).then((cat) => {
+            console.log(cat);
+            setSelectedCategory(cat);
+        });
     }
 
     const setPhotos = (photos: { data: File }[], field: { onChange: any, name?: "images" }) => {
         const data = photos.filter((v) => v);
         field.onChange(data.map((v: { data: File }) => v.data));
+    }
+
+    const getFiltersSection = () => {
+        const filters = selectedCategory.filters;
+        console.log({ filters });
+        return <>
+            <h2 className={styles.SectionHeader}>Dodatkowe informacje</h2>
+            {filters.map((filter) => {
+                switch (filter.filterType) {
+                    case FilterType.SelectOne:
+                        return <Controller
+                            name="selectedFilterValueIds"
+                            control={control}
+                            defaultValue={null}
+                            render={({ field }) => <Select items={filter.filterValues.map((v) => {
+                                return {
+                                    ...v,
+                                    text: v.value
+                                }
+                            })}
+                                error={Boolean(errors.selectedFilterValueIds)}
+                                {...field} onChange={(e: ISelectItem) => field.onChange(e.value)}
+                            />}
+                        />;
+                    case FilterType.SelectMany:
+                        return <Controller
+                            name="selectedFilterValueIds"
+                            control={control}
+                            defaultValue={null}
+                            render={({ field }) => <Select items={filter.filterValues.map((v) => {
+                                return {
+                                    ...v,
+                                    text: v.value
+                                }
+                            })}
+                                multiSelect
+                                error={Boolean(errors.selectedFilterValueIds)}
+                                {...field} onChange={(e: ISelectItem) => field.onChange(e.value)}
+                            />}
+                        />;
+                    default: return null
+                }
+            })}
+        </>
+    }
+
+    const getPriceSection = () => {
+        console.log(formValues);
+        return <>
+            <h2 className={styles.SectionHeader}>Określ cenę</h2>
+            <p className={styles.BtnLabel}>Dzięki określonej cenie pozwolisz dotrzeć klientom do swojej oferty </p>
+            <div className={styles.PriceSection}>
+                <Controller
+                    name="priceUnitId"
+                    control={control}
+                    defaultValue={Number(priceUnits[0].id)}
+                    render={({ field }) => <Select items={priceUnits}
+                        error={Boolean(errors.priceUnitId)} errorText={errors.priceUnitId?.message}
+                        {...field} onChange={(e: ISelectItem) => field.onChange(e.value)}
+                    />}
+                />
+                {formValues.priceUnitId ? <Select items={priceTypes} defaultSelected={priceType} onChange={(e: ISelectItem) => { setPriceType(e.id) }} /> : <></>}
+            </div>
+            {isPriceWrongErr() && <p className={classNames(styles.BtnLabel, styles.Error)}>{isPriceWrongErr()}</p>}
+            {(!formValues.priceUnitId && priceType === PRICE_TYPES.UNIT
+                && <Controller
+                    name="minPrice"
+                    control={control}
+                    shouldUnregister
+                    rules={{ required: "Podaj cenę", min: { value: 0, message: "Cena nie może być mniejsza niż 0" }, max: { value: 99999, message: "Cena nie może być większa niż 99999" } }}
+                    render={({ field }) => <Input kind="filled" type="number" label="Cena" required defaultValue={formValues.minPrice || ''}
+                        error={Boolean(errors.minPrice)} errorText={errors.minPrice?.message}
+                        {...field} onChange={(e: React.ChangeEvent<HTMLInputElement>) => field.onChange(Number(e.target.value))}
+                    />}
+                />
+            )}
+            {(!formValues.priceUnitId && priceType === PRICE_TYPES.RANGE
+                && <>
+                    <div className={styles.PriceInputs}>
+                        <Controller
+                            name="minPrice"
+                            control={control}
+                            shouldUnregister
+                            rules={{ required: "Podaj cenę", min: { value: 0, message: "Cena nie może być mniejsza niż 0" }, max: { value: 99999, message: "Cena nie może być większa niż 99999" }, validate: isPriceWrongErr }}
+                            render={({ field }) => <Input kind="filled" type="number" label="Cena minimalna" defaultValue={formValues.minPrice || ''}
+                                required error={Boolean(errors.minPrice)} errorText={errors.minPrice?.type !== 'validate' && errors.minPrice?.message}
+                                {...field} onChange={(e: React.ChangeEvent<HTMLInputElement>) => field.onChange(Number(e.target.value))}
+                            />}
+                        />
+                        <Controller
+                            name="maxPrice"
+                            control={control}
+                            shouldUnregister
+                            rules={{ required: "Podaj cenę", min: { value: 0, message: "Cena nie może być mniejsza niż 0" }, max: { value: 99999, message: "Cena nie może być większa niż 99999" }, validate: isPriceWrongErr }}
+                            render={({ field }) => <Input kind="filled" type="number" label="Cena maksymalna" defaultValue={formValues.maxPrice || ''}
+                                required error={Boolean(errors.maxPrice)} errorText={errors.maxPrice?.type !== 'validate' && errors.maxPrice?.message}
+                                {...field} onChange={(e: React.ChangeEvent<HTMLInputElement>) => field.onChange(Number(e.target.value))}
+                            />}
+                        />
+                    </div>
+                </>
+            )}
+        </>
     }
 
     return <>
@@ -199,67 +306,12 @@ const NewAd: FC = () => {
                 </section>
                 {formValues.categoryId !== null &&
                     <section className={styles.FormSection}>
-                        <h2 className={styles.SectionHeader}>Określ cenę</h2>
-                        <p className={styles.BtnLabel}>Dzięki określonej cenie pozwolisz dotrzeć klientom do swojej oferty </p>
-                        <div className={styles.PriceSection}>
-                            <Controller
-                                name="priceUnitId"
-                                control={control}
-                                defaultValue={Number(priceUnits[0].id)}
-                                render={({ field }) => <Select items={priceUnits}
-                                    error={Boolean(errors.priceUnitId)} errorText={errors.priceUnitId?.message}
-                                    {...field} onChange={(e: ISelectItem) => {
-                                        field.onChange(e.value)
-                                        setPriceType(!e.value ? null : priceType ? priceType : priceTypes[0].value);
-                                    }}
-                                />}
-                            />
-                            {formValues.priceUnitId ? <Select items={priceTypes} defaultSelected={priceType} onChange={(e: ISelectItem) => { setPriceType(e.value) }} /> : <></>}
-                        </div>
-                        {isPriceWrongErr() && <p className={classNames(styles.BtnLabel, styles.Error)}>{isPriceWrongErr()}</p>}
-                        {(priceType === PRICE_TYPES.UNIT
-                            && <Controller
-                                name="minPrice"
-                                control={control}
-                                shouldUnregister
-                                rules={{ required: "Podaj cenę", min: { value: 0, message: "Cena nie może być mniejsza niż 0" }, max: { value: 99999, message: "Cena nie może być większa niż 99999" } }}
-                                render={({ field }) => <Input kind="filled" type="number" label="Cena" required defaultValue={formValues.minPrice || ''}
-                                    error={Boolean(errors.minPrice)} errorText={errors.minPrice?.message}
-                                    {...field} onChange={(e: React.ChangeEvent<HTMLInputElement>) => field.onChange(Number(e.target.value))}
-                                />}
-                            />
-                        )}
-                        {(priceType === PRICE_TYPES.RANGE
-                            && <>
-                                <div className={styles.PriceInputs}>
-                                    <Controller
-                                        name="minPrice"
-                                        control={control}
-                                        shouldUnregister
-                                        rules={{ required: "Podaj cenę", min: { value: 0, message: "Cena nie może być mniejsza niż 0" }, max: { value: 99999, message: "Cena nie może być większa niż 99999" }, validate: isPriceWrongErr }}
-                                        render={({ field }) => <Input kind="filled" type="number" label="Cena minimalna" defaultValue={formValues.minPrice || ''}
-                                            required error={Boolean(errors.minPrice)} errorText={errors.minPrice?.type !== 'validate' && errors.minPrice?.message}
-                                            {...field} onChange={(e: React.ChangeEvent<HTMLInputElement>) => field.onChange(Number(e.target.value))}
-                                        />}
-                                    />
-                                    <Controller
-                                        name="maxPrice"
-                                        control={control}
-                                        shouldUnregister
-                                        rules={{ required: "Podaj cenę", min: { value: 0, message: "Cena nie może być mniejsza niż 0" }, max: { value: 99999, message: "Cena nie może być większa niż 99999" }, validate: isPriceWrongErr }}
-                                        render={({ field }) => <Input kind="filled" type="number" label="Cena maksymalna" defaultValue={formValues.maxPrice || ''}
-                                            required error={Boolean(errors.maxPrice)} errorText={errors.maxPrice?.type !== 'validate' && errors.maxPrice?.message}
-                                            {...field} onChange={(e: React.ChangeEvent<HTMLInputElement>) => field.onChange(Number(e.target.value))}
-                                        />}
-                                    />
-                                </div>
-                            </>
-                        )}
+                        {getPriceSection()}
+                        {selectedCategory?.filters?.length ? getFiltersSection() : null}
                     </section>
                 }
                 <section className={classNames(styles.FormSection, styles.SubmitSection)}>
                     <Button type="submit" size="lg" kind="secondary" value="Submit" onClick={handleSubmit(onSubmit)} >Dodaj ogłoszenie</Button>
-                    {/* <button type="submit">asd</button> */}
                 </section>
             </form>
         </main>
