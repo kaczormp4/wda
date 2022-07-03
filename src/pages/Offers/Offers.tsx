@@ -6,7 +6,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { OfferCard } from '../../components/OfferCard/OfferCard';
 import { Categories, ICategory } from '../../api/Categories';
 import { fill } from 'lodash';
-import Select from '../../components/commonComponents/Select/Select';
+import Select, { ISelectItem } from '../../components/commonComponents/Select/Select';
 import Button from '../../components/commonComponents/Button/Button';
 import classNames from 'classnames';
 
@@ -30,18 +30,18 @@ export const Offers: FC = () => {
         });
     }, [id]);
 
-    const onCategoryChange = (item: ICategory) => {
-        navigate(`/ogloszenia/${item.id}`);
+    const onCategoryChange = (item: ISelectItem) => {
+        navigate(`/ogloszenia/${item.value}`);
     };
 
 
     const getFilters = () => {
-        const categoriesSelectItems = categories?.map((v) => { return { id: v.id, text: v.name } });
+        const categoriesSelectItems = categories?.map((v) => { return { id: v.id, text: v.name, value: v.id } });
 
         return (categories && category)
             ? <div className={s.FilterField}>
                 <label htmlFor='categorySelect' className={s.FilterLabel}>Kategoria</label>
-                <Select buttonProps={{ id: 'categorySelect' }} items={categoriesSelectItems} defaultSelected={category.id} onChange={(item: ICategory) => onCategoryChange(item)}/>
+                <Select buttonProps={{ id: 'categorySelect' }} items={categoriesSelectItems} defaultSelected={category.id} onChange={(item: ISelectItem) => onCategoryChange(item)}/>
             </div>
             : fill(Array(4), null).map((v,i) => <div className={s.FilterField} key={i}>
                 <label htmlFor='categorySelect' className={classNames(s.FilterLabel, s.Skeleton)}></label>

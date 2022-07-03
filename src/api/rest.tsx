@@ -1,8 +1,18 @@
 import axios, { AxiosError } from "axios";
+import { setupCache } from 'axios-cache-adapter';
 import { toast } from 'react-toastify';
 import { MSALInstance, Scopes } from "./Authentication/MSALConfig";
 
 const apiURL = 'https://weddings.azurewebsites.net/api';
+
+// cache setup
+const cache = setupCache({
+    maxAge: 3 * 60 * 1000 // 3min
+});
+
+const api = axios.create({
+    adapter: cache.adapter
+});
 
 // interceptor setup
 axios.interceptors.request.use(
@@ -41,7 +51,9 @@ REST methods
 /////
 */
 function get(url: string, urlParams: string = '') {
-    return axios.get(`${apiURL}${url}${urlParams}`).then((response) => {
+    return api.get(`${apiURL}${url}${urlParams}`).then((response) => {
+        console.log({store: cache.store});
+
         return response.data;
     }).catch(error => {
         throw handleError(error);
@@ -49,7 +61,7 @@ function get(url: string, urlParams: string = '') {
 }
 
 function post(url: string, payload: Object) {
-    return axios.post(`${apiURL}${url}`, payload).then((response) => {
+    return api.post(`${apiURL}${url}`, payload).then((response) => {
         return response.data;
     }).catch(error => {
         throw  handleError(error);
@@ -57,7 +69,7 @@ function post(url: string, payload: Object) {
 }
 
 function remove(url: string, urlParams: string = '') {
-    return axios.delete(`${apiURL}${url}${urlParams}`).then((response) => {
+    return api.delete(`${apiURL}${url}${urlParams}`).then((response) => {
         console.log(response);
         return response.data;
     }).catch(error => {
