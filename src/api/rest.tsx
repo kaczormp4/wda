@@ -15,7 +15,7 @@ const api = axios.create({
 });
 
 // interceptor setup
-axios.interceptors.request.use(
+api.interceptors.request.use(
     async function (req) {
         const accessToken = await MSALInstance.acquireTokenSilent(Scopes);
         req.headers['Authorization'] = `Bearer ${accessToken.accessToken}`;
