@@ -76,7 +76,7 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Navbar loggedIn={true} flyoutMenuList={temporaryFlyoutMenuList} userInfo={{ name: "Jan Kowalski", avatar: null }} />
+        <Navbar flyoutMenuList={temporaryFlyoutMenuList}/>
         <div className="app">
           {/* <Routes >
             {routes.map((route, i) => (
