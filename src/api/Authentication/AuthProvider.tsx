@@ -37,7 +37,7 @@ export default class App extends Component<Props, State> {
             this.setState({ isAuthenticated: !!acc, authInfo: acc });
             MSALInstance.loginRedirect(acc);
         } catch (error) {
-            debugger;
+            console.error(error);
         }
     }
 

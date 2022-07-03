@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import "./../Select/Select";
 import { cssPrefix } from '../../../config';
 import classNames from 'classnames';
-import _, { uniqueId } from 'lodash';
+import  { uniqueId } from 'lodash';
 import Button, { ButtonProps } from '../Button/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import FocusTrap from 'focus-trap-react';

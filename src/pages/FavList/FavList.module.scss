@@ -1,0 +1,21 @@
+@import "../../styles/styleUtils.scss";
+
+.FavList {
+    width: var(--width-desktop-1250);
+    max-width: calc(100% - var(--spacing-05));
+    margin: auto;
+    .Header {
+        margin-top: var(--spacing-05);
+        font-size: var(--font-size-05);
+        font-weight: bold;
+    }
+    .Offers {
+        @include centerSection(var(--width-desktop-1600));
+        gap: var(--spacing-03);
+        column-gap: var(--spacing-06);
+        column-gap: 2rem;
+        justify-content: flex-start;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(640px, 1fr));
+    }
+}

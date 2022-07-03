@@ -39,7 +39,7 @@ export const Offers: FC = () => {
     const getCategorySelect = (filter: IFilter) => {
         const filterSelectItems = filter.filterValues?.map((v) => { return { id: v.id, text: v.value, value: v.id } });
         if(filter.filterType === FilterType.SelectMany) {
-            return <div className={s.FilterField}>
+            return <div className={s.FilterField} key={filter.id}>
             <label htmlFor={String(filter.id)} className={s.FilterLabel}>{filter.name}</label>
             <MultiSelect 
                 buttonProps={{ id: String(filter.id) }}
@@ -51,7 +51,7 @@ export const Offers: FC = () => {
         }
         
         filterSelectItems.unshift({id: -1, text: 'Nie wybrano', value: -1});
-        return <div className={s.FilterField}>
+        return <div className={s.FilterField} key={filter.id}>
             <label htmlFor={String(filter.id)} className={s.FilterLabel}>{filter.name}</label>
             <Select 
                 buttonProps={{ id: String(filter.id) }}

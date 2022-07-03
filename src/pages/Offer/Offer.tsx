@@ -11,6 +11,7 @@ import Skeleton from './Skeleton/Skeleton';
 import classNames from 'classnames';
 import DOMPurify from 'dompurify';
 import { Advertisements, IAdvertisement, IImage } from '../../api/Advertisements';
+import { FavButton } from '../../components/FavButton/FavButton';
 
 const arrayPhotos = [
     'https://ckis.tczew.pl/imagecache/max_1800/orkiestra-jubileusz.jpg',
@@ -69,23 +70,7 @@ const Offer: FC<OfferProps> = () => {
                 <section className={styles.Description}>
                     <div className={styles.DateAndFavourite}>
                         <span> Dodano : 1 lipca 18:00</span>
-                        <Button
-                            kind='ghost'
-                            onClick={() => addToFavourite()}
-                            iconOnly
-                            iconDescription={
-                                isFavourite ?
-                                    'Usuń z "Moja Lista"'
-                                    :
-                                    'Dodaj do "Moja Lista"'
-                            }
-                            icon={
-                                isFavourite ?
-                                    <FontAwesomeIcon icon="heart" />
-                                    :
-                                    <FontAwesomeIcon icon="heart" className={styles.unfilled} />
-                            }
-                        />
+                        <FavButton offerId={String(offerId)} />
                     </div>
                     <h1>{data?.title}</h1>
                     <div className={styles.PriceAndInfo}>
