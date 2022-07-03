@@ -1,13 +1,14 @@
 import axios, { AxiosError } from "axios";
 import { toast } from 'react-toastify';
+import { MSALInstance, Scopes } from "./Authentication/MSALConfig";
 
 const apiURL = 'https://weddings.azurewebsites.net/api';
 
 // interceptor setup
 axios.interceptors.request.use(
-    function (req) {
-        const token = "no-token";
-        req.headers['Authorization'] = `Bearer ${token}`;
+    async function (req) {
+        const accessToken = await MSALInstance.acquireTokenSilent(Scopes);
+        req.headers['Authorization'] = `Bearer ${accessToken.accessToken}`;
         req.headers['Content-Type'] = `multipart/form-data; boundary=--14737809831466499882746641449`;
         return req;
     },

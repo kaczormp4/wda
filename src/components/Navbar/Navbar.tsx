@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FC, useCallback, useEffect, useRef, useState } from 'react'
+import { FC, useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import classnames from 'classnames';
 
@@ -7,23 +7,21 @@ import Button from '../commonComponents/Button/Button';
 import { Portal } from '../Portal/Portal';
 import styles from "./Navbar.module.scss";
 import Flyout from '../commonComponents/Flyout/Flyout';
+import AuthenticationContext from '../../api/Authentication/AuthenticationContext';
+import { MSALInstance } from '../../api/Authentication/MSALConfig';
 
 interface NavbarProps {
-    loggedIn: boolean,
     flyoutMenuList: {
         id: string,
         text: string,
         route: string,
         icon: string
     }[];
-    userInfo: {
-        name: string,
-        avatar: string
-    }
 }
 
 const Navbar: FC<NavbarProps> = (props) => {
-    const { loggedIn, flyoutMenuList, userInfo } = props;
+    const context = useContext(AuthenticationContext);
+    const { flyoutMenuList } = props;
     const [openMenu, setOpenMenu] = useState<boolean>(false);
     const [unhideNavbar, setUnhideNavbar] = useState<boolean>(true);
     const mobileNavbarHeight = useRef<HTMLDivElement>(null);
@@ -66,9 +64,9 @@ const Navbar: FC<NavbarProps> = (props) => {
     }
 
     const UserAvatar = () => {
-        if (userInfo.avatar) {
+        if (context.authInfo) {
             return <Link to='/profil'>
-                <img src={userInfo.avatar} />
+                <img src={"https://mir-s3-cdn-cf.behance.net/project_modules/disp/ea7a3c32163929.567197ac70bda.png"} />
             </Link>
         } else {
             return <Link to='/profil'>
@@ -88,7 +86,7 @@ const Navbar: FC<NavbarProps> = (props) => {
                     <Button kind='teritiary' onClick={() => navigateTo('moja-lista')} icon={<FontAwesomeIcon icon="list-squares" />} iconPosition="left">Moja Lista</Button>
                     <Button kind='teritiary' onClick={() => navigateTo('nowe-ogloszenie')} icon={<FontAwesomeIcon icon="circle-plus" />}>Dodaj ogłoszenie</Button>
                     {
-                        loggedIn ?
+                        context.isAuthenticated ?
                             <Flyout direction='bottom-end' openOnHover useAbsolutePositioning focusTrap buttonProps={{ kind: 'ghost', iconOnly: true }}>
                                 <div className={styles.FlyoutMenu}>
                                     {
@@ -98,12 +96,10 @@ const Navbar: FC<NavbarProps> = (props) => {
                                             </Link>
                                         )
                                     }
+                                    <Button kind='ghost' size="lg" onClick={context.logout}>Wyloguj</Button>
                                 </div>
                             </Flyout>
-                            :
-                            <Link to='/logowanie'>
-                                <Button kind='primary'>Zaloguj Się</Button>
-                            </Link>
+                            : <Button kind='primary' onClick={context.login}>Zaloguj</Button>
                     }
                 </nav>
             </div>
@@ -139,13 +135,13 @@ const Navbar: FC<NavbarProps> = (props) => {
                             <Button kind='ghost' size="lg" iconOnly icon={<FontAwesomeIcon icon='close' />} onClick={() => setOpenMenu(!openMenu)} />
                         </div>
                         {
-                            loggedIn &&
+                            context.isAuthenticated &&
                             <div className={styles.FloatMenuAvatarBox}>
                                 <div className={styles.FloatMenuAvatar}>
                                     {UserAvatar()}
                                 </div>
                                 <div className={styles.FloatMenuUserName}>
-                                    <h1>{userInfo.name}</h1>
+                                    <h1>{context.authInfo.name}</h1>
                                 </div>
                             </div>
                         }
@@ -161,7 +157,7 @@ const Navbar: FC<NavbarProps> = (props) => {
                         {
                             openMenu && <div className={styles.FloatMenuLogInLogout} style={{ marginBottom: mobileNavbarHeight.current.clientHeight }} >
                                 {
-                                    loggedIn ?
+                                    context.isAuthenticated ?
                                         <Button kind='teritiary' size="lg" icon={<FontAwesomeIcon icon="sign-out" />} onClick={() => navigateTo('log-out')}>WYLOGUJ</Button>
                                         :
                                         <Button kind='primary' size="lg" icon={<FontAwesomeIcon icon="sign-out" />} onClick={() => navigateTo('logowanie')}>ZALOGUJ</Button>
