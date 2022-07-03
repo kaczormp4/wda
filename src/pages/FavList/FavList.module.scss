@@ -1,13 +1,15 @@
 @import "../../styles/styleUtils.scss";
 
 .FavList {
-    width: var(--width-desktop-1250);
-    max-width: calc(100% - var(--spacing-05));
-    margin: auto;
+    @include centerSection(var(--width-desktop-1600));
     .Header {
         margin-top: var(--spacing-05);
         font-size: var(--font-size-05);
         font-weight: bold;
+    }
+    .subHeader {
+        margin-top: var(--spacing-04);
+        font-size: var(--font-size-03);
     }
     .Offers {
         @include centerSection(var(--width-desktop-1600));

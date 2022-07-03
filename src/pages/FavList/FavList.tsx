@@ -10,7 +10,7 @@ type FavListProps = {};
 
 const FavList: FC<FavListProps> = () => {
   const favOffers = new Favorites().getList();
-  const [offers, setOffers] = useState<IAdvertisement[]>([]);
+  const [offers, setOffers] = useState<IAdvertisement[]>();
   useEffect(() => {
     const api = new Advertisements();
     const offersPromises = favOffers.map(
@@ -21,9 +21,9 @@ const FavList: FC<FavListProps> = () => {
           });
         })
     );
-    Promise.all(offersPromises).then((res) => {
-        res.forEach((v) => v.image = v.images[0] as IImage );
-        setOffers(res);
+    Promise.all(offersPromises).then(res => {
+      res.forEach(v => (v.image = v.images[0] as IImage));
+      setOffers(res);
     });
   }, []);
 
@@ -31,11 +31,15 @@ const FavList: FC<FavListProps> = () => {
     <>
       <main className={styles.FavList}>
         <h1 className={styles.Header}>Obserwowane ogłoszenia</h1>
-        <div className={styles.Offers}>
-          {offers
-            ? offers.map(off => <OfferCard key={off.id} offer={off} />)
-            : fill(Array(6), null).map((x, i) => <OfferCard key={i} skeleton />)}
-        </div>
+        {favOffers.length === 0 ? (
+          <h2 className={styles.subHeader}>Brak obserwowanych ogłoszeń</h2>
+        ) : (
+          <div className={styles.Offers}>
+            {offers
+              ? offers.map(off => <OfferCard key={off.id} offer={off} />)
+              : fill(Array(4), null).map((x, i) => <OfferCard key={i} skeleton />)}
+          </div>
+        )}
       </main>
     </>
   );
