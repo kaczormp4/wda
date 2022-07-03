@@ -7,9 +7,11 @@ type State = {
     isAuthenticated: boolean;
     authInfo: Account
 }
-export default class App extends Component<React.PropsWithChildren<any>, State> {
-    constructor() {
-        super(null);
+
+type Props = React.PropsWithChildren<any>;
+export default class App extends Component<Props, State> {
+    constructor(props: Props) {
+        super(props);
         this.state = {
             isAuthenticated: false,
             authInfo: null
@@ -32,7 +34,8 @@ export default class App extends Component<React.PropsWithChildren<any>, State> 
         try {
             const loginResponse = await MSALInstance.loginPopup({});
             var acc = MSALInstance.getAccount();
-            this.setState({ isAuthenticated: !!acc, authInfo: acc })
+            this.setState({ isAuthenticated: !!acc, authInfo: acc });
+            MSALInstance.loginRedirect(acc);
         } catch (error) {
             debugger;
         }

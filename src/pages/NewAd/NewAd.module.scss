@@ -21,6 +21,9 @@
             &Header {
                 margin-bottom: var(--spacing-02);
                 font-size: var(--font-size-04);
+                &:not(:first-of-type) {
+                    margin-top: var(--spacing-05);
+                }
             }
             &Desc {
                 font-size: var(--font-size-02);
