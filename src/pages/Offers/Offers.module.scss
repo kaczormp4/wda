@@ -3,16 +3,19 @@
 
 .Offers {
     @include centerSection(var(--width-desktop-1600));
-    display: flex;
     gap: var(--spacing-03);
+    column-gap: var(--spacing-06);
+    column-gap: 2rem;
     justify-content: flex-start;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(640px, 1fr));
     .OffersCategory {
         font-size: var(--font-size-05);
         margin-bottom: var(--spacing-03);
     }
     .Filters {
         display: grid;
+        grid-column: 1/-1;
         grid-gap: var(--spacing-03);
         grid-template-columns: repeat(auto-fill, 12rem);
         width: 100%;

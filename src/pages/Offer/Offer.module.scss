@@ -156,13 +156,6 @@
         }
     }
 }
-.unfilled {
-    & > path {
-        fill: none;
-        stroke: rgb(0, 0, 0);
-        stroke-width: 2rem;
-    }
-}
 
 @media only screen and (max-width: 1155px) {
     .Container {

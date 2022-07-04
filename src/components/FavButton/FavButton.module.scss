@@ -1,0 +1,11 @@
+.FavButton {
+
+    .unfilled {
+        & > path {
+            fill: none;
+            stroke: rgb(0, 0, 0);
+            stroke-width: 2rem;
+        }
+    }
+    
+}

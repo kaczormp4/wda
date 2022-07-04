@@ -45,7 +45,7 @@ const NewAd: FC = () => {
     const [categories, setCategories] = useState<ICategory[]>(null);
     const [priceUnits, setPriceUnits] = useState<ISelectItem[]>(null);
     // form validation
-    const { control, handleSubmit, formState: { errors, isValid }, formState, getValues } = useForm({
+    const { control, handleSubmit, formState: { errors, /* isValid */ }, formState, getValues } = useForm({
         mode: 'all',
         defaultValues: {
             title: '',
