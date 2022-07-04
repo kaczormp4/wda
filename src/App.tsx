@@ -46,29 +46,23 @@ import FavList from './pages/FavList/FavList';
 //   }
 // ];
 
-const temporaryFlyoutMenuList = [
+const flyoutMenuList = [
   {
     id: '1',
     text: 'Profil',
-    route: '/profil',
+    route: 'profil',
     icon: 'home'
   },
   {
     id: '2',
     text: 'Wiadomości',
-    route: '/wiadomosci',
+    route: 'wiadomosci',
     icon: 'circle-plus'
   },
   {
     id: '3',
-    text: 'Ustawienia',
-    route: '/ustawienia',
-    icon: 'comment-alt'
-  },
-  {
-    id: '4',
     text: 'Moja Lista',
-    route: '/moja-lista',
+    route: 'moja-lista',
     icon: 'comment-alt'
   },
 ]
@@ -77,7 +71,7 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Navbar flyoutMenuList={temporaryFlyoutMenuList}/>
+        <Navbar flyoutMenuList={flyoutMenuList}/>
         <div className="app">
           {/* <Routes >
             {routes.map((route, i) => (
