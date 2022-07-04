@@ -13,7 +13,7 @@ const FavList: FC<FavListProps> = () => {
   const [offers, setOffers] = useState<IAdvertisement[]>();
   useEffect(() => {
     const api = new Advertisements();
-    const offersPromises = favOffers.map(
+    const offersPromises = favOffers?.map(
       v =>
         new Promise<IAdvertisement>((resolve, reject) => {
           api.get(v).then(offer => {
@@ -31,7 +31,7 @@ const FavList: FC<FavListProps> = () => {
     <>
       <main className={styles.FavList}>
         <h1 className={styles.Header}>Obserwowane ogłoszenia</h1>
-        {favOffers.length === 0 ? (
+        {!favOffers || favOffers.length === 0 ? (
           <h2 className={styles.subHeader}>Brak obserwowanych ogłoszeń</h2>
         ) : (
           <div className={styles.Offers}>
