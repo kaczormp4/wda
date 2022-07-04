@@ -24,7 +24,9 @@ const Profile: FC<ProfileProps> = () => {
 
   useEffect(() => {
     if (id === undefined) {
-      setPofile(MSALInstance.getAccount());
+      const prof = MSALInstance.getAccount();
+      if (prof) setPofile(prof);
+      else navigateTo('notfound');
     } else {
     }
   }, [id]);
