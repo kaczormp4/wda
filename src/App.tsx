@@ -4,11 +4,7 @@ import NotFound from './pages/NotFound/NotFound';
 import Showcase from './components/Showcase/Showcase';
 import NewAd from './pages/NewAd/NewAd';
 import './utils/icons';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import APITest from './api/APITest';
 import { ToastContainer } from 'react-toastify';
@@ -17,7 +13,6 @@ import { Offers } from './pages/Offers/Offers';
 import Profile from './pages/Profile/Profile';
 import Messages from './pages/Messages/Messages';
 import FavList from './pages/FavList/FavList';
-
 
 // const routes = [
 //   {
@@ -51,27 +46,27 @@ const flyoutMenuList = [
     id: '1',
     text: 'Profil',
     route: 'profil',
-    icon: 'home'
+    icon: 'home',
   },
   {
     id: '2',
     text: 'Wiadomości',
     route: 'wiadomosci',
-    icon: 'circle-plus'
+    icon: 'circle-plus',
   },
   {
     id: '3',
     text: 'Moja Lista',
     route: 'moja-lista',
-    icon: 'comment-alt'
+    icon: 'comment-alt',
   },
-]
+];
 
 function App() {
   return (
     <div className="App">
       <Router>
-        <Navbar flyoutMenuList={flyoutMenuList}/>
+        <Navbar flyoutMenuList={flyoutMenuList} />
         <div className="app">
           {/* <Routes >
             {routes.map((route, i) => (
@@ -81,25 +76,25 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/*" element={<NotFound />} />
-            <Route path="/wiadomosci" element={<Messages />} />
+            <Route path="/wiadomosci/:userId" element={<Messages />} />
             <Route path="/nowe-ogloszenie" element={<NewAd />} />
             <Route path="/apitest" element={<APITest />} />
             <Route path="/components" element={<Showcase />} />
             <Route path="/moja-lista" element={<FavList />} />
-            <Route path="/profil" element={<Profile />} >
+            <Route path="/profil" element={<Profile />}>
               <Route path=":id" element={<Profile />} />
             </Route>
-            <Route path="/ogloszenia" element={<Offers />}  >
+            <Route path="/ogloszenia" element={<Offers />}>
               <Route path=":id" element={<Offers />} />
             </Route>
-            <Route path="/ogloszenie" element={<Offer />}  >
+            <Route path="/ogloszenie" element={<Offer />}>
               <Route path=":offerId" element={<Offer />} />
             </Route>
           </Routes>
         </div>
-      </Router >
+      </Router>
       <ToastContainer />
-    </div >
+    </div>
   );
 }
 
