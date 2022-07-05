@@ -31,6 +31,17 @@
         }
         
     }
+    .FilterField {
+        display: inline-flex;
+        flex-direction: column;
+        margin-right: var(--spacing-04);
+        .FilterLabel {
+            font-size: var(--font-size-02);
+            padding-left: var(--spacing-03);
+            margin-bottom: -0.25rem;
+            display: inherit;
+        }
+    }
     .SubmitSection {
         display: flex;
         justify-content: flex-end;

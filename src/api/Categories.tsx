@@ -24,6 +24,16 @@ interface IFilter {
     }[]
 }
 
+export interface ISelectedFilter {
+    filterId: number,
+    filterName: string,
+    filterType: FilterType,
+    selectedFilterValues: {
+        id: number,
+        value: string
+    }[]
+}
+
 interface ICategoryFilter extends ICategory {
     filters: IFilter[]
 }
