@@ -1,3 +1,4 @@
+import { ISelectedFilter } from "./Categories";
 import { get, post } from "./rest";
 
 const url = '/Offers';
@@ -18,6 +19,7 @@ interface IAdvertisement {
     maxPrice: number,
     priceUnitId: number,
     selectedFilterValueIds?: number[],
+    selectedFilters?: ISelectedFilter[],
     image?: IImage
     images?: Blob[] | IImage[]
 }

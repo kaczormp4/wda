@@ -14,15 +14,23 @@
         margin-bottom: var(--spacing-03);
     }
     .Filters {
-        display: grid;
-        grid-column: 1/-1;
-        grid-gap: var(--spacing-03);
-        grid-template-columns: repeat(auto-fill, 12rem);
-        width: 100%;
-        :global {
-            .#{$prefix}-btn {
-                width: 100%;
+        display: flex;
+        align-items: center;
+        .FiltersWrapper {
+            flex: 1;
+            display: grid;
+            grid-column: 1/-1;
+            grid-gap: var(--spacing-03);
+            grid-template-columns: repeat(auto-fill, 12rem);
+            width: 100%;
+            :global {
+                .#{$prefix}-btn {
+                    width: 100%;
+                }
             }
+        }
+        .FiltersReset {
+            flex-shrink: 0;
         }
     }
     .FilterField {

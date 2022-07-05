@@ -84,5 +84,18 @@
             flex-direction: column;
             align-items: flex-end;
         }
+        .Tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-02);
+            margin-top: var(--spacing-03);
+            .Tag {
+                padding: var(--spacing-02);
+                background: var(--primary);
+                color: var(--text-02);
+                border-radius: var(--spacing-07);
+                font-size: var(--font-size-02);
+            }
+        }
     }
 }
