@@ -48,7 +48,12 @@ export const OfferCard: FC<P> = props => {
           </div>
           <p className={s.Price}>{getAdvPrice(offer)}</p>
         </div>
-        <FavButton className={s.btnWrapper} offerId={String(offer.id)} />
+        <div className={s.footerWrapper}>
+          <p>
+            Dodane przez: {offer.author.givenName} {offer.author.surname}{' '}
+          </p>
+          <FavButton offerId={String(offer.id)} />
+        </div>
       </div>
     </Link>
   );

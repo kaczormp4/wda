@@ -7,12 +7,14 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { OfferCard } from '../../components/OfferCard/OfferCard';
 import { MSALInstance } from '../../api/Authentication/MSALConfig';
 import { Account } from 'msal';
+import { IUser, Users } from '../../api/Users';
 
 type ProfileProps = {};
 
 const Profile: FC<ProfileProps> = () => {
   const [offers, setOffers] = useState<IAdvertisement[]>(null);
   const [profile, setPofile] = useState<Account>(null);
+  const [user, setUser] = useState<IUser>(null);
   const [isShowPhoneNumber, setShowPhoneNumber] = useState<boolean>(false);
 
   let { id } = useParams();
@@ -23,20 +25,31 @@ const Profile: FC<ProfileProps> = () => {
   };
 
   useEffect(() => {
-    if (id === undefined) {
-      const prof = MSALInstance.getAccount();
+    const prof = MSALInstance.getAccount();
+    if (prof && id === prof.accountIdentifier) {
+      navigateTo('profil');
+    } else if (id === undefined) {
       if (prof) setPofile(prof);
       else navigateTo('notfound');
     } else {
+      new Users().get(id).then(user => {
+        setUser(user);
+      });
     }
   }, [id]);
 
-  if (id) {
-    return <p>Public profile not implemented</p>;
+  const visibleProfile: IUser = profile
+    ? {
+        userIdentifier: profile.sid,
+        givenName: profile.idTokenClaims.given_name,
+        surname: profile.idTokenClaims.family_name,
+      }
+    : user;
+
+  if (!visibleProfile) {
+    return <></>; // implement skeleton
   }
-  if (!profile) {
-    return <p>Loading...</p>;
-  }
+
   return (
     <>
       <main className={styles.Container}>
@@ -51,12 +64,12 @@ const Profile: FC<ProfileProps> = () => {
           <div className={styles.MainUserInfoContainer}>
             <div className={styles.UserNameAndRate}>
               <div>
-                {profile.idTokenClaims.given_name || profile.idTokenClaims.family_name ? (
+                {visibleProfile.givenName || visibleProfile.surname ? (
                   <h1>
-                    {profile.idTokenClaims.given_name} {profile.idTokenClaims.family_name}
+                    {visibleProfile.givenName} {visibleProfile.surname}
                   </h1>
                 ) : (
-                  <h1>{profile.name}</h1>
+                  <h1>{profile?.name}</h1>
                 )}
                 <FontAwesomeIcon icon="check-circle" />
               </div>
@@ -64,14 +77,18 @@ const Profile: FC<ProfileProps> = () => {
               <div>★★★★★</div>
             </div>
             <div className={styles.Buttons}>
-              <Button icon={<FontAwesomeIcon icon="edit" />}>Edytuj profil</Button>
+              {profile && <Button icon={<FontAwesomeIcon icon="edit" />}>Edytuj profil</Button>}
               <Button onClick={() => setShowPhoneNumber(!isShowPhoneNumber)}>Zadzwoń</Button>
               {isShowPhoneNumber && (
                 <div className={styles.PhoneNumber}>
                   723 333 222 <FontAwesomeIcon icon="clone" />
                 </div>
               )}
-              <Button>Wyślij Wiadomość</Button>
+              {user && (
+                <Button renderAsLink={true} href={`wiadomosci/${visibleProfile.userIdentifier}`}>
+                  Wyślij wiadomość
+                </Button>
+              )}
             </div>
           </div>
         </section>
