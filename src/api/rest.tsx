@@ -18,8 +18,11 @@ const api = axios.create({
 // interceptor setup
 api.interceptors.request.use(
     async function (req) {
-        const accessToken = await MSALInstance.acquireTokenSilent(Scopes);
-        req.headers['Authorization'] = `Bearer ${accessToken.accessToken}`;
+        const account = await MSALInstance.getAccount();
+        if(account) {
+            const accessToken = await MSALInstance.acquireTokenSilent(Scopes);
+            req.headers['Authorization'] = `Bearer ${accessToken.accessToken}`;
+        }
         req.headers['Content-Type'] = `multipart/form-data; boundary=--14737809831466499882746641449`;
         return req;
     },
