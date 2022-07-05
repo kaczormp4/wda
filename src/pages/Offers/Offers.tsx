@@ -118,12 +118,17 @@ export const Offers: FC = () => {
         /> */}
       </>
     ) : (
-      fill(Array(4), null).map((v, i) => (
-        <div className={s.FilterField} key={i}>
-          <label htmlFor="categorySelect" className={classNames(s.FilterLabel, s.Skeleton)}></label>
-          <Button skeleton />
-        </div>
-      ))
+      <div className={s.FiltersWrapper}>
+        {fill(Array(4), null).map((v, i) => (
+          <div className={s.FilterField} key={i}>
+            <label
+              htmlFor="categorySelect"
+              className={classNames(s.FilterLabel, s.Skeleton)}
+            ></label>
+            <Button skeleton />
+          </div>
+        ))}
+      </div>
     );
   };
 
