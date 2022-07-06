@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import styles from './Offer.module.scss';
 import Button from '../../components/commonComponents/Button/Button';
-import { get } from '../../api/rest';
 import { useNavigate, useParams } from 'react-router-dom';
 import Slider from './Slider/Slider';
 import { getAdvPrice } from '../../utils/offersUtils';
@@ -12,6 +11,8 @@ import classNames from 'classnames';
 import DOMPurify from 'dompurify';
 import { Offers, IOffer, IImage } from '../../api/Offers';
 import { FavButton } from '../../components/FavButton/FavButton';
+import { getTags } from '../../components/OfferCard/OfferCard';
+import ReportModal from './ReportModal/ReportModal';
 
 const arrayPhotos = [
   'https://ckis.tczew.pl/imagecache/max_1800/orkiestra-jubileusz.jpg',
@@ -29,6 +30,7 @@ type OfferProps = {};
 const Offer: FC<OfferProps> = () => {
   const [data, setData] = useState<IOffer | null>(null);
   const [isFavourite, setisFavourite] = useState<boolean>(false);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [isShowPhoneNumber, setShowPhoneNumber] = useState<boolean>(false);
 
   const navigate = useNavigate();
@@ -76,32 +78,7 @@ const Offer: FC<OfferProps> = () => {
               <h1>{getAdvPrice(data as any)}</h1>
               {/* <span>dostępne terminy NEW FUTURE</span> */}
             </div>
-            <div className={styles.AdditionalInfo}>
-              <div className={styles.singleLine}>
-                <FontAwesomeIcon icon="check-circle" /> <span> Dostę2 z szo</span>
-              </div>
-              <div className={styles.singleLine}>
-                <FontAwesomeIcon icon="check-circle" /> <span> Dostępny na sesjach</span>
-              </div>
-              <div className={styles.singleLine}>
-                <FontAwesomeIcon icon="check-circle" /> <span> Dostjach</span>
-              </div>
-              <div className={styles.singleLine}>
-                <FontAwesomeIcon icon="check-circle" /> <span> Dosna sesjach</span>
-              </div>
-              <div className={styles.singleLine}>
-                <FontAwesomeIcon icon="check-circle" /> <span> Dostępny na sesjach</span>
-              </div>
-              <div className={styles.singleLine}>
-                <FontAwesomeIcon icon="check-circle" /> <span> Dostępny na sesjach</span>
-              </div>
-              <div className={styles.singleLine}>
-                <FontAwesomeIcon icon="check-circle" /> <span> Dostępny na sesjach</span>
-              </div>
-              <div className={styles.singleLine}>
-                <FontAwesomeIcon icon="check-circle" /> <span> za darmo</span>
-              </div>
-            </div>
+            <div className={styles.AdditionalInfo}>{getTags(data.selectedFilters)}</div>
             <h1>OPIS</h1>
             <div
               className={classNames(styles.MainDescription, 'styledText')}
@@ -109,8 +86,8 @@ const Offer: FC<OfferProps> = () => {
             ></div>
             <div className={styles.DescriptionFooter}>
               <div>ID: {data?.id}</div>
-              <Button kind="ghost">
-                <FontAwesomeIcon icon="flag" /> Zgłoś Oferte
+              <Button danger kind="ghost" onClick={() => setModalOpen(true)}>
+                <FontAwesomeIcon icon="flag" /> Zgłoś
               </Button>
             </div>
           </section>
@@ -166,6 +143,9 @@ const Offer: FC<OfferProps> = () => {
                 </section> */}
         </div>
       </main>
+      {modalOpen && (
+        <ReportModal offer={data} setModalOpen={setModalOpen}/>
+      )}
     </>
   );
 };

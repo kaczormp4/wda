@@ -1,0 +1,73 @@
+@import "../../styles/styleUtils.scss";
+
+.Container {
+    @include centerSection(var(--width-desktop-1250));
+    margin-bottom: var(--spacing-03);
+    .Header {
+        display: flex;
+        gap: var(--spacing-03);
+        &Btn {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            &Active {
+                border-bottom: 2px solid var(--interactive-01);
+                background-color: var(--focus);
+                color: var(--text-02);
+                &:hover{
+                    background-color: var(--interactive-01);
+                }
+            }
+        }
+    }
+
+    .Reports {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: var(--spacing-03);
+        flex-wrap: wrap;
+        background: var(--background-02);
+        border-radius: var(--spacing-02);
+        padding: var(--spacing-04) var(--spacing-03);
+        .Report {
+            background: var(--background-01);
+            border-radius: var(--spacing-02);
+            overflow: hidden;
+            &ID {
+                font-size: var(--font-size-02);
+            }
+            &Status {
+                width: var(--spacing-04);
+                height: var(--spacing-04);
+                border-radius: var(--spacing-04);
+                background: var(--danger);
+                &.ReportComplete {
+                    background-color: var(--positive-01);
+                }
+            }
+            &Header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: var(--spacing-04);
+                margin-bottom: var(--spacing-03);
+                padding: var(--spacing-02);
+                box-shadow: var(--box-shadow--small);
+
+            }
+
+            &Content {
+                display: grid;
+                padding: 0 var(--spacing-02);
+                padding-bottom: var(--spacing-02);
+                label {
+                    font-size: var(--font-size-02);
+                    margin-top: var(--spacing-02);
+                    margin-bottom: var(--spacing-01);
+                }
+                a {
+                    color: var(--interactive-01)
+                }
+            }
+        }
+    }
+}

@@ -19,6 +19,7 @@ class CategoriesModal extends Component<P> {
         const { categories, onClose, onBtnClick } = this.props;
 
         return <Modal
+            id="categoriesModal"
             heading="Wybierz kategorię"
             open={true}
             passive

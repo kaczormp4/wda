@@ -57,6 +57,7 @@
                 flex-wrap: wrap;
                 gap: var(--spacing-04);
                 .singleLine {
+                    font-size: var(--font-size-02);
                     & > img,
                     svg {
                         color: var(--primary);
