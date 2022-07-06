@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import s from './Offers.module.scss';
-import { IAdvertisement, Advertisements as AdvAPI } from '../../api/Advertisements';
+import { IOffer, Offers as OfferAPI } from '../../api/Offers';
 
 import { useParams, useNavigate } from 'react-router-dom';
 import { OfferCard } from '../../components/OfferCard/OfferCard';
@@ -13,7 +13,7 @@ import MultiSelect from '../../components/commonComponents/MultiSelect/MultiSele
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const Offers: FC = () => {
-  const [offers, setOffers] = useState<IAdvertisement[]>(null);
+  const [offers, setOffers] = useState<IOffer[]>(null);
   const [category, setCategory] = useState<ICategoryFilter>(null);
   const [categories, setCategories] = useState<ICategory[]>(null);
   const [dynamicFilters, setDynamicFilters] = useState([]);
@@ -23,7 +23,7 @@ export const Offers: FC = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (id === undefined) navigate('notfound');
-    new AdvAPI().getByCategory(categoryId).then(off => {
+    new OfferAPI().getByCategory(categoryId).then(off => {
       setOffers(off);
     });
     new Categories().get().then(cats => {
@@ -132,7 +132,7 @@ export const Offers: FC = () => {
     );
   };
 
-  const filteredOffers = (offers: IAdvertisement[]) => {
+  const filteredOffers = (offers: IOffer[]) => {
     const currFilters = Object.values(dynamicFilters);
     if (currFilters.length) {
       return offers.filter(offer => {

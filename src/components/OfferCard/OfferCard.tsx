@@ -1,14 +1,14 @@
 import classNames from 'classnames';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { IAdvertisement } from '../../api/Advertisements';
+import { IOffer } from '../../api/Offers';
 import { ISelectedFilter } from '../../api/Categories';
 import { getAdvPrice } from '../../utils/offersUtils';
 import { FavButton } from '../FavButton/FavButton';
 import s from './OfferCard.module.scss';
 
 type P = {
-  offer?: IAdvertisement;
+  offer?: IOffer;
   skeleton?: boolean;
 };
 

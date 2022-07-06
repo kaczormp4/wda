@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import styles from './FavList.module.scss';
 
 import { Favorites } from '../../api/Favorites';
-import { Advertisements, IAdvertisement, IImage } from '../../api/Advertisements';
+import { Offers, IImage, IOffer } from '../../api/Offers';
 import { OfferCard } from '../../components/OfferCard/OfferCard';
 import { fill } from 'lodash';
 
@@ -10,12 +10,12 @@ type FavListProps = {};
 
 const FavList: FC<FavListProps> = () => {
   const favOffers = new Favorites().getList();
-  const [offers, setOffers] = useState<IAdvertisement[]>();
+  const [offers, setOffers] = useState<IOffer[]>();
   useEffect(() => {
-    const api = new Advertisements();
+    const api = new Offers();
     const offersPromises = favOffers?.map(
       v =>
-        new Promise<IAdvertisement>((resolve, reject) => {
+        new Promise<IOffer>((resolve, reject) => {
           api.get(v).then(offer => {
             resolve(offer);
           });

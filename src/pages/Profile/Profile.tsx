@@ -1,10 +1,9 @@
 import { FC, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IAdvertisement, Advertisements as AdvAPI } from '../../api/Advertisements';
+import { IOffer, Offers as OfferAPI } from '../../api/Offers';
 import styles from './Profile.module.scss';
 import Button from '../../components/commonComponents/Button/Button';
 import { useNavigate, useParams } from 'react-router-dom';
-import { OfferCard } from '../../components/OfferCard/OfferCard';
 import { MSALInstance } from '../../api/Authentication/MSALConfig';
 import { Account } from 'msal';
 import { IUser, Users } from '../../api/Users';
@@ -12,7 +11,7 @@ import { IUser, Users } from '../../api/Users';
 type ProfileProps = {};
 
 const Profile: FC<ProfileProps> = () => {
-  const [offers, setOffers] = useState<IAdvertisement[]>(null);
+  const [offers, setOffers] = useState<IOffer[]>(null);
   const [profile, setPofile] = useState<Account>(null);
   const [user, setUser] = useState<IUser>(null);
   const [isShowPhoneNumber, setShowPhoneNumber] = useState<boolean>(false);

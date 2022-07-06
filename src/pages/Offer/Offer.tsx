@@ -10,7 +10,7 @@ import { getAdvPrice } from '../../utils/offersUtils';
 import Skeleton from './Skeleton/Skeleton';
 import classNames from 'classnames';
 import DOMPurify from 'dompurify';
-import { Advertisements, IAdvertisement, IImage } from '../../api/Advertisements';
+import { Offers, IOffer, IImage } from '../../api/Offers';
 import { FavButton } from '../../components/FavButton/FavButton';
 
 const arrayPhotos = [
@@ -27,7 +27,7 @@ const arrayPhotos = [
 type OfferProps = {};
 
 const Offer: FC<OfferProps> = () => {
-  const [data, setData] = useState<IAdvertisement | null>(null);
+  const [data, setData] = useState<IOffer | null>(null);
   const [isFavourite, setisFavourite] = useState<boolean>(false);
   const [isShowPhoneNumber, setShowPhoneNumber] = useState<boolean>(false);
 
@@ -41,7 +41,7 @@ const Offer: FC<OfferProps> = () => {
   useEffect(() => {
     if (offerId === undefined) navigateTo('notfound');
 
-    new Advertisements()
+    new Offers()
       .get(offerId)
       .then(data => {
         setData(data);
@@ -127,7 +127,9 @@ const Offer: FC<OfferProps> = () => {
               </div>
               <div className={styles.NameAndRate}>
                 <div>
-                  <h2>{data.author.givenName} {data.author.surname}</h2>
+                  <h2>
+                    {data.author.givenName} {data.author.surname}
+                  </h2>
                   <FontAwesomeIcon icon="check-circle" />
                 </div>
                 <div>
@@ -140,7 +142,9 @@ const Offer: FC<OfferProps> = () => {
               <Button kind="teritiary" onClick={() => setShowPhoneNumber(!isShowPhoneNumber)}>
                 Zadzwoń
               </Button>
-              <Button renderAsLink={true} href={`/wiadomosci/${data.author.userIdentifier}`}>Wyślij wiadomość</Button>
+              <Button renderAsLink={true} href={`/wiadomosci/${data.author.userIdentifier}`}>
+                Wyślij wiadomość
+              </Button>
             </div>
             {isShowPhoneNumber && (
               <div className={styles.PhoneNumber}>

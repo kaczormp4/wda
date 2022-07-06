@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { Advertisements, IPostAdvertisement } from '../../api/Advertisements';
+import { Offers, IPostOffer } from '../../api/Offers';
 import { Categories, FilterType, ICategory, ICategoryFilter } from '../../api/Categories';
 import { PriceUnits } from '../../api/PriceUnits';
 import Button from '../../components/commonComponents/Button/Button';
@@ -97,7 +97,7 @@ const NewAd: FC = () => {
     });
   }, []);
 
-  const onSubmit = (values: IPostAdvertisement) => {
+  const onSubmit = (values: IPostOffer) => {
     const formData = new FormData();
     if (priceType === PRICE_TYPES.UNIT) {
       values.maxPrice = values.minPrice;
@@ -120,7 +120,7 @@ const NewAd: FC = () => {
       }
     }
     // sadly, formData cannot be string typed
-    new Advertisements()
+    new Offers()
       .post(formData as any)
       .then(adId => {
         navigate(`/ogloszenie/${adId}`);
@@ -221,7 +221,7 @@ const NewAd: FC = () => {
                         error={Boolean(errors.selectedFilterValueIds)}
                         {...field}
                         onChange={(e: ISelectItem) => {
-                            console.log(e);
+                          console.log(e);
                           const filterID = filter.id;
                           const newValue = {
                             ...field.value,

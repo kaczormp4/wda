@@ -9,7 +9,7 @@ interface IImage {
   imageUrl: string;
 }
 
-interface IAdvertisement {
+interface IOffer {
   id?: number | string;
   author: IUser;
   title: string;
@@ -27,23 +27,23 @@ interface IAdvertisement {
 
 type IgnoredFields = 'images' | 'selectedFilters' | 'author';
 
-interface IPostAdvertisement extends Omit<IAdvertisement, IgnoredFields> {
+interface IPostOffer extends Omit<IOffer, IgnoredFields> {
   images: Blob[];
   selectedFilterValueIds: number[];
 }
 
-class Advertisements {
-  public get(id: IAdvertisement['id']): Promise<IAdvertisement> {
+class Offers {
+  public get(id: IOffer['id']): Promise<IOffer> {
     return get(url, `/${id}`);
   }
 
-  public getByCategory(id: IAdvertisement['id']): Promise<IAdvertisement[]> {
+  public getByCategory(id: IOffer['id']): Promise<IOffer[]> {
     return get(url, `?categoryId=${id}`);
   }
 
-  public post(ad: IPostAdvertisement): Promise<number> {
+  public post(ad: IPostOffer): Promise<number> {
     return post(url, ad);
   }
 }
 
-export { IImage, IAdvertisement, IPostAdvertisement, Advertisements };
+export { IImage, IOffer, IPostOffer, Offers };
