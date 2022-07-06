@@ -91,7 +91,6 @@
             .MainUserInfo {
                 display: flex;
                 gap: var(--spacing-04);
-                cursor: pointer;
                 .UserAvatar {
                     width: max-content;
                     & > img {
@@ -110,7 +109,7 @@
                         img {
                             color: var(--positive-01);
                         }
-                        & > h3 {
+                        & > a {
                             color: var(--interactive-01);
                             cursor: pointer;
                         }

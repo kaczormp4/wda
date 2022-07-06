@@ -27,7 +27,7 @@ const arrayPhotos = [
 type OfferProps = {};
 
 const Offer: FC<OfferProps> = () => {
-  const [data, setData] = useState<IAdvertisement | null | any>(null);
+  const [data, setData] = useState<IAdvertisement | null>(null);
   const [isFavourite, setisFavourite] = useState<boolean>(false);
   const [isShowPhoneNumber, setShowPhoneNumber] = useState<boolean>(false);
 
@@ -117,7 +117,7 @@ const Offer: FC<OfferProps> = () => {
         </div>
         <div className={styles.MainUseInfoContainer}>
           <section className={styles.UserInfo}>
-            <div className={styles.MainUserInfo} onClick={() => navigateTo(`profil/${22}`)}>
+            <div className={styles.MainUserInfo}>
               <div className={styles.UserAvatar}>
                 <img
                   src={
@@ -127,11 +127,11 @@ const Offer: FC<OfferProps> = () => {
               </div>
               <div className={styles.NameAndRate}>
                 <div>
-                  <h2>Jan Kowalski</h2>
+                  <h2>{data.author.givenName} {data.author.surname}</h2>
                   <FontAwesomeIcon icon="check-circle" />
                 </div>
                 <div>
-                  <h3>Odwiedz profil</h3>
+                  <a href={`/profil/${data.author.userIdentifier}`}>Odwiedź profil</a>
                 </div>
                 <div>★★★★★ 45</div>
               </div>
@@ -140,9 +140,7 @@ const Offer: FC<OfferProps> = () => {
               <Button kind="teritiary" onClick={() => setShowPhoneNumber(!isShowPhoneNumber)}>
                 Zadzwoń
               </Button>
-              <Button onClick={() => navigateTo(`wiadomosci/${data.author.userIdentifier}`)}>
-                Wyślij Wiadomość
-              </Button>
+              <Button renderAsLink={true} href={`/wiadomosci/${data.author.userIdentifier}`}>Wyślij wiadomość</Button>
             </div>
             {isShowPhoneNumber && (
               <div className={styles.PhoneNumber}>

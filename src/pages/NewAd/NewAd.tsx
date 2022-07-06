@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { Advertisements, IAdvertisement } from '../../api/Advertisements';
+import { Advertisements, IPostAdvertisement } from '../../api/Advertisements';
 import { Categories, FilterType, ICategory, ICategoryFilter } from '../../api/Categories';
 import { PriceUnits } from '../../api/PriceUnits';
 import Button from '../../components/commonComponents/Button/Button';
@@ -97,7 +97,7 @@ const NewAd: FC = () => {
     });
   }, []);
 
-  const onSubmit = (values: IAdvertisement) => {
+  const onSubmit = (values: IPostAdvertisement) => {
     const formData = new FormData();
     if (priceType === PRICE_TYPES.UNIT) {
       values.maxPrice = values.minPrice;
