@@ -9,7 +9,7 @@ import Navbar from './components/Navbar/Navbar';
 import APITest from './api/APITest';
 import { ToastContainer } from 'react-toastify';
 import Offer from './pages/Offer/Offer';
-import { Offers } from './pages/Offers/Offers';
+import Offers from './pages/Offers/Offers';
 import Profile from './pages/Profile/Profile';
 import Messages from './pages/Messages/Messages';
 import FavList from './pages/FavList/FavList';

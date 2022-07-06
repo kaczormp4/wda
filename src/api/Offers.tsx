@@ -37,6 +37,10 @@ class Offers {
     return get(url, `/${id}`);
   }
 
+  public getUserOffers(id: IUser['userIdentifier']): Promise<IOffer[]> {
+    return get(url, `/user/${id}`);
+  }
+
   public getByCategory(id: IOffer['id']): Promise<IOffer[]> {
     return get(url, `?categoryId=${id}`);
   }

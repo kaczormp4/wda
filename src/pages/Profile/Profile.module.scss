@@ -1,7 +1,7 @@
+@import "../../styles/styleUtils.scss";
+
 .Container {
-    width: var(--width-desktop-1250);
-    max-width: calc(100% - var(--spacing-05));
-    margin: auto;
+    @include centerSection(var(--width-desktop-1250));
     margin-bottom: var(--spacing-03);
     .MainProfileInfoContainer {
         height: max-content;
@@ -10,6 +10,8 @@
         margin-top: var(--spacing-03);
         border-radius: var(--spacing-02);
         display: flex;
+        margin-bottom: var(--spacing-06);
+
         .UserAvatar {
             margin-right: var(--spacing-05);
             width: 150px;
@@ -63,6 +65,18 @@
         background-color: var(--background-02);
         margin-top: var(--spacing-03);
         border-radius: var(--spacing-02);
+    }
+    .Header {
+        font-size: var(--font-size-04);
+        margin-bottom: var(--font-size-02);
+        font-weight: bold;
+    }
+    .UserOffers {
+        gap: var(--spacing-03);
+        column-gap: var(--spacing-06);
+        justify-content: flex-start;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(640px, 1fr));
     }
 }
 @media only screen and (max-width: 700px) {
