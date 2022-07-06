@@ -7,6 +7,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { MSALInstance } from '../../api/Authentication/MSALConfig';
 import { Account } from 'msal';
 import { IUser, Users } from '../../api/Users';
+import Offers from '../Offers/Offers';
 
 type ProfileProps = {};
 
@@ -28,11 +29,20 @@ const Profile: FC<ProfileProps> = () => {
     if (prof && id === prof.accountIdentifier) {
       navigateTo('profil');
     } else if (id === undefined) {
-      if (prof) setPofile(prof);
-      else navigateTo('notfound');
+      if (prof) {
+        setPofile(prof);
+        new OfferAPI().getUserOffers(prof.accountIdentifier).then(userOffers => {
+          console.log({ userOffers });
+          setOffers(userOffers);
+        });
+      } else navigateTo('notfound');
     } else {
       new Users().get(id).then(user => {
         setUser(user);
+      });
+      new OfferAPI().getUserOffers(id).then(userOffers => {
+        console.log({ userOffers });
+        setOffers(userOffers);
       });
     }
   }, [id]);
@@ -91,12 +101,8 @@ const Profile: FC<ProfileProps> = () => {
             </div>
           </div>
         </section>
-        <section className={styles.SearchEngineAndFilter}></section>
-        {/* <section className={styles.ActiveOffers}>
-                {
-                    offers?.map((off) => <OfferCard key={off.id} offer={off} />)
-                }
-            </section> */}
+        <h2 className={styles.Header}>Oferty użytkownika</h2>
+        <section className={styles.UserOffers}>{offers && <Offers offers={offers} />}</section>
       </main>
     </>
   );

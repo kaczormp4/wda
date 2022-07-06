@@ -3,35 +3,40 @@ import s from './Offers.module.scss';
 import { IOffer, Offers as OfferAPI } from '../../api/Offers';
 
 import { useParams, useNavigate } from 'react-router-dom';
-import { OfferCard } from '../../components/OfferCard/OfferCard';
 import { Categories, FilterType, ICategory, ICategoryFilter, IFilter } from '../../api/Categories';
 import { fill } from 'lodash';
 import Select, { ISelectItem } from '../../components/commonComponents/Select/Select';
 import Button from '../../components/commonComponents/Button/Button';
 import classNames from 'classnames';
 import MultiSelect from '../../components/commonComponents/MultiSelect/MultiSelect';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { OffersView } from './OffersView';
 
-export const Offers: FC = () => {
-  const [offers, setOffers] = useState<IOffer[]>(null);
+type OffersProps = {
+  offers?: IOffer[];
+};
+
+const Offers = (props: OffersProps) => {
+  const propsOffers = props.offers;
+  const [offers, setOffers] = useState<IOffer[]>(propsOffers);
   const [category, setCategory] = useState<ICategoryFilter>(null);
   const [categories, setCategories] = useState<ICategory[]>(null);
   const [dynamicFilters, setDynamicFilters] = useState([]);
-  //   const [appliedFilters, setAppliedFilters] = useState<number[]>([]);
   let { id } = useParams();
   const categoryId = Number(id);
   const navigate = useNavigate();
   useEffect(() => {
-    if (id === undefined) navigate('notfound');
-    new OfferAPI().getByCategory(categoryId).then(off => {
-      setOffers(off);
-    });
-    new Categories().get().then(cats => {
-      setCategories(cats);
-    });
-    new Categories().getById(id).then(currentCat => {
-      setCategory(currentCat);
-    });
+    if (!props.offers) {
+      if (id === undefined) navigate('notfound');
+      new OfferAPI().getByCategory(categoryId).then(off => {
+        setOffers(off);
+      });
+      new Categories().get().then(cats => {
+        setCategories(cats);
+      });
+      new Categories().getById(id).then(currentCat => {
+        setCategory(currentCat);
+      });
+    }
   }, [id]);
 
   const onCategoryChange = (item: ISelectItem) => {
@@ -96,17 +101,19 @@ export const Offers: FC = () => {
     return categories && category ? (
       <>
         <div className={s.FiltersWrapper}>
-          <div className={s.FilterField}>
-            <label htmlFor="categorySelect" className={s.FilterLabel}>
-              Kategoria
-            </label>
-            <Select
-              buttonProps={{ id: 'categorySelect' }}
-              items={categoriesSelectItems}
-              defaultSelected={category.id}
-              onChange={(item: ISelectItem) => onCategoryChange(item)}
-            />
-          </div>
+          {!props.offers && (
+            <div className={s.FilterField}>
+              <label htmlFor="categorySelect" className={s.FilterLabel}>
+                Kategoria
+              </label>
+              <Select
+                buttonProps={{ id: 'categorySelect' }}
+                items={categoriesSelectItems}
+                defaultSelected={category.id}
+                onChange={(item: ISelectItem) => onCategoryChange(item)}
+              />
+            </div>
+          )}
           {category?.filters.map(c => getCategorySelect(c))}
         </div>
         {/* <Button
@@ -145,10 +152,16 @@ export const Offers: FC = () => {
 
   return (
     <div className={s.Offers}>
-      <div className={s.Filters}>{getFilters()}</div>
-      {offers
-        ? filteredOffers(offers).map(off => <OfferCard key={off.id} offer={off} />)
-        : fill(Array(6), null).map((x, i) => <OfferCard key={i} skeleton />)}
+      {/* cannot rneder filters for profile view cuase they don't have onme category */}
+      {!props.offers && <div className={s.Filters}>{getFilters()}</div>}
+      <OffersView offers={filteredOffers(offers)} />
     </div>
   );
 };
+
+const defaultProps: OffersProps = {
+  offers: null,
+};
+
+Offers.defaultProps = defaultProps;
+export default Offers;
