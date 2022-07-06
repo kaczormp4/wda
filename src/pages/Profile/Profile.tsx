@@ -94,7 +94,7 @@ const Profile: FC<ProfileProps> = () => {
                 </div>
               )}
               {user && (
-                <Button renderAsLink={true} href={`wiadomosci/${visibleProfile.userIdentifier}`}>
+                <Button renderAsLink={true} href={`/wiadomosci/${visibleProfile.userIdentifier}`}>
                   Wyślij wiadomość
                 </Button>
               )}
