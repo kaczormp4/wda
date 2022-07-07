@@ -13,7 +13,7 @@
                 border-bottom: 2px solid var(--interactive-01);
                 background-color: var(--focus);
                 color: var(--text-02);
-                &:hover{
+                &:hover {
                     background-color: var(--interactive-01);
                 }
             }
@@ -52,7 +52,11 @@
                 margin-bottom: var(--spacing-03);
                 padding: var(--spacing-02);
                 box-shadow: var(--box-shadow--small);
-
+                > div {
+                    display: flex;
+                    align-items: center;
+                    gap: var(--spacing-03);
+                }
             }
 
             &Content {
@@ -65,7 +69,7 @@
                     margin-bottom: var(--spacing-01);
                 }
                 a {
-                    color: var(--interactive-01)
+                    color: var(--interactive-01);
                 }
             }
         }

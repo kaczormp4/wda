@@ -5,6 +5,8 @@ import { MSALInstance } from '../../api/Authentication/MSALConfig';
 import Button from '../../components/commonComponents/Button/Button';
 import classnames from 'classnames';
 import { IReport, Reports } from '../../api/Reports';
+import { toast } from 'react-toastify';
+import { IStatistics, Statistics } from '../../api/Statistics';
 
 type AdminPanelProps = {};
 const Pages = {
@@ -23,6 +25,7 @@ const AdminPanel: FC<AdminPanelProps> = () => {
   let { subpage } = useParams<string>();
   const [activePage, setActivePage] = useState(Pages.main.route);
   const [reports, setReports] = useState<IReport[]>(null);
+  const [statistics, setStatistics] = useState<IStatistics[]>(null);
 
   useEffect(() => {
     const prof = MSALInstance.getAccount();
@@ -41,11 +44,24 @@ const AdminPanel: FC<AdminPanelProps> = () => {
     new Reports().get().then(val => {
       setReports(val);
     });
+    new Statistics().get().then(val => {
+      console.log(val);
+      setStatistics(val);
+    });
+
   };
 
   const switchPage = (page: string) => {
     navigate(`${page}`);
   };
+
+  const toggleReport = (id: number) => {
+    new Reports().toggle(id).then((val) => {
+      toast.info(val);
+      const newReports = [...reports];
+      setReports(newReports.filter((v) =>v.id !== id)); 
+    })
+  }
 
   const getActiveView = () => {
     if (activePage === Pages.main.route) {
@@ -63,11 +79,14 @@ const AdminPanel: FC<AdminPanelProps> = () => {
               <div className={styles.Report} key={`report_${report.id}`}>
                 <div className={styles.ReportHeader}>
                   <span className={styles.ReportID}>#{report.id}</span>
-                  <span
-                    className={classnames(styles.ReportStatus, {
-                      [styles.ReportComplete]: report.isCompleted,
-                    })}
-                  ></span>
+                  <div>
+                    <Button kind="ghost" onClick={() => toggleReport(report.id)}>Zamknij zgłoszenie</Button>
+                    <span
+                      className={classnames(styles.ReportStatus, {
+                        [styles.ReportComplete]: report.isCompleted,
+                      })}
+                    ></span>
+                  </div>
                 </div>
                 <div className={styles.ReportContent}>
                   <label>Powód:</label>
@@ -75,7 +94,9 @@ const AdminPanel: FC<AdminPanelProps> = () => {
                   <label>Przedmiot zgłoszenia</label>
                   <Link to={`/ogloszenie/${report.offerId}`}>Ogłoszenie #{report.offerId}</Link>
                   <label>Zgłosil</label>
-                  <Link to={`/profil/${report.reportingUser.userIdentifier}`}>{report.reportingUser.givenName} {report.reportingUser.surname}</Link>
+                  <Link to={`/profil/${report.reportingUser.userIdentifier}`}>
+                    {report.reportingUser.givenName} {report.reportingUser.surname}
+                  </Link>
                 </div>
               </div>
             ))}

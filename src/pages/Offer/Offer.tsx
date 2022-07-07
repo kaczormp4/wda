@@ -13,6 +13,7 @@ import { Offers, IOffer, IImage } from '../../api/Offers';
 import { FavButton } from '../../components/FavButton/FavButton';
 import { getTags } from '../../components/OfferCard/OfferCard';
 import ReportModal from './ReportModal/ReportModal';
+import DeleteOfferModal from '../../components/OfferCard/DeleteOfferModal/DeleteOfferModal';
 
 const arrayPhotos = [
   'https://ckis.tczew.pl/imagecache/max_1800/orkiestra-jubileusz.jpg',
@@ -29,9 +30,9 @@ type OfferProps = {};
 
 const Offer: FC<OfferProps> = () => {
   const [data, setData] = useState<IOffer | null>(null);
-  const [isFavourite, setisFavourite] = useState<boolean>(false);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [isShowPhoneNumber, setShowPhoneNumber] = useState<boolean>(false);
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
 
   const navigate = useNavigate();
   let { offerId } = useParams();
@@ -53,8 +54,8 @@ const Offer: FC<OfferProps> = () => {
       });
   }, []);
 
-  const addToFavourite = () => {
-    setisFavourite(!isFavourite);
+  const onDelete = () => {
+    navigateTo('profil');
   };
 
   if (data === null) {
@@ -129,6 +130,17 @@ const Offer: FC<OfferProps> = () => {
               </div>
             )}
           </section>
+          <div className={styles.OfferManagement}>
+            <h2>Zarządzanie ogłoszeniem</h2>
+            <Button
+              danger
+              kind="ghost"
+              icon={<FontAwesomeIcon icon="trash" />}
+              onClick={setShowDeleteModal}
+            >
+              Usuń ogłoszenie
+            </Button>
+          </div>
           {/* <section className={styles.Calendar}>
                     <h1>calendar</h1>
                 </section>
@@ -143,9 +155,10 @@ const Offer: FC<OfferProps> = () => {
                 </section> */}
         </div>
       </main>
-      {modalOpen && (
-        <ReportModal offer={data} setModalOpen={setModalOpen}/>
+      {showDeleteModal && (
+        <DeleteOfferModal offer={data} setModalOpen={setShowDeleteModal} onDelete={onDelete} />
       )}
+      {modalOpen && <ReportModal offer={data} setModalOpen={setModalOpen} />}
     </>
   );
 };

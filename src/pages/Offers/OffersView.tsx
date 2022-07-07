@@ -5,14 +5,15 @@ import { OfferCard } from '../../components/OfferCard/OfferCard';
 import { fill } from 'lodash';
 
 type Props = {
+  allowEdit?: boolean,
   offers: IOffer[];
 };
 export const OffersView = (props: Props) => {
-  const { offers } = props;
+  const { offers, allowEdit } = props;
   return (
     <>
       {offers
-        ? offers.map(off => <OfferCard key={off.id} offer={off} />)
+        ? offers.map(off => <OfferCard allowEdit={allowEdit} key={off.id} offer={off} />)
         : fill(Array(6), null).map((x, i) => <OfferCard key={i} skeleton />)}
     </>
   );
