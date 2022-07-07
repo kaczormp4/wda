@@ -99,7 +99,9 @@ const Flyout: FC<FlyoutProps> = (props: React.PropsWithChildren<FlyoutProps>) =>
 
 
     const positionMenu = () => {
-        setIsOpen(!isOpen);
+        if(!disabled) {
+            setIsOpen(!isOpen);
+        }
     }
 
     const checkBlur = (ev: React.FocusEvent) => {
@@ -119,7 +121,7 @@ const Flyout: FC<FlyoutProps> = (props: React.PropsWithChildren<FlyoutProps>) =>
 
     const triggerProps = {
         ref: buttonRef, id: `trigger_${id}`, active: isOpen,
-        disabled: disabled, icon: icon, size: buttonSize, ...buttonProps,
+        icon: icon, size: buttonSize, ...buttonProps,
         onBlur: (e: React.FocusEvent) => checkBlur(e)
     }
 

@@ -15,8 +15,9 @@ type ProfileProps = {};
 const Profile: FC<ProfileProps> = () => {
   const [offers, setOffers] = useState<IOffer[]>(null);
   const [profile, setPofile] = useState<Account>(null);
-  const [user, setUser] = useState<IUser>(null);
+  // const [premiumVisbility, setPremiumVisbility] = useState<boolean>(false);
   const [isShowPhoneNumber, setShowPhoneNumber] = useState<boolean>(false);
+  const [user, setUser] = useState<IUser>(null);
 
   let { id } = useParams();
   const navigate = useNavigate();
@@ -57,7 +58,7 @@ const Profile: FC<ProfileProps> = () => {
         surname: profile.idTokenClaims.family_name,
       }
     : user;
-    
+
   if (!visibleProfile) {
     return <></>; // implement skeleton
   }
@@ -83,10 +84,13 @@ const Profile: FC<ProfileProps> = () => {
                 ) : (
                   <h1>{profile?.name}</h1>
                 )}
-                <FontAwesomeIcon icon="check-circle" />
+                <span className={styles.ProfileType}>Zwykły użytkownik</span>
               </div>
               <div>45 opinii</div>
               <div>★★★★★</div>
+              {/* <Button kind="secondary" onClick={() => setPremiumVisbility(!premiumVisbility)}>
+                {!premiumVisbility ? 'Zmień plan na wyższy' : 'Ukryj sekcję pakietów'}
+              </Button> */}
             </div>
             <div className={styles.Buttons}>
               {profile && <Button icon={<FontAwesomeIcon icon="edit" />}>Edytuj profil</Button>}
@@ -104,6 +108,53 @@ const Profile: FC<ProfileProps> = () => {
             </div>
           </div>
         </section>
+        {
+          <section className={styles.PremiumSection}>
+            <h2>Pakiet twojego konta</h2>
+            <div className={styles.PremiumSectionWrapper}>
+              <div className={styles.Card}>
+                <div className={styles.CardContent}>
+                  <p className={styles.CardTitle}>Zwykły</p>
+                  <ul>
+                    <li>Maksymalna liczba ogłoszeń: 3</li>
+                    <li>Zwykłe pozycjonowane ogłoszeń</li>
+                    <li>Brak dodatkowych benefitów</li>
+                    <li></li>
+                    <li></li>
+                  </ul>
+                </div>
+
+                <p>To twój aktualny pakiet</p>
+              </div>
+              <div className={styles.Card}>
+                <div className={styles.CardContent}>
+                  <p className={styles.CardTitle}>Premium</p>
+                  <ul>
+                    <li>Maksymalna liczba ogłoszeń: 10</li>
+                    <li>Ulepszone pozycjonowane ogłoszeń</li>
+                    <li>Możliwość uczestniczenia w akcjach promocyjnych</li>
+                    <li>Zweryfikowane konto</li>
+                    <li></li>
+                  </ul>
+                </div>
+                <Button>Wybierz</Button>
+              </div>
+              <div className={styles.Card}>
+                <div className={styles.CardContent}>
+                  <p className={styles.CardTitle}>Premium+ </p>
+                  <ul>
+                    <li>Nieograniczona liczba ogłoszeń</li>
+                    <li>Najlepsze pozycjonowane ogłoszeń</li>
+                    <li>Możliwość uczestniczenia w akcjach promocyjnych</li>
+                    <li>Zweryfikowane konto</li>
+                    <li>Możliwość wyświetlenia ogłoszeń na stronie głównej</li>
+                  </ul>
+                </div>
+                <Button kind="secondary">Wybierz</Button>
+              </div>
+            </div>
+          </section>
+        }
         <h2 className={styles.Header}>
           {isOwnProfile ? 'Twoje ogłoszenia' : 'Oferty użytkownika'}
         </h2>
