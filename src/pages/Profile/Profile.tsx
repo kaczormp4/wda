@@ -8,6 +8,7 @@ import { MSALInstance } from '../../api/Authentication/MSALConfig';
 import { Account } from 'msal';
 import { IUser, Users } from '../../api/Users';
 import Offers from '../Offers/Offers';
+import { OffersView } from '../Offers/OffersView';
 
 type ProfileProps = {};
 
@@ -24,11 +25,13 @@ const Profile: FC<ProfileProps> = () => {
     navigate(`/${route}`);
   };
 
+  const isOwnProfile = id === undefined;
+
   useEffect(() => {
     const prof = MSALInstance.getAccount();
     if (prof && id === prof.accountIdentifier) {
       navigateTo('profil');
-    } else if (id === undefined) {
+    } else if (isOwnProfile) {
       if (prof) {
         setPofile(prof);
         new OfferAPI().getUserOffers(prof.accountIdentifier).then(userOffers => {
@@ -54,7 +57,7 @@ const Profile: FC<ProfileProps> = () => {
         surname: profile.idTokenClaims.family_name,
       }
     : user;
-
+    
   if (!visibleProfile) {
     return <></>; // implement skeleton
   }
@@ -101,8 +104,12 @@ const Profile: FC<ProfileProps> = () => {
             </div>
           </div>
         </section>
-        <h2 className={styles.Header}>Oferty użytkownika</h2>
-        <section className={styles.UserOffers}>{offers && <Offers offers={offers} />}</section>
+        <h2 className={styles.Header}>
+          {isOwnProfile ? 'Twoje ogłoszenia' : 'Oferty użytkownika'}
+        </h2>
+        <section className={styles.UserOffers}>
+          {<OffersView allowEdit={isOwnProfile} offers={offers} />}
+        </section>
       </main>
     </>
   );

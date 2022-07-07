@@ -1,5 +1,5 @@
 import { ISelectedFilter } from './Categories';
-import { get, post } from './rest';
+import { get, post, remove } from './rest';
 import { IUser } from './Users';
 
 const url = '/Offers';
@@ -49,13 +49,18 @@ class Offers {
     return get(url, `?categoryId=${id}`);
   }
 
-  public report(id: IOffer['id'], body: IOfferReport): Promise<IOffer[]> {
+  public report(id: IOffer['id'], body: IOfferReport): Promise<string> {
     return post(`${url}/${id}/report`, body);
   }
 
   public post(ad: IPostOffer): Promise<number> {
     return post(url, ad, true);
   }
+
+  public delete(id: IOffer['id']): Promise<string> {
+    return remove(`${url}/${id}/delete`);
+  }
+
 }
 
 export { IImage, IOffer, IPostOffer, Offers };

@@ -94,6 +94,16 @@ function remove(url: string, urlParams: string = '') {
     });
 }
 
+function patch(url: string, payload?: Object) {
+  return api
+    .patch(`${apiURL}${url}`, payload)
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => {
+      throw handleError(error);
+    });
+}
 // TODO put
 
-export { get, post, remove, argsToString, apiURL };
+export { get, post, remove, patch, argsToString, apiURL };
