@@ -25,6 +25,10 @@ interface IOffer {
   images?: IImage[];
 }
 
+interface IOfferReport {
+  reason: string
+}
+
 type IgnoredFields = 'images' | 'selectedFilters' | 'author';
 
 interface IPostOffer extends Omit<IOffer, IgnoredFields> {
@@ -45,8 +49,12 @@ class Offers {
     return get(url, `?categoryId=${id}`);
   }
 
+  public report(id: IOffer['id'], body: IOfferReport): Promise<IOffer[]> {
+    return post(`${url}/${id}/report`, body);
+  }
+
   public post(ad: IPostOffer): Promise<number> {
-    return post(url, ad);
+    return post(url, ad, true);
   }
 }
 

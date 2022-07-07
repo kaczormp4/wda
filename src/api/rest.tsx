@@ -23,7 +23,12 @@ api.interceptors.request.use(
       const accessToken = await MSALInstance.acquireTokenSilent(Scopes);
       req.headers['Authorization'] = `Bearer ${accessToken.accessToken}`;
     }
-    req.headers['Content-Type'] = `multipart/form-data; boundary=--14737809831466499882746641449`;
+    if(req.params === 'useFormData') {
+      req.headers['Content-Type'] = `multipart/form-data; boundary=--14737809831466499882746641449`;
+    } else {
+      req.headers['Content-Type'] = `application/json`;
+    }
+
     return req;
   },
   function (error) {
@@ -59,8 +64,6 @@ function get(url: string, urlParams: string = '') {
   return api
     .get(`${apiURL}${url}${urlParams}`)
     .then(response => {
-      // console.log({store: cache.store});
-
       return response.data;
     })
     .catch(error => {
@@ -68,9 +71,9 @@ function get(url: string, urlParams: string = '') {
     });
 }
 
-function post(url: string, payload: Object) {
+function post(url: string, payload: Object, useFormData?: boolean) {
   return api
-    .post(`${apiURL}${url}`, payload)
+    .post(`${apiURL}${url}`, payload, { params: useFormData ? 'useFormData' : '' })
     .then(response => {
       return response.data;
     })

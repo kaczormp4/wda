@@ -13,6 +13,7 @@ import Offers from './pages/Offers/Offers';
 import Profile from './pages/Profile/Profile';
 import Messages from './pages/Messages/Messages';
 import FavList from './pages/FavList/FavList';
+import AdminPanel from './pages/AdminPanel/AdminPanel';
 
 // const routes = [
 //   {
@@ -81,6 +82,9 @@ function App() {
             <Route path="/apitest" element={<APITest />} />
             <Route path="/components" element={<Showcase />} />
             <Route path="/moja-lista" element={<FavList />} />
+            <Route path="/admin" element={<AdminPanel />}>
+              <Route path=":subpage" element={<Profile />} />
+            </Route>
             <Route path="/profil" element={<Profile />}>
               <Route path=":id" element={<Profile />} />
             </Route>

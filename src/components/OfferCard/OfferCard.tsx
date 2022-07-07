@@ -6,10 +6,27 @@ import { ISelectedFilter } from '../../api/Categories';
 import { getAdvPrice } from '../../utils/offersUtils';
 import { FavButton } from '../FavButton/FavButton';
 import s from './OfferCard.module.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 type P = {
   offer?: IOffer;
   skeleton?: boolean;
+};
+
+export const getTags = (filters: ISelectedFilter[]) => {
+  if (filters) {
+    const filtersMap: string[] = [];
+    filters.forEach(filter => {
+      filter.selectedFilterValues.forEach(filterVal => {
+        filtersMap.push(`${filter.filterName}: ${filterVal.value}`);
+      });
+    });
+    return filtersMap.map(v => (
+      <span className={s.Tag}>
+        <FontAwesomeIcon icon="check-circle" /> <span>{v}</span>
+      </span>
+    ));
+  }
 };
 
 export const OfferCard: FC<P> = props => {
@@ -20,17 +37,6 @@ export const OfferCard: FC<P> = props => {
 
   if (skeleton) return skeletonCard();
 
-  const getTags = (filters: ISelectedFilter[]) => {
-    if (filters) {
-      const filtersMap: string[] = [];
-      filters.forEach(filter => {
-        filter.selectedFilterValues.forEach(filterVal => {
-          filtersMap.push(`${filter.filterName}: ${filterVal.value}`);
-        });
-      });
-      return filtersMap.map(v => <p className={s.Tag}>{v}</p>);
-    }
-  };
 
   return (
     <Link className={s.OfferCard} to={`/ogloszenie/${offer.id}`}>

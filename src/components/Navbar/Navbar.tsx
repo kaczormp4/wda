@@ -8,6 +8,7 @@ import { Portal } from '../Portal/Portal';
 import styles from './Navbar.module.scss';
 import Flyout from '../commonComponents/Flyout/Flyout';
 import AuthenticationContext from '../../api/Authentication/AuthenticationContext';
+import { MSALInstance } from '../../api/Authentication/MSALConfig';
 
 interface NavbarProps {
   flyoutMenuList: {
@@ -25,6 +26,7 @@ const Navbar: FC<NavbarProps> = props => {
   const [unhideNavbar, setUnhideNavbar] = useState<boolean>(true);
   const mobileNavbarHeight = useRef<HTMLDivElement>(null);
   let lastScrollTop = 0;
+  const isAdmin = MSALInstance.getAccount(); // currently just isLoggedIn
 
   const navigate = useNavigate();
 
@@ -93,6 +95,16 @@ const Navbar: FC<NavbarProps> = props => {
           <Link to="/">WEDD LOGO</Link>
         </div>
         <nav className={styles.NavMenu}>
+          {isAdmin && (
+            <Button
+              kind="ghost"
+              onClick={() => navigateTo('admin')}
+              icon={<FontAwesomeIcon icon="dashboard" />}
+              iconPosition="left"
+            >
+              Panel administracyjny
+            </Button>
+          )}
           <Button
             kind="teritiary"
             onClick={() => navigateTo('wiadomosci')}
@@ -126,7 +138,12 @@ const Navbar: FC<NavbarProps> = props => {
             >
               <div className={styles.FlyoutMenu}>
                 {flyoutMenuList.map(item => (
-                  <Button kind="ghost" key={item.id} size="lg" onClick={() => navigateTo(item.route)}>
+                  <Button
+                    kind="ghost"
+                    key={item.id}
+                    size="lg"
+                    onClick={() => navigateTo(item.route)}
+                  >
                     {item.text}
                   </Button>
                 ))}
