@@ -78,6 +78,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/*" element={<NotFound />} />
             <Route path="/wiadomosci/:userId" element={<Messages />} />
+            <Route path="/wiadomosci" element={<Messages />} />
             <Route path="/nowe-ogloszenie" element={<NewAd />} />
             <Route path="/apitest" element={<APITest />} />
             <Route path="/components" element={<Showcase />} />
