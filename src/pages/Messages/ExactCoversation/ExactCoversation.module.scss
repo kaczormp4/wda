@@ -95,10 +95,14 @@
     background-color: var(--background-02);
     display: flex;
     justify-content: space-around;
+    align-items: center;
     .SearchEngineInput {
         width: 500px;
         max-width: 98%;
         margin: 0 10px;
+    }
+    .SendMessageButton {
+        margin-bottom: var(--spacing-04);
     }
 }
 @media only screen and (max-width: 700px) {

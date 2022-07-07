@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './ExactCoversation.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Input from '../../../components/commonComponents/Input/Input';
@@ -8,24 +8,34 @@ import { useNavigate } from 'react-router-dom';
 const ExactCoversation = ({
   close,
   userMessages,
-  id,
   handleSendMsg,
   messages,
   myUserId,
+  userId,
 }: {
   close: any;
   userMessages: any;
   handleSendMsg: any;
-  id: any;
   messages: any;
   myUserId: any;
+  userId: any;
 }) => {
   const navigate = useNavigate();
   const [message, setMessage] = useState<string>('');
 
+  const autoScroll = useRef<any>(null);
+
+  useEffect(() => {
+    if (autoScroll) {
+      autoScroll?.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages]);
+
   const navigateTo = (route: string) => {
     navigate(`/${route}`);
   };
+
+  const exactMessage = userMessages.find((user: { id: string }) => user.id === userId);
 
   return (
     <>
@@ -41,14 +51,14 @@ const ExactCoversation = ({
         </div>
         <div
           className={styles.ConversationInfoNavbarAvatar}
-          onClick={() => navigateTo(`profil/${22}`)}
+          onClick={() => navigateTo(`profil/${userId}`)}
         >
-          <img src={userMessages[id].photo} />
+          <img src={exactMessage?.photo} />
         </div>
         <div className={styles.ConversationInfoAndButtonsContainer}>
           <div className={styles.ConversationInfoNameAndStatus}>
             <h3>
-              {userMessages[id].name} {userMessages[id].surname}
+              {exactMessage?.name} {exactMessage?.surname}
             </h3>
             <div>
               <div>◉ Aktywny teraz</div>
@@ -64,13 +74,13 @@ const ExactCoversation = ({
         {messages.map((msg: any) => {
           if (msg.senderId === myUserId) {
             return (
-              <div className={styles.ConwerstionOnelineContainerRight}>
+              <div className={styles.ConwerstionOnelineContainerRight} ref={autoScroll}>
                 <div className={styles.ConwerstionOnelineContentRight}>{msg.message}</div>
               </div>
             );
           } else if (msg.senderId !== myUserId) {
             return (
-              <div className={styles.ConwerstionOnelineContainerLeft}>
+              <div className={styles.ConwerstionOnelineContainerLeft} ref={autoScroll}>
                 <div className={styles.ConwerstionOnelineContentLeft}>{msg.message}</div>
               </div>
             );
@@ -83,7 +93,13 @@ const ExactCoversation = ({
           className={styles.SearchEngineInput}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setMessage(e.target.value)}
         />
-        <button onClick={() => handleSendMsg(message)}>WYSLIJ</button>
+        <Button
+          size="lg"
+          onClick={() => handleSendMsg(message)}
+          className={styles.SendMessageButton}
+        >
+          WYSLIJ
+        </Button>
       </div>
     </>
   );
