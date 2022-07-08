@@ -43,6 +43,9 @@
     // sizes
     &--sm {
         padding: var(--spacing-03);
+        + .wedd-input--active {
+            padding: var(--spacing-01);
+        }
     }
     &--md {
         padding: var(--spacing-04);

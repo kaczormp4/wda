@@ -10,7 +10,7 @@
         margin-top: var(--spacing-03);
         border-radius: var(--spacing-02);
         display: flex;
-        margin-bottom: var(--spacing-06);
+        margin-bottom: var(--spacing-05);
 
         .UserAvatar {
             margin-right: var(--spacing-05);
@@ -48,6 +48,64 @@
                 gap: 1rem;
                 & button {
                     width: 200px;
+                }
+            }
+        }
+        .ProfileType {
+            font-size: var(--font-size-02);
+            color: var(--disabled-02);
+        }
+    }
+
+    .PremiumSection {
+        padding: var(--spacing-05);
+        background-color: var(--background-02);
+        margin-top: var(--spacing-03);
+        margin-bottom: var(--spacing-05);
+        border-radius: var(--spacing-02);
+
+        > h2 {
+            font-size: var(--font-size-04);
+            margin-bottom: var(--font-size-02);
+            font-weight: bold;
+            margin-bottom: var(--spacing-05);
+        }
+        
+        &Wrapper {
+            justify-content: flex-start;
+            display: flex;
+            gap: var(--spacing-05);
+            flex-wrap: wrap;
+            justify-content: center;
+
+
+        }
+
+        .Card {
+            box-shadow: var(--box-shadow--small);
+            padding: var(--spacing-02);
+            border-radius: var(--spacing-01);
+            text-align: center;
+            min-width: 300px;
+            max-width: 50%;
+            flex: 1;
+            &Title {
+                font-size: var(--font-size-04);
+                margin-bottom: var(--spacing-02);
+            }
+            ul {
+                text-align: left;
+                margin: var(--spacing-01);
+                li {
+                    font-size: var(--font-size-03);
+                    min-height: var(--spacing-06);
+                    padding: var(--spacing-02) var(--spacing-04);
+                    display: flex;
+                    align-items: center;
+                    color: var(--text-03);
+                    &:not(:last-of-type) {
+                        border-bottom: 1px solid var(--md-overlay);
+                    }
                 }
             }
         }

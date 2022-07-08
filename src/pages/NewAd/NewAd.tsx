@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Offers, IPostOffer } from '../../api/Offers';
@@ -17,6 +17,7 @@ import styles from './NewAd.module.scss';
 import PhotoAdder from './PhotoAdder';
 import { TextEditor } from '../../components/commonComponents/TextEditor/TextEditor';
 import MultiSelect from '../../components/commonComponents/MultiSelect/MultiSelect';
+import AuthenticationContext from '../../api/Authentication/AuthenticationContext';
 
 enum PRICE_TYPES {
   UNIT = 'UNIT',
@@ -43,6 +44,11 @@ const priceTypes: ISelectItem[] = [
 
 const NewAd: FC = () => {
   const navigate = useNavigate();
+  const context = useContext(AuthenticationContext);
+  if(!context.isAuthenticated) {
+    navigate('/');
+  }
+
   // REST
   const [categories, setCategories] = useState<ICategory[]>(null);
   const [priceUnits, setPriceUnits] = useState<ISelectItem[]>(null);

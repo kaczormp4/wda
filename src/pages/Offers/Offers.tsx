@@ -10,6 +10,7 @@ import Button from '../../components/commonComponents/Button/Button';
 import classNames from 'classnames';
 import MultiSelect from '../../components/commonComponents/MultiSelect/MultiSelect';
 import { OffersView } from './OffersView';
+import Input from '../../components/commonComponents/Input/Input';
 
 type OffersProps = {
   offers?: IOffer[];
@@ -21,6 +22,7 @@ const Offers = (props: OffersProps) => {
   const [category, setCategory] = useState<ICategoryFilter>(null);
   const [categories, setCategories] = useState<ICategory[]>(null);
   const [dynamicFilters, setDynamicFilters] = useState([]);
+  const [searchValue, setSearchValue] = useState<string>('');
   let { id } = useParams();
   const categoryId = Number(id);
   const navigate = useNavigate();
@@ -116,6 +118,15 @@ const Offers = (props: OffersProps) => {
           )}
           {category?.filters.map(c => getCategorySelect(c))}
         </div>
+        <div className={s.SearchWrapper}>
+          <Input
+            kind="outlined"
+            size="sm"
+            type="search"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value)}
+            label="Wyszukaj po nazwie i opisie ogłoszenia"
+          />
+        </div>
         {/* <Button
           kind="ghost"
           onClick={() => setDynamicFilters([])}
@@ -140,14 +151,23 @@ const Offers = (props: OffersProps) => {
   };
 
   const filteredOffers = (offers: IOffer[]) => {
+    if(!offers) return null;
     const currFilters = Object.values(dynamicFilters);
+    let filteredOffers = [...offers];
+    if(searchValue) {
+      filteredOffers = filteredOffers.filter((v) =>  
+        v.title.toLowerCase().includes((searchValue.toLowerCase())) ||
+        v.description.toLowerCase().includes((searchValue.toLowerCase())) ||
+        v.shortDescription.toLowerCase().includes((searchValue.toLowerCase()))
+      )
+    }
     if (currFilters.length) {
-      return offers.filter(offer => {
+      return filteredOffers.filter(offer => {
         const selectedFilters = offer.selectedFilters?.map(v => v.selectedFilterValues).flat();
         const selectedFiltersIDs = selectedFilters.map(v => v.id);
         return currFilters.every(ids => ids.some((v: number) => selectedFiltersIDs.includes(v)));
       });
-    } else return offers;
+    } else return filteredOffers;
   };
 
   return (

@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FC, useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import classnames from 'classnames';
 
 import Button from '../commonComponents/Button/Button';
@@ -9,6 +9,7 @@ import styles from './Navbar.module.scss';
 import Flyout from '../commonComponents/Flyout/Flyout';
 import AuthenticationContext from '../../api/Authentication/AuthenticationContext';
 import { MSALInstance } from '../../api/Authentication/MSALConfig';
+import { IOffer, Offers } from '../../api/Offers';
 
 interface NavbarProps {
   flyoutMenuList: {
@@ -21,9 +22,12 @@ interface NavbarProps {
 
 const Navbar: FC<NavbarProps> = props => {
   const context = useContext(AuthenticationContext);
+  const location = useLocation();
+
   const { flyoutMenuList } = props;
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   const [unhideNavbar, setUnhideNavbar] = useState<boolean>(true);
+  const [offers, setOffers] = useState<IOffer[]>(null);
   const mobileNavbarHeight = useRef<HTMLDivElement>(null);
   let lastScrollTop = 0;
   const isAdmin = MSALInstance.getAccount(); // currently just isLoggedIn
@@ -51,6 +55,12 @@ const Navbar: FC<NavbarProps> = props => {
   }, []);
 
   useEffect(() => {
+    const prof = MSALInstance.getAccount();
+    if (prof) {
+      new Offers().getUserOffers(prof.accountIdentifier).then(userOffers => {
+        setOffers(userOffers);
+      });
+    }
     document.addEventListener('keydown', escFunction, false);
     window.addEventListener('scroll', handleScroll, false);
 
@@ -121,13 +131,37 @@ const Navbar: FC<NavbarProps> = props => {
           >
             Moja Lista
           </Button>
-          <Button
-            kind="teritiary"
-            onClick={() => navigateTo('nowe-ogloszenie')}
-            icon={<FontAwesomeIcon icon="circle-plus" />}
+          <Flyout
+            direction="bottom-end"
+            openOnHover
+            useAbsolutePositioning
+            focusTrap
+            disabled={(offers && offers.length < 3 ) || location.pathname === '/profil'}
+            buttonProps={{
+              kind: 'teritiary',
+              children: 'Dodaj ogłoszenie',
+              disabled: !offers || offers.length >= 3,
+              onClick: () =>
+                context.isAuthenticated ? navigateTo('nowe-ogloszenie') : context.login(),
+              icon: <FontAwesomeIcon icon="circle-plus" />,
+            }}
           >
-            Dodaj ogłoszenie
-          </Button>
+            <div className={styles.FlyoutBtn}>
+              <p>Posiadasz co najmniej 3 aktywne ogłoszenia.</p>
+              <p>
+                Dodaj pakiet do swojego konta, móc dodać kolejne ogłoszenia i zyskac dodatkowe
+                korzyści!
+              </p>
+              <Button
+              size="sm"
+                onClick={() =>
+                  navigate('/profil')
+                }
+              >
+                Przejdź do ustawień
+              </Button>
+            </div>
+          </Flyout>
           {context.isAuthenticated ? (
             <Flyout
               direction="bottom-end"

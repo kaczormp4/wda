@@ -15,7 +15,6 @@
         @include centerSection(var(--width-desktop-1600));
         gap: var(--spacing-03);
         column-gap: var(--spacing-06);
-        column-gap: 2rem;
         justify-content: flex-start;
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(640px, 1fr));
