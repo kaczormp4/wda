@@ -14,6 +14,7 @@ import Profile from './pages/Profile/Profile';
 import Messages from './pages/Messages/Messages';
 import FavList from './pages/FavList/FavList';
 import AdminPanel from './pages/AdminPanel/AdminPanel';
+import OfferEdit from './pages/Offer/OfferEdit/OfferEdit';
 
 // const routes = [
 //   {
@@ -92,8 +93,9 @@ function App() {
             <Route path="/ogloszenia" element={<Offers />}>
               <Route path=":id" element={<Offers />} />
             </Route>
-            <Route path="/ogloszenie" element={<Offer />}>
+            <Route path="/ogloszenie">
               <Route path=":offerId" element={<Offer />} />
+              <Route path=":offerId/edycja" element={<OfferEdit />} />
             </Route>
           </Routes>
         </div>

@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { FC, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { IOffer } from '../../api/Offers';
 import { ISelectedFilter } from '../../api/Categories';
 import { getAdvPrice } from '../../utils/offersUtils';
@@ -36,6 +36,11 @@ export const OfferCard: FC<P> = props => {
   const { offer, skeleton, allowEdit } = props;
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   const [hideOffer, setHideOffer] = useState<boolean>(false);
+  const navigate = useNavigate();
+
+  const navigateTo = (route: string) => {
+    navigate(`/${route}`);
+  };
   const skeletonCard = () => {
     return <div className={classNames(s.OfferCard, s.Skeleton)}></div>;
   };
@@ -71,14 +76,21 @@ export const OfferCard: FC<P> = props => {
               Dodane przez: {offer.author.givenName} {offer.author.surname}{' '}
             </p>
             {allowEdit ? (
-              <div>
+              <div className={s.footerEdit}>
+                <Button
+                  kind="teritiary"
+                  icon={<FontAwesomeIcon icon="edit" />}
+                  onClick={() => navigateTo(`ogloszenie/${offer.id}/edycja`)}
+                >
+                  Edytuj
+                </Button>
                 <Button
                   danger
                   kind="ghost"
                   icon={<FontAwesomeIcon icon="trash" />}
                   onClick={setShowDeleteModal}
                 >
-                  Usuń ogłoszenie
+                  Usuń
                 </Button>
               </div>
             ) : (

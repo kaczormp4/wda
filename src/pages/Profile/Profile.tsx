@@ -6,15 +6,19 @@ import Button from '../../components/commonComponents/Button/Button';
 import { useNavigate, useParams } from 'react-router-dom';
 import { MSALInstance } from '../../api/Authentication/MSALConfig';
 import { Account } from 'msal';
-import { IUser, Users } from '../../api/Users';
+import { IUser, IUserEdit, Users } from '../../api/Users';
 import Offers from '../Offers/Offers';
 import { OffersView } from '../Offers/OffersView';
+import { Controller, useForm } from 'react-hook-form';
+import Input from '../../components/commonComponents/Input/Input';
+import { toast } from 'react-toastify';
 
 type ProfileProps = {};
 
 const Profile: FC<ProfileProps> = () => {
   const [offers, setOffers] = useState<IOffer[]>(null);
   const [profile, setPofile] = useState<Account>(null);
+  const [editUserForm, setEditUserForm] = useState<boolean>(null);
   // const [premiumVisbility, setPremiumVisbility] = useState<boolean>(false);
   const [isShowPhoneNumber, setShowPhoneNumber] = useState<boolean>(false);
   const [user, setUser] = useState<IUser>(null);
@@ -26,42 +30,57 @@ const Profile: FC<ProfileProps> = () => {
     navigate(`/${route}`);
   };
 
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    formState,
+    watch,
+    getValues,
+    reset,
+  } = useForm({
+    mode: 'all',
+    defaultValues: {
+      givenName: '',
+      surname: '',
+      description: '',
+    },
+  });
+  watch();
+
   const isOwnProfile = id === undefined;
 
   useEffect(() => {
     const prof = MSALInstance.getAccount();
     if (prof && id === prof.accountIdentifier) {
       navigateTo('profil');
-    } else if (isOwnProfile) {
-      if (prof) {
-        setPofile(prof);
-        new OfferAPI().getUserOffers(prof.accountIdentifier).then(userOffers => {
-          console.log({ userOffers });
-          setOffers(userOffers);
-        });
-      } else navigateTo('notfound');
-    } else {
-      new Users().get(id).then(user => {
-        setUser(user);
-      });
-      new OfferAPI().getUserOffers(id).then(userOffers => {
-        console.log({ userOffers });
-        setOffers(userOffers);
-      });
     }
+    new Users().get(isOwnProfile ? prof.accountIdentifier : id).then(user => {
+      reset({
+        givenName: user.givenName,
+        surname: user.surname,
+        description: '',
+      });
+      setUser(user);
+    });
+    new OfferAPI().getUserOffers(isOwnProfile ? prof.accountIdentifier : id).then(userOffers => {
+      console.log({ userOffers });
+      setOffers(userOffers);
+    });
   }, [id]);
 
-  const visibleProfile: IUser = profile
-    ? {
-        userIdentifier: profile.sid,
-        givenName: profile.idTokenClaims.given_name,
-        surname: profile.idTokenClaims.family_name,
-      }
-    : user;
-
-  if (!visibleProfile) {
+  if (!user) {
     return <></>; // implement skeleton
   }
+
+  const onSubmit = (values: IUserEdit) => {
+    console.log({ values });
+    new Users().patch(user.userIdentifier, values).then(v => {
+      setUser({...user, ...values});
+      setEditUserForm(false);
+      toast.success(v);
+    });
+  };
 
   return (
     <>
@@ -76,32 +95,103 @@ const Profile: FC<ProfileProps> = () => {
           </div>
           <div className={styles.MainUserInfoContainer}>
             <div className={styles.UserNameAndRate}>
-              <div>
-                {visibleProfile.givenName || visibleProfile.surname ? (
-                  <h1>
-                    {visibleProfile.givenName} {visibleProfile.surname}
-                  </h1>
-                ) : (
-                  <h1>{profile?.name}</h1>
-                )}
-                <span className={styles.ProfileType}>Zwykły użytkownik</span>
-              </div>
-              <div>45 opinii</div>
-              <div>★★★★★</div>
+              {editUserForm ? (
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <Controller
+                    name="givenName"
+                    control={control}
+                    rules={{
+                      required: 'Imię nie może być puste',
+                      maxLength: {
+                        value: 120,
+                        message: 'Imię nie może mieć więcej niż 120 znaków',
+                      },
+                    }}
+                    render={({ field }) => (
+                      <Input
+                        className={styles.LongInput}
+                        defaultValue={field.value}
+                        kind="filled"
+                        type="text"
+                        label="Imię"
+                        required
+                        errorText={errors.givenName?.message}
+                        error={Boolean(errors.givenName)}
+                        {...field}
+                      />
+                    )}
+                  />
+                  <Controller
+                    name="surname"
+                    control={control}
+                    rules={{
+                      required: 'Nazwisko nie może być puste',
+                      maxLength: {
+                        value: 120,
+                        message: 'Nazwisko nie może mieć więcej niż 120 znaków',
+                      },
+                    }}
+                    render={({ field }) => (
+                      <Input
+                        className={styles.LongInput}
+                        defaultValue={field.value}
+                        kind="filled"
+                        type="text"
+                        label="Nazwisko"
+                        required
+                        errorText={errors.surname?.message}
+                        error={Boolean(errors.surname)}
+                        {...field}
+                      />
+                    )}
+                  />
+                  <Button
+                    type="submit"
+                    size="md"
+                    kind="secondary"
+                    value="Submit"
+                    onClick={handleSubmit(onSubmit)}
+                  >
+                    Wyślij
+                  </Button>
+                </form>
+              ) : (
+                <>
+                  <div>
+                    {user.givenName || user.surname ? (
+                      <h1>
+                        {user.givenName} {user.surname}
+                      </h1>
+                    ) : (
+                      <h1>{profile?.name}</h1>
+                    )}
+                    <span className={styles.ProfileType}>Zwykły użytkownik</span>
+                  </div>
+                  <div>45 opinii</div>
+                  <div>★★★★★</div>
+                </>
+              )}
               {/* <Button kind="secondary" onClick={() => setPremiumVisbility(!premiumVisbility)}>
                 {!premiumVisbility ? 'Zmień plan na wyższy' : 'Ukryj sekcję pakietów'}
               </Button> */}
             </div>
             <div className={styles.Buttons}>
-              {profile && <Button icon={<FontAwesomeIcon icon="edit" />}>Edytuj profil</Button>}
+              {isOwnProfile && (
+                <Button
+                  icon={<FontAwesomeIcon icon="edit" />}
+                  onClick={() => setEditUserForm(!editUserForm)}
+                >
+                  Edytuj profil
+                </Button>
+              )}
               <Button onClick={() => setShowPhoneNumber(!isShowPhoneNumber)}>Zadzwoń</Button>
               {isShowPhoneNumber && (
                 <div className={styles.PhoneNumber}>
                   723 333 222 <FontAwesomeIcon icon="clone" />
                 </div>
               )}
-              {user && (
-                <Button renderAsLink={true} href={`/wiadomosci/${visibleProfile.userIdentifier}`}>
+              {!isOwnProfile && (
+                <Button renderAsLink={true} href={`/wiadomosci/${user.userIdentifier}`}>
                   Wyślij wiadomość
                 </Button>
               )}
