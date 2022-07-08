@@ -20,6 +20,19 @@
         }
     }
 
+    .StatsCard {
+        background: var(--background-01);
+        border-radius: var(--spacing-02);
+        padding: var(--spacing-04) var(--spacing-03);
+        .CardTitle {
+            color: var(--text-03);
+            margin-bottom: var(--spacing-03);
+        }
+        .CardValue {
+            font-size: var(--font-size-06);
+        }
+    }
+
     .Reports {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));

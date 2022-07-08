@@ -25,7 +25,7 @@ const AdminPanel: FC<AdminPanelProps> = () => {
   let { subpage } = useParams<string>();
   const [activePage, setActivePage] = useState(Pages.main.route);
   const [reports, setReports] = useState<IReport[]>(null);
-  const [statistics, setStatistics] = useState<IStatistics[]>(null);
+  const [statistics, setStatistics] = useState<IStatistics>(null);
 
   useEffect(() => {
     const prof = MSALInstance.getAccount();
@@ -48,7 +48,6 @@ const AdminPanel: FC<AdminPanelProps> = () => {
       console.log(val);
       setStatistics(val);
     });
-
   };
 
   const switchPage = (page: string) => {
@@ -56,18 +55,35 @@ const AdminPanel: FC<AdminPanelProps> = () => {
   };
 
   const toggleReport = (id: number) => {
-    new Reports().toggle(id).then((val) => {
+    new Reports().toggle(id).then(val => {
       toast.info(val);
       const newReports = [...reports];
-      setReports(newReports.filter((v) =>v.id !== id)); 
-    })
-  }
+      setReports(newReports.filter(v => v.id !== id));
+    });
+  };
 
   const getActiveView = () => {
     if (activePage === Pages.main.route) {
       return (
         <div className={styles.Reports}>
-          <p>Brak statysyk</p>
+          {statistics ? (
+            <>
+              <div className={styles.StatsCard}>
+                <p className={styles.CardTitle}>Liczba utworzonych ogłoszeń</p>
+                <p className={styles.CardValue}>{statistics.offersCreated}</p>
+              </div>
+              <div className={styles.StatsCard}>
+                <p className={styles.CardTitle}>Liczba użytkowników</p>
+                <p className={styles.CardValue}>{statistics.amountOfUsers}</p>
+              </div>
+              <div className={styles.StatsCard}>
+                <p className={styles.CardTitle}>Liczba zgłoszeń</p>
+                <p className={styles.CardValue}>{statistics.amountOfReports}</p>
+              </div>
+            </>
+          ) : (
+            <></>
+          )}
         </div>
       );
     }
@@ -80,7 +96,9 @@ const AdminPanel: FC<AdminPanelProps> = () => {
                 <div className={styles.ReportHeader}>
                   <span className={styles.ReportID}>#{report.id}</span>
                   <div>
-                    <Button kind="ghost" onClick={() => toggleReport(report.id)}>Zamknij zgłoszenie</Button>
+                    <Button kind="ghost" onClick={() => toggleReport(report.id)}>
+                      Zamknij zgłoszenie
+                    </Button>
                     <span
                       className={classnames(styles.ReportStatus, {
                         [styles.ReportComplete]: report.isCompleted,
