@@ -198,7 +198,7 @@ const Profile: FC<ProfileProps> = () => {
             </div>
           </div>
         </section>
-        {
+        { isOwnProfile && 
           <section className={styles.PremiumSection}>
             <h2>Pakiet twojego konta</h2>
             <div className={styles.PremiumSectionWrapper}>

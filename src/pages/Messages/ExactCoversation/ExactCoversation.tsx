@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '../../../components/commonComponents/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import TextField from '../../../components/commonComponents/TextField/TextField';
+import moment from 'moment';
 
 const ExactCoversation = ({
   close,
@@ -82,9 +83,9 @@ const ExactCoversation = ({
       </div>
       <div className={styles.ConversationContent}>
         {messages.map((msg: any) => {
-          const d = new Date(msg.date);
+          const d = moment(msg.date);
           // let day = `${d.getDay()}/ ${d.getMonth()} ${d.getHours()}:${d.getMinutes()}`;
-          const formattedHours = `${d.getHours()}:${d.getMinutes()}`;
+          const formattedHours = `${d.format('HH:mm')}`;
           if (msg.senderId === myUserId) {
             return (
               <div className={styles.ConwerstionOnelineContainerRight} ref={autoScroll}>
