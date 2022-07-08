@@ -5,77 +5,48 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Input from '../../components/commonComponents/Input/Input';
 import ExactCoversation from './ExactCoversation/ExactCoversation';
 import AuthenticationContext from '../../api/Authentication/AuthenticationContext';
-import { HttpTransportType, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
+import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 import { MSALInstance } from '../../api/Authentication/MSALConfig';
 import { Users } from '../../api/Users';
+import classNames from 'classnames';
 
-// const userMessages = [
-//   {
-//     id: 0,
-//     photo:
-//       'https://mir-s3-cdn-cf.behance.net/project_modules/disp/ea7a3c32163929.567197ac70bda.png',
-//     name: 'Jan',
-//     surname: 'Kowalski',
-//     lastMessage: 'Witam Serdecznie. Czy ten golf wolkswagen to na gaz?',
-//     date: '22.02',
-//   },
-//   {
-//     id: 1,
-//     photo: 'https://wolnomularstwo.pl/wp-content/uploads/2020/12/john-locke-mason.jpg',
-//     name: 'John',
-//     surname: 'Lock',
-//     lastMessage: 'Nie dam rady',
-//     date: '21.02',
-//   },
-//   {
-//     id: 2,
-//     photo: 'https://www.pinknews.co.uk/images/2018/04/Emily-2-Tinder-650x635.jpg',
-//     name: 'Anna',
-//     surname: 'Nowak',
-//     lastMessage: 'Za darmo to uczciwa cena',
-//     date: '2.02',
-//   },
-//   {
-//     id: 3,
-//     photo: 'https://skslegal.pl/wp-content/uploads/2020/02/skibniewski_karol-5.jpg',
-//     name: 'Karol',
-//     surname: 'Cepen',
-//     lastMessage: 'Będe o 14',
-//     date: '22.12',
-//   },
-//   {
-//     id: 4,
-//     photo: 'https://static.goldenline.pl/user_photo/040/user_6049064_7db230_huge.jpg',
-//     name: 'Michał',
-//     surname: 'Kichał',
-//     lastMessage: 'haha',
-//     date: '22.02',
-//   },
-//   {
-//     id: 5,
-//     photo: 'https://img.a.transfermarkt.technology/portrait/big/208166-1594710596.jpg',
-//     name: 'Bartłomiej',
-//     surname: 'Nieobecny',
-//     lastMessage: 'Nie pozdrawiam',
-//     date: '22.02',
-//   },
-//   {
-//     id: 6,
-//     photo: 'https://skslegal.pl/wp-content/uploads/2020/02/skibniewski_karol-5.jpg',
-//     name: 'Jarosław',
-//     surname: 'Polskezbaw',
-//     lastMessage: 'Za PO to by pan wiecej zaplacil',
-//     date: '22.12',
-//   },
-//   {
-//     id: 7,
-//     photo: 'https://bi.im-g.pl/im/e4/8e/18/z25751524V,Adam-Malysz.jpg',
-//     name: 'Adam',
-//     surname: 'Małysz',
-//     lastMessage: 'Skocze pozniej',
-//     date: '21.02',
-//   },
-// ];
+const mockUserMessages = [
+  {
+    id: '7b54b360-d73b-4432-b173-55adccb42590',
+    photo:
+      'https://media-exp1.licdn.com/dms/image/C4E03AQEwQK67CAdYqw/profile-displayphoto-shrink_400_400/0/1637600147999?e=1662595200&v=beta&t=Dkf_nzQf3ycfMrioWgZy_iz7OFx4qCBuMVATrR2Xoc8',
+    name: 'Jakub  ',
+    surname: 'Faliszewski',
+    lastMessage: 'Mock Message',
+    date: '22.02',
+  },
+  {
+    id: '0793d5fc-f20a-4498-b336-8a359aa0ab0f',
+    photo:
+      'https://media-exp1.licdn.com/dms/image/C5603AQEKIu8SJ5n-kg/profile-displayphoto-shrink_800_800/0/1596805427253?e=1662595200&v=beta&t=now8Ux5h8piZkHJul9N937rC-Ih4vuSpMSlJm0S2J3c',
+    name: 'Tomasz',
+    surname: 'Lesniak',
+    lastMessage: 'Mock Message',
+    date: '21.02',
+  },
+  {
+    id: '63b313b2-50af-4695-97f7-c357788ff92d',
+    photo:
+      'https://media-exp1.licdn.com/dms/image/C4E03AQHUl0wLziO19w/profile-displayphoto-shrink_800_800/0/1648037282153?e=1662595200&v=beta&t=K1L7WPLYDCSfUT-_Lpg5M_BFwfW0ubWCcvgrZnqR6lI',
+    name: 'Bartłomiej',
+    surname: 'Kaczmarczyk',
+    lastMessage: 'Mock Message',
+    date: '2.02',
+  },
+  {
+    id: '6fbb147d-279c-4a08-abb9-9f90b96c8e97',
+    photo: 'https://www.pinknews.co.uk/images/2018/04/Emily-2-Tinder-650x635.jpg',
+    name: 'Bartusiek',
+    surname: 'Kczmrczyk',
+    lastMessage: 'Mock Message',
+    date: '2.02',
+  },
+];
 type MessagesProps = {};
 
 const Messages: FC<MessagesProps> = () => {
@@ -83,8 +54,9 @@ const Messages: FC<MessagesProps> = () => {
   const [openMobileModal, setOpenMobileModal] = useState<boolean>(true);
   const [messages, setMessages] = useState<any>([]);
   const [userMessages, setUserMessages] = useState<any>([]); // lista wiadomosci  z lewej str
-
   const [user, setUser] = useState<any>(null);
+  const [userId, setUserId] = useState<any>(user?.userIdentifier);
+
   const context = useContext(AuthenticationContext);
 
   const navigate = useNavigate();
@@ -97,25 +69,41 @@ const Messages: FC<MessagesProps> = () => {
   let { userId: userIdFromParams } = useParams();
 
   useEffect(() => {
-    const sss = async () => {
-      const token = await context.getToken();
+    if (context.isAuthenticated) {
+      const sss = async () => {
+        const token = await context.getToken();
 
-      const connection = new HubConnectionBuilder()
-        .withUrl('https://weddings.azurewebsites.net/chatHub', {
-          accessTokenFactory: () => token.accessToken,
-        })
-        .configureLogging(LogLevel.Debug)
-        .build();
+        const connection = new HubConnectionBuilder()
+          .withUrl('https://weddings.azurewebsites.net/chatHub', {
+            accessTokenFactory: () => token.accessToken,
+          })
+          .configureLogging(LogLevel.Debug)
+          .build();
 
-      setConnection(connection);
+        setConnection(connection);
 
-      connection.on('ReceiveMessage', (message: any) => {
-        setMessages((prev: any) => [...prev, message]);
-      });
+        connection.on('ReceiveMessage', (message: any) => {
+          setMessages((prev: any) => [...prev, message]);
+          // if (messages) {
+          //   const currentUser = userMessages?.map((user: any) => {
+          //     console.log(messages[messages.length - 1]?.message);
 
-      await connection.start();
-    };
-    sss().catch(console.error);
+          //     if (user?.id === messages[messages.length - 1]?.senderId) {
+          //       return { ...user, lastMessage: 'sssss' };
+          //     } else {
+          //       return { ...user };
+          //     }
+          //   });
+          //   if (currentUser) {
+          //     setUserMessages(currentUser);
+          //   }
+          // }
+        });
+
+        await connection.start();
+      };
+      sss().catch(console.error);
+    }
   }, []);
 
   useEffect(() => {
@@ -123,57 +111,58 @@ const Messages: FC<MessagesProps> = () => {
     if (prof && userIdFromParams === prof.accountIdentifier) {
       navigateTo('profil');
     } else {
-      new Users().get(userIdFromParams).then(user => {
-        setUser(user);
-      });
+      if (!!userIdFromParams) {
+        new Users().get(userIdFromParams).then(user => {
+          setUser(user);
+        });
+      }
     }
   }, [userIdFromParams]);
 
   useEffect(() => {
     if (!!user) {
-      setUserMessages([
-        {
-          id: user?.userIdentifier,
-          photo:
-            'https://mir-s3-cdn-cf.behance.net/project_modules/disp/ea7a3c32163929.567197ac70bda.png',
-          name: user?.givenName,
-          surname: user?.surname,
-          lastMessage: 'Skocze pozniej',
-          date: '21.02',
-        },
-      ]);
+      const orderMsgs = mockUserMessages
+        .filter(msg => msg.id !== context?.authInfo?.accountIdentifier)
+        .map(msg => {
+          if (msg.id === user?.userIdentifier) {
+            return {
+              isBold: true,
+              ...msg,
+            };
+          } else {
+            return { ...msg };
+          }
+        });
+      setUserMessages(orderMsgs);
     } else {
-      setUserMessages([
-        {
-          id: 7,
-          photo: 'https://bi.im-g.pl/im/e4/8e/18/z25751524V,Adam-Malysz.jpg',
-          name: 'Adam',
-          surname: 'Małysz',
-          lastMessage: 'Skocze pozniej',
-          date: '21.02',
-        },
-      ]);
+      const orderMsgs = mockUserMessages.filter(
+        msg => msg.id !== context?.authInfo?.accountIdentifier
+      );
+      setUserMessages(orderMsgs);
     }
   }, [user]);
 
   const changeMessage = (id: string) => {
     // setOpenMobileModal(true);
-    // setUserId(id);
+    setUserId(id);
+    navigateTo(`wiadomosci/${id}`);
     // zmienic gdy bedzie endpoint na zapisane wiadomoscioo
   };
 
   const handleSendMsg = (message: string) => {
-    isConnection.invoke('SendMessage', userIdFromParams, message);
+    if (message) {
+      isConnection.invoke('SendMessage', userIdFromParams, message);
 
-    setMessages((prev: any) => [
-      ...prev,
-      {
-        date: '2022-07-07T06:30:53.8777528Z',
-        message,
-        senderDisplayName: context?.authInfo?.name,
-        senderId: context?.authInfo?.accountIdentifier,
-      },
-    ]);
+      setMessages((prev: any) => [
+        ...prev,
+        {
+          date: '2022-07-07T06:30:53.8777528Z',
+          message,
+          senderDisplayName: context?.authInfo?.name,
+          senderId: context?.authInfo?.accountIdentifier,
+        },
+      ]);
+    }
   };
 
   const filtredUserMessages = userMessages.filter(
@@ -182,6 +171,10 @@ const Messages: FC<MessagesProps> = () => {
       user.surname.toLowerCase().includes(findMessage.toLowerCase()) ||
       user.lastMessage.toLowerCase().includes(findMessage.toLowerCase())
   );
+
+  if (!context.isAuthenticated) {
+    navigateTo(``);
+  }
 
   return (
     <>
@@ -198,7 +191,12 @@ const Messages: FC<MessagesProps> = () => {
           <div className={styles.AllMessages}>
             {filtredUserMessages.length > 0 ? (
               filtredUserMessages.map((user: any) => (
-                <div className={styles.OneMessageContainer} onClick={() => changeMessage(user.id)}>
+                <div
+                  className={classNames(styles.OneMessageContainer, {
+                    [`${styles.OneMessageContainerSelected} `]: user.isBold,
+                  })}
+                  onClick={() => changeMessage(user.id)}
+                >
                   <div className={styles.OneMessageAvatar}>
                     <img src={user.photo} />
                   </div>
@@ -226,7 +224,7 @@ const Messages: FC<MessagesProps> = () => {
               handleSendMsg={handleSendMsg}
               messages={messages}
               myUserId={context?.authInfo?.accountIdentifier}
-              userId={user?.userIdentifier}
+              userId={userId || userIdFromParams || userMessages[0]?.id}
             />
           )}
         </div>

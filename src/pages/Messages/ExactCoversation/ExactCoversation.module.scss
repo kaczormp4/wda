@@ -67,12 +67,30 @@
         width: 100%;
         display: flex;
         justify-content: flex-end;
+        position: relative;
         .ConwerstionOnelineContentRight {
             max-width: 50%;
             background-color: var(--primary);
             margin: var(--spacing-04);
             padding: var(--spacing-04);
             border-radius: var(--spacing-02) var(--spacing-02) 0 var(--spacing-02);
+            box-shadow: 0 2px 4px 0 rgb(0 0 0 / 10%);
+            word-wrap: break-word;
+            animation: OpacityAnimation 400ms linear;
+        }
+        .ConwerstionOnelineDate {
+            opacity: 0;
+            position: absolute;
+            bottom: -2px;
+            color: var(--text-03);
+            font-size: var(--font-size-02);
+            transition-duration: 0.4s;
+            transition-timing-function: ease-in-out;
+        }
+        &:hover {
+            .ConwerstionOnelineDate {
+                opacity: 1;
+            }
         }
     }
     /// POPRAWIC TO !!!!!!!!!!!!!!
@@ -80,29 +98,61 @@
         width: 100%;
         display: flex;
         justify-content: flex-start;
+        position: relative;
         .ConwerstionOnelineContentLeft {
             max-width: 50%;
-            background-color: var(--primary);
+            background-color: var(--text-02);
             margin: var(--spacing-04);
             padding: var(--spacing-04);
             border-radius: var(--spacing-02) var(--spacing-02) var(--spacing-02) 0;
+            box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
+            word-wrap: break-word;
+            animation: OpacityAnimation 400ms linear;
+        }
+        .ConwerstionOnelineDate {
+            opacity: 0;
+            position: absolute;
+            bottom: -2px;
+            color: var(--text-03);
+            font-size: var(--font-size-02);
+            transition-duration: 0.4s;
+            transition-timing-function: ease-in-out;
+        }
+        &:hover {
+            .ConwerstionOnelineDate {
+                opacity: 1;
+            }
+        }
+    }
+    @keyframes OpacityAnimation {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
         }
     }
 }
 .WriteMessageContainer {
     margin-top: auto;
-    width: 100%;
     background-color: var(--background-02);
     display: flex;
     justify-content: space-around;
     align-items: center;
-    .SearchEngineInput {
-        width: 500px;
-        max-width: 98%;
-        margin: 0 10px;
+    margin-top: var(--spacing-04);
+    margin-bottom: var(--spacing-04);
+    .textField {
+        width: 100%;
+        margin-left: var(--spacing-02);
+        margin-right: var(--spacing-06);
+        height: var(--spacing-07);
+        min-height: var(--spacing-07);
+        padding-top: 0;
+        padding-bottom: 0;
     }
     .SendMessageButton {
-        margin-bottom: var(--spacing-04);
+        // margin-bottom: var(--spacing-04);
+        margin-right: var(--spacing-04);
     }
 }
 @media only screen and (max-width: 700px) {
