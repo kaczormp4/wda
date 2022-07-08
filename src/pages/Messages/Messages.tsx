@@ -104,7 +104,7 @@ const Messages: FC<MessagesProps> = () => {
       };
       sss().catch(console.error);
     }
-  }, []);
+  }, [context.isAuthenticated]);
 
   useEffect(() => {
     const prof = MSALInstance.getAccount();
