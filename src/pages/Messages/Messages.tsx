@@ -156,7 +156,7 @@ const Messages: FC<MessagesProps> = () => {
       setMessages((prev: any) => [
         ...prev,
         {
-          date: '2022-07-07T06:30:53.8777528Z',
+          date: new Date(),
           message,
           senderDisplayName: context?.authInfo?.name,
           senderId: context?.authInfo?.accountIdentifier,

@@ -116,7 +116,7 @@ const ExactCoversation = ({
           onClick={(e: React.MouseEvent) => handleSendMessage(e)}
           className={styles.SendMessageButton}
         >
-          WYSLIJ
+          WYŚLIJ
         </Button>
       </div>
     </>

@@ -29,6 +29,8 @@ const Offers = (props: OffersProps) => {
   useEffect(() => {
     if (!props.offers) {
       if (id === undefined) navigate('notfound');
+      setSearchValue('');
+      setDynamicFilters([]);
       new OfferAPI().getByCategory(categoryId).then(off => {
         setOffers(off);
       });
