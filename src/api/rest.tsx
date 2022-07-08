@@ -20,8 +20,15 @@ api.interceptors.request.use(
   async function (req) {
     const account = await MSALInstance.getAccount();
     if (account) {
-      const accessToken = await MSALInstance.acquireTokenSilent(Scopes);
-      req.headers['Authorization'] = `Bearer ${accessToken.accessToken}`;
+      try {
+        const accessToken = await MSALInstance.acquireTokenSilent(Scopes);
+        req.headers['Authorization'] = `Bearer ${accessToken.accessToken}`;
+      }
+      catch(e) {
+        console.log(e);
+        toast.info("Sesja zakończona. Zostałeś wylogowany/a");
+        MSALInstance.logout();
+      }
     }
     if(req.params === 'useFormData') {
       req.headers['Content-Type'] = `multipart/form-data; boundary=--14737809831466499882746641449`;
@@ -49,9 +56,9 @@ function argsToString(args: object): string {
 }
 
 const handleError = (error: AxiosError) => {
-  console.error(error.request);
+  console.error(error);
   const toastMessage =
-    error.request.responseText || `${error.request.status}: ${error.request.statusText}`;
+    error.request?.responseText || `${error.request?.status}: ${error.request?.statusText}`;
   toast.error(toastMessage);
 };
 
@@ -86,7 +93,6 @@ function remove(url: string, urlParams: string = '') {
   return api
     .delete(`${apiURL}${url}${urlParams}`)
     .then(response => {
-      console.log(response);
       return response.data;
     })
     .catch(error => {

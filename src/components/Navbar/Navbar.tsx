@@ -136,11 +136,11 @@ const Navbar: FC<NavbarProps> = props => {
             openOnHover
             useAbsolutePositioning
             focusTrap
-            disabled={(offers && offers.length < 3 ) || location.pathname === '/profil'}
+            disabled={(!offers || offers?.length < 3 ) || location.pathname === '/profil'}
             buttonProps={{
               kind: 'teritiary',
               children: 'Dodaj ogłoszenie',
-              disabled: !offers || offers.length >= 3,
+              disabled: offers && offers.length >= 3,
               onClick: () =>
                 context.isAuthenticated ? navigateTo('nowe-ogloszenie') : context.login(),
               icon: <FontAwesomeIcon icon="circle-plus" />,
