@@ -110,7 +110,6 @@ const ExactCoversation = ({
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setMessage(e.target.value)}
           onKeyDown={(e: React.KeyboardEvent<HTMLTextAreaElement>) => handleSendMessage(e)}
           disableResize
-          required
         />
         <Button
           size="lg"
