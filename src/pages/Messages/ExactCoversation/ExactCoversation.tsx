@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './ExactCoversation.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Input from '../../../components/commonComponents/Input/Input';
 import Button from '../../../components/commonComponents/Button/Button';
 import { useNavigate } from 'react-router-dom';
+import TextField from '../../../components/commonComponents/TextField/TextField';
 
 const ExactCoversation = ({
   close,
@@ -33,6 +33,16 @@ const ExactCoversation = ({
 
   const navigateTo = (route: string) => {
     navigate(`/${route}`);
+  };
+
+  const handleSendMessage = (e: any) => {
+    if (e.key === 'Enter' || e.keyCode === 13) {
+      e.preventDefault();
+      handleSendMsg(message);
+    }
+    if (e.type === 'click') {
+      handleSendMsg(message);
+    }
   };
 
   const exactMessage = userMessages.find((user: { id: string }) => user.id === userId);
@@ -65,37 +75,46 @@ const ExactCoversation = ({
             </div>
           </div>
           <div className={styles.ConversationInfoButtons}>
-            <FontAwesomeIcon icon="flag" />
-            <FontAwesomeIcon icon="trash-alt" />
+            {/* <FontAwesomeIcon icon="flag" />
+            <FontAwesomeIcon icon="trash-alt" /> */}
           </div>
         </div>
       </div>
       <div className={styles.ConversationContent}>
         {messages.map((msg: any) => {
+          const d = new Date(msg.date);
+          // let day = `${d.getDay()}/ ${d.getMonth()} ${d.getHours()}:${d.getMinutes()}`;
+          const formattedHours = `${d.getHours()}:${d.getMinutes()}`;
           if (msg.senderId === myUserId) {
             return (
               <div className={styles.ConwerstionOnelineContainerRight} ref={autoScroll}>
                 <div className={styles.ConwerstionOnelineContentRight}>{msg.message}</div>
+                <div className={styles.ConwerstionOnelineDate}>{formattedHours}</div>
               </div>
             );
           } else if (msg.senderId !== myUserId) {
             return (
               <div className={styles.ConwerstionOnelineContainerLeft} ref={autoScroll}>
                 <div className={styles.ConwerstionOnelineContentLeft}>{msg.message}</div>
+                <div className={styles.ConwerstionOnelineDate}>{formattedHours}</div>
               </div>
             );
           }
         })}
       </div>
       <div className={styles.WriteMessageContainer}>
-        <Input
+        <TextField
+          id="ExactConversation"
+          className={styles.textField}
           kind="outlined"
-          className={styles.SearchEngineInput}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setMessage(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setMessage(e.target.value)}
+          onKeyDown={(e: React.KeyboardEvent<HTMLTextAreaElement>) => handleSendMessage(e)}
+          disableResize
+          required
         />
         <Button
           size="lg"
-          onClick={() => handleSendMsg(message)}
+          onClick={(e: React.MouseEvent) => handleSendMessage(e)}
           className={styles.SendMessageButton}
         >
           WYSLIJ

@@ -18,6 +18,7 @@ type TextFieldProps = {
   disabled?: boolean;
   skeleton?: boolean;
   readOnly?: boolean;
+  disableResize?: boolean;
   onBlur?: Function;
   onClick?: Function;
   onFocus?: Function;
@@ -39,6 +40,7 @@ const TextField: FC<TextFieldProps> = props => {
     skeleton,
     readOnly,
     maxLength,
+    disableResize,
     onBlur,
     onClick,
     onFocus,
@@ -136,6 +138,7 @@ const TextField: FC<TextFieldProps> = props => {
         onFocus={e => handleFocus(e)}
         onChange={e => handleChange(e)}
         onKeyDown={e => handleKeyDown(e)}
+        style={disableResize && { resize: 'none' }}
       />
       {label && !skeleton && (
         <label className={labelClassnames} onClick={e => setActiveLabel()}>
