@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import styles from './Offer.module.scss';
@@ -14,6 +14,7 @@ import { FavButton } from '../../components/FavButton/FavButton';
 import { getTags } from '../../components/OfferCard/OfferCard';
 import ReportModal from './ReportModal/ReportModal';
 import DeleteOfferModal from '../../components/OfferCard/DeleteOfferModal/DeleteOfferModal';
+import { MSALInstance } from '../../api/Authentication/MSALConfig';
 
 const arrayPhotos = [
   'https://ckis.tczew.pl/imagecache/max_1800/orkiestra-jubileusz.jpg',
@@ -32,8 +33,8 @@ const Offer: FC<OfferProps> = () => {
   const [data, setData] = useState<IOffer | null>(null);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [isShowPhoneNumber, setShowPhoneNumber] = useState<boolean>(false);
+  const [isUserOffer, setIsUserOffer] = useState<boolean>(false);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
-
   const navigate = useNavigate();
   let { offerId } = useParams();
 
@@ -48,6 +49,7 @@ const Offer: FC<OfferProps> = () => {
       .get(offerId)
       .then(data => {
         setData(data);
+        setIsUserOffer(data.author.userIdentifier === MSALInstance.getAccount()?.accountIdentifier);
       })
       .catch(error => {
         navigateTo('notfound');
@@ -80,7 +82,7 @@ const Offer: FC<OfferProps> = () => {
               {/* <span>dostępne terminy NEW FUTURE</span> */}
             </div>
             <div className={styles.AdditionalInfo}>{getTags(data.selectedFilters)}</div>
-            <h1>OPIS</h1>
+            <h1>Opis</h1>
             <div
               className={classNames(styles.MainDescription, 'styledText')}
               dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data?.description) }}
@@ -130,17 +132,26 @@ const Offer: FC<OfferProps> = () => {
               </div>
             )}
           </section>
-          <div className={styles.OfferManagement}>
-            <h2>Zarządzanie ogłoszeniem</h2>
-            <Button
-              danger
-              kind="ghost"
-              icon={<FontAwesomeIcon icon="trash" />}
-              onClick={setShowDeleteModal}
-            >
-              Usuń ogłoszenie
-            </Button>
-          </div>
+          {isUserOffer && (
+            <div className={styles.OfferManagement}>
+              <h2>Zarządzanie ogłoszeniem</h2>
+              <Button
+                kind="teritiary"
+                icon={<FontAwesomeIcon icon="edit" />}
+                onClick={() => navigateTo(`ogloszenie/${data.id}/edycja`)}
+              >
+                Edytuj
+              </Button>
+              <Button
+                danger
+                kind="ghost"
+                icon={<FontAwesomeIcon icon="trash" />}
+                onClick={setShowDeleteModal}
+              >
+                Usuń
+              </Button>
+            </div>
+          )}
           {/* <section className={styles.Calendar}>
                     <h1>calendar</h1>
                 </section>

@@ -1,5 +1,5 @@
 import { ISelectedFilter } from './Categories';
-import { get, post, remove } from './rest';
+import { get, patch, post, remove } from './rest';
 import { IUser } from './Users';
 
 const url = '/Offers';
@@ -23,6 +23,12 @@ interface IOffer {
   selectedFilters: ISelectedFilter[];
   image?: IImage;
   images?: IImage[];
+}
+
+interface IEditOffer {
+  title: string;
+  shortDescription: string;
+  description: string;
 }
 
 interface IOfferReport {
@@ -57,10 +63,14 @@ class Offers {
     return post(url, ad, true);
   }
 
+  public patch(id: IOffer['id'], ad: IEditOffer): Promise<string> {
+    return patch(`${url}/${id}/update`, ad);
+  }
+
   public delete(id: IOffer['id']): Promise<string> {
     return remove(`${url}/${id}/delete`);
   }
 
 }
 
-export { IImage, IOffer, IPostOffer, Offers };
+export { IImage, IOffer, IPostOffer, IEditOffer, Offers };

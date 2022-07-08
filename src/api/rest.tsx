@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import { setupCache } from 'axios-cache-adapter';
+import { setup, setupCache } from 'axios-cache-adapter';
 import { toast } from 'react-toastify';
 import { MSALInstance, Scopes } from './Authentication/MSALConfig';
 
@@ -9,11 +9,17 @@ const apiURL = 'https://weddings.azurewebsites.net/api';
 const cache = setupCache({
   maxAge: 3 * 60 * 1000, // 3min
   clearOnError: true,
+  invalidate: async (config: any, request) => {
+    if (request.clearCacheEntry) {
+      await (config.store as any).clear()
+    }
+  }
 });
 
 const api = axios.create({
   adapter: cache.adapter,
 });
+
 
 // interceptor setup
 api.interceptors.request.use(
@@ -80,7 +86,7 @@ function get(url: string, urlParams: string = '') {
 
 function post(url: string, payload: Object, useFormData?: boolean) {
   return api
-    .post(`${apiURL}${url}`, payload, { params: useFormData ? 'useFormData' : '' })
+    .post(`${apiURL}${url}`, payload, {params: useFormData ? 'useFormData' : '' })
     .then(response => {
       return response.data;
     })
@@ -102,7 +108,7 @@ function remove(url: string, urlParams: string = '') {
 
 function patch(url: string, payload?: Object) {
   return api
-    .patch(`${apiURL}${url}`, payload)
+    .patch(`${apiURL}${url}`, payload, {clearCacheEntry: true})
     .then(response => {
       return response.data;
     })

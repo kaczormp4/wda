@@ -1,4 +1,4 @@
-import { get } from './rest';
+import { get, patch } from './rest';
 
 const url = '/users';
 
@@ -8,10 +8,20 @@ interface IUser {
   surname: string | null;
 }
 
+interface IUserEdit {
+  givenName: string;
+  surname: string;
+  description: string;
+}
+
 class Users {
   public get(id: string): Promise<IUser> {
     return get(url, `/${id}`);
   }
+
+  public patch(id: IUser['userIdentifier'], user: IUserEdit): Promise<string> {
+    return patch(`${url}/${id}/update`, user);
+  }
 }
 
-export { IUser, Users };
+export { IUser, IUserEdit, Users };

@@ -73,6 +73,10 @@
             p {
                 font-size: var(--font-size-02);
             }
+            .footerEdit {
+                display: flex;
+                gap: var(--spacing-03);
+            }
         }
 
         .Title {
@@ -107,7 +111,7 @@
 .Tag {
     font-size: var(--font-size-02);
     & > img,
-        svg {
-            color: var(--primary);
-        }
+    svg {
+        color: var(--primary);
+    }
 }

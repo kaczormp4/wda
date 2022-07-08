@@ -8,11 +8,12 @@ import s from './FavButton.module.scss';
 
 type P = {
   offerId: string;
+  disabled?: boolean;
   className?: string;
 };
 
 export const FavButton: FC<P> = props => {
-  const { offerId, className } = props;
+  const { offerId, className, disabled } = props;
   const isFavorite = new Favorites().get(offerId);
   const [isFav, setIsFav] = useState<boolean>(isFavorite);
 
@@ -21,6 +22,7 @@ export const FavButton: FC<P> = props => {
       <Button
         className={s.FavButton}
         kind="ghost"
+        disabled={disabled}
         onClick={() =>
           isFav
             ? new Favorites().remove(offerId).then(v => setIsFav(v))
