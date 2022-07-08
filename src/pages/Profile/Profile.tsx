@@ -54,56 +54,29 @@ const Profile: FC<ProfileProps> = () => {
     const prof = MSALInstance.getAccount();
     if (prof && id === prof.accountIdentifier) {
       navigateTo('profil');
-    } else if (isOwnProfile) {
-      if (prof) {
-        setPofile(prof);
-        reset({
-          givenName: prof.idTokenClaims.given_name,
-          surname: prof.idTokenClaims.family_name,
-          description: '',
-        });
-        new OfferAPI().getUserOffers(prof.accountIdentifier).then(userOffers => {
-          console.log({ userOffers });
-          setOffers(userOffers);
-        });
-      } else navigateTo('notfound');
-    } else {
-      setPofile(null);
-      new Users().get(id).then(user => {
-        setUser(user);
-      });
-      new OfferAPI().getUserOffers(id).then(userOffers => {
-        console.log({ userOffers });
-        setOffers(userOffers);
-      });
     }
+    new Users().get(isOwnProfile ? prof.accountIdentifier : id).then(user => {
+      reset({
+        givenName: user.givenName,
+        surname: user.surname,
+        description: '',
+      });
+      setUser(user);
+    });
+    new OfferAPI().getUserOffers(isOwnProfile ? prof.accountIdentifier : id).then(userOffers => {
+      console.log({ userOffers });
+      setOffers(userOffers);
+    });
   }, [id]);
 
-  const visibleProfile: IUser = profile
-    ? {
-        userIdentifier: profile.sid,
-        givenName: profile.idTokenClaims.given_name,
-        surname: profile.idTokenClaims.family_name,
-      }
-    : user;
-
-  if (!visibleProfile) {
+  if (!user) {
     return <></>; // implement skeleton
   }
 
   const onSubmit = (values: IUserEdit) => {
     console.log({ values });
-    new Users().patch(profile.accountIdentifier, values).then(v => {
-      const newProfile = {
-        ...profile,
-        idTokenClaims: {
-          ...profile.idTokenClaims,
-          given_name: values.givenName,
-          family_name: values.surname,
-        },
-      };
-      console.log(newProfile);
-      setPofile(newProfile);
+    new Users().patch(user.userIdentifier, values).then(v => {
+      setUser({...user, ...values});
       setEditUserForm(false);
       toast.success(v);
     });
@@ -185,9 +158,9 @@ const Profile: FC<ProfileProps> = () => {
               ) : (
                 <>
                   <div>
-                    {visibleProfile.givenName || visibleProfile.surname ? (
+                    {user.givenName || user.surname ? (
                       <h1>
-                        {visibleProfile.givenName} {visibleProfile.surname}
+                        {user.givenName} {user.surname}
                       </h1>
                     ) : (
                       <h1>{profile?.name}</h1>
@@ -203,7 +176,7 @@ const Profile: FC<ProfileProps> = () => {
               </Button> */}
             </div>
             <div className={styles.Buttons}>
-              {profile && (
+              {isOwnProfile && (
                 <Button
                   icon={<FontAwesomeIcon icon="edit" />}
                   onClick={() => setEditUserForm(!editUserForm)}
@@ -217,8 +190,8 @@ const Profile: FC<ProfileProps> = () => {
                   723 333 222 <FontAwesomeIcon icon="clone" />
                 </div>
               )}
-              {!profile && (
-                <Button renderAsLink={true} href={`/wiadomosci/${visibleProfile.userIdentifier}`}>
+              {!isOwnProfile && (
+                <Button renderAsLink={true} href={`/wiadomosci/${user.userIdentifier}`}>
                   Wyślij wiadomość
                 </Button>
               )}
