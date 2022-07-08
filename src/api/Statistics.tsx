@@ -1,21 +1,17 @@
-import { get } from "./rest";
+import { get } from './rest';
 
 const url = '/Statistics';
 
 interface IStatistics {
-    id: number,
-    isCompleted: boolean,
-    offerId: number,
-    reason: string,
+  amountOfReports: number;
+  amountOfUsers: number;
+  offersCreated: number;
 }
 
 class Statistics {
-    public get(): Promise<IStatistics[]> {
-        return get(`${url}`);
-    }
+  public get(): Promise<IStatistics> {
+    return get(`${url}`);
+  }
 }
 
-export {
-    IStatistics,
-    Statistics,
-}
+export { IStatistics, Statistics };
