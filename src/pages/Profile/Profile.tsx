@@ -7,7 +7,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { MSALInstance } from '../../api/Authentication/MSALConfig';
 import { Account } from 'msal';
 import { IUser, IUserEdit, Users } from '../../api/Users';
-import Offers from '../Offers/Offers';
 import { OffersView } from '../Offers/OffersView';
 import { Controller, useForm } from 'react-hook-form';
 import Input from '../../components/commonComponents/Input/Input';
@@ -17,8 +16,8 @@ type ProfileProps = {};
 
 const Profile: FC<ProfileProps> = () => {
   const [offers, setOffers] = useState<IOffer[]>(null);
-  const [profile, setPofile] = useState<Account>(null);
   const [editUserForm, setEditUserForm] = useState<boolean>(null);
+  const [sendingEditUserReq, setSendingEditUserReq] = useState<boolean>(false);
   // const [premiumVisbility, setPremiumVisbility] = useState<boolean>(false);
   const [isShowPhoneNumber, setShowPhoneNumber] = useState<boolean>(false);
   const [user, setUser] = useState<IUser>(null);
@@ -75,9 +74,11 @@ const Profile: FC<ProfileProps> = () => {
 
   const onSubmit = (values: IUserEdit) => {
     console.log({ values });
+    setSendingEditUserReq(true);
     new Users().patch(user.userIdentifier, values).then(v => {
       setUser({...user, ...values});
       setEditUserForm(false);
+      setSendingEditUserReq(false);
       toast.success(v);
     });
   };
@@ -113,6 +114,7 @@ const Profile: FC<ProfileProps> = () => {
                         defaultValue={field.value}
                         kind="filled"
                         type="text"
+                        disabled={sendingEditUserReq}
                         label="Imię"
                         required
                         errorText={errors.givenName?.message}
@@ -137,6 +139,7 @@ const Profile: FC<ProfileProps> = () => {
                         defaultValue={field.value}
                         kind="filled"
                         type="text"
+                        disabled={sendingEditUserReq}
                         label="Nazwisko"
                         required
                         errorText={errors.surname?.message}
@@ -148,6 +151,7 @@ const Profile: FC<ProfileProps> = () => {
                   <Button
                     type="submit"
                     size="md"
+                    disabled={sendingEditUserReq}
                     kind="secondary"
                     value="Submit"
                     onClick={handleSubmit(onSubmit)}
@@ -158,12 +162,10 @@ const Profile: FC<ProfileProps> = () => {
               ) : (
                 <>
                   <div>
-                    {user.givenName || user.surname ? (
+                    {user.givenName || user.surname && (
                       <h1>
                         {user.givenName} {user.surname}
                       </h1>
-                    ) : (
-                      <h1>{profile?.name}</h1>
                     )}
                     <span className={styles.ProfileType}>Zwykły użytkownik</span>
                   </div>
