@@ -3,3 +3,16 @@
 @import "./styles/cssVariables";
 @import "./styles/globals";
 @import 'react-toastify/dist/ReactToastify.css';
+
+.App {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    .app {
+        height: 100%;
+        overflow: auto;
+        &.no-scroll {
+            overflow: hidden;
+        }
+    }
+}
