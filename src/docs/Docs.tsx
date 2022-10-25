@@ -20,11 +20,9 @@ export const Docs: FC = () => {
   useEffect(() => {
     fetch(mark)
       .then(response => {
-        console.log(response);
         return response.text();
       })
       .then(text => {
-        console.log(text);
         setDocsSource(text);
         setNav(getNavStructure(text));
       });
@@ -42,7 +40,6 @@ export const Docs: FC = () => {
       headings.forEach((v, i) => {
         v.id = `heading_${nav[i].index}`;
       });
-      console.log(headings);
     }
     const hash = window.location.hash;
     if (hash) {
@@ -53,7 +50,6 @@ export const Docs: FC = () => {
   const getNavStructure = (source: string) => {
     const contentWithoutCode = source
       .replace(/(?:[^\n#]+)#+\s([^#\n]+)\n*/g, '')
-      //   .replace(/^#\s[^#\n]*\n+/, '')
       .replace(/```[^`\n]*\n+[^```]+```\n+/g, '')
       .replace(/`([^`\n]+)`/g, '$1')
       .replace(/\*\*?([^*\n]+)\*\*?/g, '$1')
@@ -86,7 +82,6 @@ export const Docs: FC = () => {
   };
 
   const getNav = () => {
-    console.log(nav);
     return (
       <nav className={s.Nav}>
         {nav.map(v => {
