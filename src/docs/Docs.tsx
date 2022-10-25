@@ -38,7 +38,7 @@ export const Docs: FC = () => {
     if (nav.length && contentRef.current) {
       const headings = contentRef.current.querySelectorAll(`h1, h2, h3`);
       headings.forEach((v, i) => {
-        v.id = `heading_${nav[i].index}`;
+        v.id = generateFriendlyHashLink(nav[i]);
       });
     }
     const hash = window.location.hash;
@@ -46,6 +46,10 @@ export const Docs: FC = () => {
         document.getElementById(hash.substring(1))?.scrollIntoView({behavior: 'auto'});
       }
   }, [nav]);
+
+  const generateFriendlyHashLink = (item: Nav) => {
+    return encodeURIComponent(item.text);
+  }
 
   const getNavStructure = (source: string) => {
     const contentWithoutCode = source
@@ -90,7 +94,7 @@ export const Docs: FC = () => {
           });
 
           return (
-            <a className={classes} href={`#heading_${v.index}`} key={v.index}>
+            <a className={classes} href={`#${generateFriendlyHashLink(v)}`} key={v.index}>
               {v.text}
             </a>
           );

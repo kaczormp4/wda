@@ -50,6 +50,9 @@
         color: var(--interactive-01);
     }
 
+    *:target {
+        animation: highlight 5s forwards;
+    }
     table,
     th,
     td {
@@ -119,5 +122,15 @@
         p.hint.error:before {
             background-color: #ef4e4e;
         }
+    }
+}
+
+
+@keyframes highlight {
+    from {
+        background: var(--focus);
+    }
+    to {
+        background: transparent;
     }
 }
