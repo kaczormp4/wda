@@ -15,6 +15,7 @@ import Messages from './pages/Messages/Messages';
 import FavList from './pages/FavList/FavList';
 import AdminPanel from './pages/AdminPanel/AdminPanel';
 import OfferEdit from './pages/Offer/OfferEdit/OfferEdit';
+import { Docs } from './docs/Docs';
 
 // const routes = [
 //   {
@@ -78,6 +79,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/*" element={<NotFound />} />
+            <Route path="/docs" element={<Docs />} />
             <Route path="/wiadomosci/:userId" element={<Messages />} />
             <Route path="/wiadomosci" element={<Messages />} />
             <Route path="/nowe-ogloszenie" element={<NewAd />} />
