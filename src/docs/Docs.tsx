@@ -37,7 +37,7 @@ export const Docs: FC = () => {
 
   useEffect(() => {
     if (nav.length && contentRef.current) {
-      const headings = contentRef.current.querySelectorAll(`h1, h2, h3`);
+      const headings = contentRef.current.querySelectorAll(`h1, h2, h3, h4`);
       headings.forEach((v, i) => {
         v.id = generateFriendlyHashLink(nav[i]);
       });
@@ -74,7 +74,7 @@ export const Docs: FC = () => {
         level: r.match(/^#+/g)[0].length,
         text: r.replace(pattOfTitle, '$1').replace('\r', ''),
       }))
-      .filter(v => v.level <= 3);
+      .filter(v => v.level <= 4);
 
     let maxLevel = 0;
     navData.forEach(t => {

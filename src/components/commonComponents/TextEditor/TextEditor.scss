@@ -23,6 +23,7 @@
     }
 }
 .#{$prefix}-text-editor {
+    position: relative;
     &--errorText {
         position: absolute;
         padding-left: var(--spacing-04);
