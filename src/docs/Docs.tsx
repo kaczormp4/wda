@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkhint from 'remark-hint';
 import mark from './docs.md';
+import mark2 from './docsTEMPLATE.md';
 import s from './Docs.module.scss';
 import classNames from 'classnames';
 
@@ -43,13 +44,13 @@ export const Docs: FC = () => {
     }
     const hash = window.location.hash;
     if (hash) {
-        document.getElementById(hash.substring(1))?.scrollIntoView({behavior: 'auto'});
-      }
+      document.getElementById(hash.substring(1))?.scrollIntoView({ behavior: 'auto' });
+    }
   }, [nav]);
 
   const generateFriendlyHashLink = (item: Nav) => {
     return encodeURIComponent(item.text);
-  }
+  };
 
   const getNavStructure = (source: string) => {
     const contentWithoutCode = source
