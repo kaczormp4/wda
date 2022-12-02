@@ -226,7 +226,8 @@ const Navbar: FC<NavbarProps> = props => {
                 size="lg"
                 iconOnly
                 icon={<FontAwesomeIcon icon="circle-plus" />}
-                onClick={() => navigateTo('nowe-ogloszenie')}
+                disabled={offers && offers.length >= 3}
+                onClick={() => context.isAuthenticated ? navigateTo('nowe-ogloszenie') : context.login()}
               >
                 Dodaj ogłoszenie
               </Button>
