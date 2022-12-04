@@ -53,10 +53,11 @@ export const OfferCard: FC<P> = props => {
   if (hideOffer) {
     return null;
   }
-  
+
   return (
     <>
       <Link className={s.OfferCard} to={`/ogloszenie/${offer.id}`}>
+        {offer.promo && <p className={s.Promo}>Super oferta 💥</p>}
         <img
           className={s.Image}
           alt={`Przedmiot ogłoszenia ${offer.title}`}
