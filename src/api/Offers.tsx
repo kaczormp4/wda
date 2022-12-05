@@ -23,6 +23,8 @@ interface IOffer {
   selectedFilters: ISelectedFilter[];
   image?: IImage;
   images?: IImage[];
+  // temp
+  promo?: boolean;
 }
 
 interface IEditOffer {

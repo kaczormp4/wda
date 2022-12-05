@@ -1,16 +1,22 @@
 import { FC, useEffect, useState } from 'react';
 import { Categories, ICategory } from '../../api/Categories';
 import { CategoriesView } from './CategoriesView/CategoriesView';
+import { HomeOffers } from './HomeOffers/HomeOffers';
 
 import styles from "./Home.module.scss";
+import { IOffer, Offers } from '../../api/Offers';
 
 export const Home: FC = () => {
 
     const [categories, setCategories] = useState<ICategory[]>(null);
+    const [offers, setOffers] = useState<IOffer[]>(null);
 
     useEffect(() => {
         new Categories().get().then((cats) => {
             setCategories(cats);
+        });
+        new Offers().getByCategory('4').then((offers) => {
+            setOffers(offers);
         });
     }, []);
 
@@ -18,6 +24,7 @@ export const Home: FC = () => {
         <div className={styles.Home}>
             <div className={styles.Search}>Placeholder dla wyszukiwarki</div>
             <CategoriesView categories={categories} />
+            <HomeOffers offers={offers}/>
         </div>
     </>
 }

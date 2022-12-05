@@ -9,7 +9,17 @@
     gap: var(--spacing-02);
     transition: transform var(--transition-short);
     will-change: transform;
+    overflow: hidden;
 
+    .Promo {
+        position: absolute;
+        top: 26px;
+        left: -52px;
+        transform: rotateZ(-45deg);
+        background: var(--primary);
+        padding: var(--spacing-02) var(--spacing-07);
+        color: var(--text-02);
+    }
     &.Skeleton {
         background: white;
         border-color: transparent;
