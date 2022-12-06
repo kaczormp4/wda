@@ -3,12 +3,14 @@
 .#{$prefix}-select {
     $slct: &;
     // position: relative;
+    font-family: 'Inter', sans-serif;
 
     &--wrapper {
         position: relative;
         display: inline-block;
         padding-top: var(--spacing-02);
         .#{$prefix}-btn {
+            background-color: var(--background-01);
             border: 1px solid var(--text-02);
             min-width: 10rem;
         }

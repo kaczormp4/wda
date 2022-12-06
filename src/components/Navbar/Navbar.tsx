@@ -102,7 +102,7 @@ const Navbar: FC<NavbarProps> = props => {
     <div className={styles.NavbarContainer}>
       <div className={styles.NavbarContent}>
         <div className={styles.Logo}>
-          <Link to="/">WEDD LOGO</Link>
+          <Link to="/">Nuptiae</Link>
         </div>
         <nav className={styles.NavMenu}>
           {isAdmin && (
@@ -136,7 +136,7 @@ const Navbar: FC<NavbarProps> = props => {
             openOnHover
             useAbsolutePositioning
             focusTrap
-            disabled={(!offers || offers?.length < 3 ) || location.pathname === '/profil'}
+            disabled={!offers || offers?.length < 3 || location.pathname === '/profil'}
             buttonProps={{
               kind: 'teritiary',
               children: 'Dodaj ogłoszenie',
@@ -152,12 +152,7 @@ const Navbar: FC<NavbarProps> = props => {
                 Dodaj pakiet do swojego konta, móc dodać kolejne ogłoszenia i zyskac dodatkowe
                 korzyści!
               </p>
-              <Button
-              size="sm"
-                onClick={() =>
-                  navigate('/profil')
-                }
-              >
+              <Button size="sm" onClick={() => navigate('/profil')}>
                 Przejdź do ustawień
               </Button>
             </div>
@@ -227,7 +222,9 @@ const Navbar: FC<NavbarProps> = props => {
                 iconOnly
                 icon={<FontAwesomeIcon icon="circle-plus" />}
                 disabled={offers && offers.length >= 3}
-                onClick={() => context.isAuthenticated ? navigateTo('nowe-ogloszenie') : context.login()}
+                onClick={() =>
+                  context.isAuthenticated ? navigateTo('nowe-ogloszenie') : context.login()
+                }
               >
                 Dodaj ogłoszenie
               </Button>

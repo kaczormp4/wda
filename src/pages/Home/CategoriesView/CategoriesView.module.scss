@@ -1,21 +1,71 @@
-@import '../../../styles/styleUtils.scss';
+@import "../../../styles/styleUtils.scss";
 @import "../../../styles/variables.scss";
 
 .Categories {
     @include centerSection(100%);
-    background: var(--background-02);
     .CatList {
         display: grid;
         grid-gap: var(--spacing-03);
-        grid-template-columns: repeat(auto-fill, 16rem);
+        grid-template-columns: repeat(auto-fill, 20rem);
         justify-content: center;
         padding: var(--spacing-03) 0;
         max-width: var(--width-desktop-1600);
         margin: auto;
-        :global {
-            .#{$prefix}-btn {
-                width: 100%;
+
+        .CatBtn {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            position: relative;
+            background-position: center;
+            background-size: cover;
+            border-radius: var(--spacing-02);
+            overflow: hidden;
+            height: 10rem;
+            &:first-child {
+                grid-column: 1;
+                grid-row: 1 / span 2;
+                height: calc(20rem + var(--spacing-03));
             }
+            &:nth-child(3) {
+                grid-column: 3;
+                grid-row: 1 / span 2;
+                height: calc(20rem + var(--spacing-03));
+            }
+            .CatBtnName {
+                color: var(--text-02);
+                font-size: var(--font-size-04);
+                background: linear-gradient(0, rgba(0, 0, 0, 0.5), transparent 20%);
+                width: 100%;
+                padding: var(--spacing-02);
+                height: 100%;
+                display: flex;
+                align-items: flex-end;
+                justify-content: center;
+                z-index: 2;
+            }
+            &::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: rgb(255 106 203 / 20%);
+                opacity: 0;
+                transition: 0.3s;
+            }
+
+            &:hover {
+                &::after {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 1050px) {
+    .Categories {
+        .CatList {
+            grid-template-columns: repeat(auto-fill, 10rem);
         }
     }
 }

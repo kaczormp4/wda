@@ -3,11 +3,13 @@
     display: none;
 }
 .NavbarContainer {
-    background-color: var(--background-02);
+    // background-color: var(--background-02);
     position: sticky;
     position: -webkit-sticky;
     top: 0;
     z-index: 10;
+    width: var(--width-desktop-1600);
+    max-width: 100%;
     .NavbarContentMobile {
         display: none;
     }
@@ -20,6 +22,7 @@
         align-items: center;
         .Logo {
             font-weight: bold;
+            font-size: var(--font-size-04);
         }
         .NavMenu {
             display: flex;
@@ -83,6 +86,7 @@
             display: block;
             padding: var(--spacing-01);
             z-index: 10;
+            background-color: var(--background-01);
         }
         .NavMenu {
             width: 100%;

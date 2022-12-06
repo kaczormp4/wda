@@ -58,6 +58,7 @@ export const OfferCard: FC<P> = props => {
     <>
       <Link className={s.OfferCard} to={`/ogloszenie/${offer.id}`}>
         {offer.promo && <p className={s.Promo}>Super oferta 💥</p>}
+        <div className={s.Background}></div>
         <img
           className={s.Image}
           alt={`Przedmiot ogłoszenia ${offer.title}`}

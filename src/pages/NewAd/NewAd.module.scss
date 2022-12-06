@@ -133,7 +133,7 @@
         overflow: hidden;
         position: relative;
         &:hover {
-            color: var(--interactive-01);
+            color: var(--primary-hover);
         }
         &Img {
             object-fit: cover;

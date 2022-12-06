@@ -27,9 +27,6 @@
             padding: 0 var(--spacing-02);
             &:hover {
                 cursor: pointer;
-                & svg {
-                    color: var(--text-01);
-                }
             }
             & svg {
                 font-size: 1.5rem;

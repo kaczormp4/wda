@@ -1,31 +1,56 @@
-import { FC } from 'react'
+import { FC } from 'react';
 import { ICategory } from '../../../api/Categories';
 import Button from '../../../components/commonComponents/Button/Button';
-import s from "./CategoriesView.module.scss";
+import s from './CategoriesView.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { fill } from 'lodash';
 
-
 type P = {
-    categories: ICategory[]
-}
+  categories: ICategory[];
+};
 
-export const CategoriesView: FC<P> = (props) => {
-    const navigate = useNavigate();
-    const { categories } = props;
+const getImg = (name: string) => {
+  let fileName = name;
+  // special cases
+  if (name === 'Sale weselne') {
+    fileName = 'Sale';
+  }
+  const img = require(`./../../../assets/images/${fileName}.jpg`);
+  return img;
+};
 
-    const goToAdv = (cat: ICategory) => {
-        navigate(`/ogloszenia/${cat.id}`);
-    }
+export const CategoriesView: FC<P> = props => {
+  const navigate = useNavigate();
+  const { categories } = props;
+  console.log(categories);
 
-    return <div className={s.Categories}>
-        <div className={s.CatList}>
-            {categories
-                ? categories.map((v) => {
-                    return <Button key={v.id} size="lg" onClick={() => goToAdv(v)}>{v.name}</Button>
-                })
-                : fill(Array(12), null).map((x, i) => <Button key={i} size="lg" skeleton></Button>)
-            }
-        </div>
+  const getCategoryBtn = (cat: ICategory) => {
+    const img = getImg(cat.name);
+
+    return (
+      <a
+        href={`/ogloszenia/${cat.id}`}
+        key={cat.id}
+        className={s.CatBtn}
+        style={{ backgroundImage: `url(${img})` }}
+        title={cat.name}
+      >
+        <span className={s.CatBtnName}>
+        {cat.name}
+        </span>
+      </a>
+    );
+  };
+
+  return (
+    <div className={s.Categories}>
+      <div className={s.CatList}>
+        {categories
+          ? [...categories, categories[1], categories[3]].map(v => {
+              return getCategoryBtn(v);
+            })
+          : fill(Array(8), null).map((x, i) => <Button key={i} size="lg" skeleton></Button>)}
+      </div>
     </div>
-}
+  );
+};

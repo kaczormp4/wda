@@ -2,7 +2,6 @@
     width: 100%;
     min-height: 12rem;
     max-width: -webkit-fill-available;
-    background: var(--background-02);
     padding: var(--spacing-02);
     border-radius: var(--spacing-02);
     display: flex;
@@ -10,7 +9,19 @@
     transition: transform var(--transition-short);
     will-change: transform;
     overflow: hidden;
-
+    box-shadow: 0 0 8px 0px var(--md-overlay);
+    background-color: rgba(255, 255, 255, 0.5);
+    .Background {
+        background-image: url(./../../assets/images/corner.png);
+        background-repeat: no-repeat;
+        background-size: auto 60%;
+        background-position: 0.5rem calc(100% - 0.5rem);
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        opacity: 0.2;
+    }
     .Promo {
         position: absolute;
         top: 26px;

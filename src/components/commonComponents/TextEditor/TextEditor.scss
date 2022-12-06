@@ -24,6 +24,8 @@
 }
 .#{$prefix}-text-editor {
     position: relative;
+    font-family: 'Inter', sans-serif;
+
     &--errorText {
         position: absolute;
         padding-left: var(--spacing-04);
