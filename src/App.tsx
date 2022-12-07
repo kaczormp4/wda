@@ -70,36 +70,39 @@ function App() {
     <div className="App">
       <Router>
         <Navbar flyoutMenuList={flyoutMenuList} />
+        <div className="decorators" />
         <div className="app">
-          {/* <Routes >
+          <div className="app-wrapper">
+            {/* <Routes >
             {routes.map((route, i) => (
               <Route key={i} path={route.path} element={<route.element />} />
             ))}
           </Routes> */}
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/*" element={<NotFound />} />
-            <Route path="/docs" element={<Docs />} />
-            <Route path="/wiadomosci/:userId" element={<Messages />} />
-            <Route path="/wiadomosci" element={<Messages />} />
-            <Route path="/nowe-ogloszenie" element={<NewAd />} />
-            <Route path="/apitest" element={<APITest />} />
-            <Route path="/components" element={<Showcase />} />
-            <Route path="/moja-lista" element={<FavList />} />
-            <Route path="/admin" element={<AdminPanel />}>
-              <Route path=":subpage" element={<Profile />} />
-            </Route>
-            <Route path="/profil" element={<Profile />}>
-              <Route path=":id" element={<Profile />} />
-            </Route>
-            <Route path="/ogloszenia" element={<Offers />}>
-              <Route path=":id" element={<Offers />} />
-            </Route>
-            <Route path="/ogloszenie">
-              <Route path=":offerId" element={<Offer />} />
-              <Route path=":offerId/edycja" element={<OfferEdit />} />
-            </Route>
-          </Routes>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/*" element={<NotFound />} />
+              <Route path="/docs" element={<Docs />} />
+              <Route path="/wiadomosci/:userId" element={<Messages />} />
+              <Route path="/wiadomosci" element={<Messages />} />
+              <Route path="/nowe-ogloszenie" element={<NewAd />} />
+              <Route path="/apitest" element={<APITest />} />
+              <Route path="/components" element={<Showcase />} />
+              <Route path="/moja-lista" element={<FavList />} />
+              <Route path="/admin" element={<AdminPanel />}>
+                <Route path=":subpage" element={<Profile />} />
+              </Route>
+              <Route path="/profil" element={<Profile />}>
+                <Route path=":id" element={<Profile />} />
+              </Route>
+              <Route path="/ogloszenia" element={<Offers />}>
+                <Route path=":id" element={<Offers />} />
+              </Route>
+              <Route path="/ogloszenie">
+                <Route path=":offerId" element={<Offer />} />
+                <Route path=":offerId/edycja" element={<OfferEdit />} />
+              </Route>
+            </Routes>
+          </div>
         </div>
       </Router>
       <ToastContainer />

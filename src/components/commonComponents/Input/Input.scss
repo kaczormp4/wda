@@ -18,6 +18,8 @@
     border: 2px solid transparent;
     box-sizing: border-box;
     overflow: hidden;
+    font-family: 'Inter', sans-serif;
+
     &--wrapper {
         position: relative;
         padding-top: var(--spacing-02);
@@ -95,9 +97,9 @@
         color: var(--text-03);
         font-size: var(--font-size-03);
         transform: translate(0, -2rem) scale(0.75);
-        background-color: var(--background-02);
         padding: var(--spacing-02);
         cursor: context-menu;
+        backdrop-filter: blur(8px);
         & > span {
             color: var(--danger);
         }

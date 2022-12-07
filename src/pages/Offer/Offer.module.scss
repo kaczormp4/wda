@@ -1,6 +1,6 @@
 .Container {
-    width: var(--width-desktop-1250);
-    max-width: calc(100% - var(--spacing-05));
+    // width: var(--width-desktop-1250);
+    // max-width: calc(100% - var(--spacing-05));
     margin: auto;
     margin-bottom: var(--spacing-03);
     display: grid;
@@ -83,7 +83,7 @@
         height: max-content;
         // grid-column: 360px;
         position: sticky;
-        top: 80px;
+        top: 0;
         .OfferManagement {
             padding: var(--spacing-05);
             background-color: var(--background-02);
@@ -95,9 +95,10 @@
         }
         .UserInfo {
             padding: var(--spacing-05);
-            background-color: var(--background-02);
             margin-top: var(--spacing-03);
             border-radius: var(--spacing-02);
+            box-shadow: 0 0 10px rgb(0 0 0 / 5%);
+            margin-right: var(--spacing-03);
             .MainUserInfo {
                 display: flex;
                 gap: var(--spacing-04);

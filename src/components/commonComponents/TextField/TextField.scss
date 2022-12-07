@@ -22,6 +22,8 @@
     overflow-x: hidden;
     resize: vertical;
     font-family: inherit;
+    font-family: 'Inter', sans-serif;
+
     &--wrapper {
         position: relative;
         padding-top: var(--spacing-02);
@@ -92,7 +94,7 @@
         color: var(--text-03);
         font-size: var(--font-size-03);
         transform: translate(0, -2rem) scale(0.75);
-        background-color: var(--background-02);
+        backdrop-filter: blur(8px);
         padding: var(--spacing-02);
         cursor: context-menu;
         & > span {

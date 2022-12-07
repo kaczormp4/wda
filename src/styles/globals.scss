@@ -1,9 +1,10 @@
 body {
-	background-color: var(--background-01);
-	font-family: 'Inter', sans-serif;
+	background-color: var(--background-02);
+	font-family: 'Gentium Plus', serif;
 }
 
 // change scroll behavior
 html, body, #root {
 	height: 100%;
+	overflow: hidden;
 }

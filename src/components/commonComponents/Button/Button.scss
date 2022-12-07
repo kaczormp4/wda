@@ -21,6 +21,7 @@
     box-sizing: border-box;
     overflow: hidden;
     gap: var(--spacing-02);
+    font-family: 'Inter', sans-serif;
 
     // states
     &:disabled,
@@ -64,6 +65,7 @@
         &:hover:not(:disabled),
         &.active {
             background: var(--primary-hover);
+            color: var(--text-02);
         }
     }
     &--secondary {
@@ -72,6 +74,7 @@
         &:hover:not(:disabled),
         &.active {
             background: var(--secondary-hover);
+            color: var(--text-02);
         }
     }
 
