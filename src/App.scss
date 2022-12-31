@@ -11,7 +11,7 @@
     align-items: center;
     .app {
         height: 100%;
-        width: 100%;
+        width: -webkit-fill-available;
         overflow: hidden;
         margin: 4vh auto;
         background-color: rgba(255, 255, 255, 0.522);

@@ -16,6 +16,7 @@ import FavList from './pages/FavList/FavList';
 import AdminPanel from './pages/AdminPanel/AdminPanel';
 import OfferEdit from './pages/Offer/OfferEdit/OfferEdit';
 import { Docs } from './docs/Docs';
+import Footer from './components/Footer/Footer';
 
 // const routes = [
 //   {
@@ -104,6 +105,7 @@ function App() {
             </Routes>
           </div>
         </div>
+        <Footer />
       </Router>
       <ToastContainer />
     </div>

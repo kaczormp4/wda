@@ -23,14 +23,6 @@
     gap: var(--spacing-02);
     font-family: 'Inter', sans-serif;
 
-    // states
-    &:disabled,
-    &--disabled {
-        background: var(--disabled-01);
-        color: var(--text-02);
-        cursor: not-allowed;
-    }
-
     &:focus {
         box-shadow: 0 0 0 2px var(--focus);
     }
@@ -160,6 +152,18 @@
             }
         }
     }
+
+     // states
+     &:disabled,
+     &--disabled {
+         background: var(--disabled-01);
+         color: var(--text-02);
+         cursor: not-allowed;
+
+         &:hover {
+            background: var(--disabled-01) !important;
+        }
+     }
 
     // skeleton
     &--skeleton#{&}--disabled {

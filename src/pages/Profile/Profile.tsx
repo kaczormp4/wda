@@ -156,7 +156,7 @@ const Profile: FC<ProfileProps> = () => {
                     value="Submit"
                     onClick={handleSubmit(onSubmit)}
                   >
-                    Wyślij
+                    Zapisz
                   </Button>
                 </form>
               ) : (
@@ -193,7 +193,7 @@ const Profile: FC<ProfileProps> = () => {
                 </div>
               )}
               {!isOwnProfile && (
-                <Button renderAsLink={true} href={`/wiadomosci/${user.userIdentifier}`}>
+                <Button renderAsLink={true} href={`/wiadomosci/${user.userIdentifier}`} disabled={!MSALInstance.getAccount()}>
                   Wyślij wiadomość
                 </Button>
               )}

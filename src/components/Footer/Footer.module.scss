@@ -1,0 +1,11 @@
+.Footer {
+    box-sizing: border-box;
+    display: flex;
+    background: rgba(white, 0.3);
+    padding: var(--spacing-02);
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border-radius: var(--spacing-02) 0 0 0;
+}
