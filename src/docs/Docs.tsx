@@ -3,9 +3,11 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkhint from 'remark-hint';
 import mark from './docs.md';
+import markAdmin from './docsAdmin.md';
 import mark2 from './docsTEMPLATE.md';
 import s from './Docs.module.scss';
 import classNames from 'classnames';
+import { MSALInstance } from '../api/Authentication/MSALConfig';
 
 type Nav = {
   index: number;
@@ -16,37 +18,86 @@ type Nav = {
 export const Docs: FC = () => {
   const [docsSource, setDocsSource] = useState<string>('');
   const [nav, setNav] = useState<Nav[]>([]);
+  const [activeNavIndex, setActiveNavIndex] = useState<number>();
   const contentRef = useRef<HTMLDivElement>();
+  const docsWrapper = useRef<HTMLDivElement>();
+  const isAdmin = MSALInstance.getAccount(); // currently just isLoggedIn
 
   useEffect(() => {
-    fetch(mark)
-      .then(response => {
-        return response.text();
-      })
-      .then(text => {
+
+    Promise.all([fetch(mark), fetch(markAdmin)])
+      .then(async ([resp, respAdmin]) => {
+        let text = await resp.text();
+        const textAdmin = await respAdmin.text();
+        if(isAdmin) {
+          text = text + textAdmin;
+        }
         setDocsSource(text);
         setNav(getNavStructure(text));
       });
-
-    // add special styling case for docs
-    document.querySelector('.App .app')?.classList.add('no-scroll');
-    return () => {
-      document.querySelector('.App .app')?.classList.remove('no-scroll');
-    };
   }, []);
 
   useEffect(() => {
+    if (nav.length) {
+      docsWrapper.current.addEventListener('scroll', scrollObserver);
+    }
+  }, [nav]);
+
+  useEffect(() => {
     if (nav.length && contentRef.current) {
-      const headings = contentRef.current.querySelectorAll(`h1, h2, h3, h4`);
+      const headings = getHeadings();
       headings.forEach((v, i) => {
         v.id = generateFriendlyHashLink(nav[i]);
       });
     }
     const hash = window.location.hash;
     if (hash) {
-      document.getElementById(hash.substring(1))?.scrollIntoView({ behavior: 'auto' });
+      scrollToId(hash.substring(1));
     }
   }, [nav]);
+
+  const getHeadings = (): NodeListOf<Element> => {
+    if (nav.length && contentRef.current) {
+      return contentRef.current.querySelectorAll(`h1, h2, h3, h4`);
+    }
+  };
+
+  const scrollObserver = (e: Event) => {
+    const doc = e.target as HTMLElement;
+    const scrollVal = doc.scrollTop;
+    if (contentRef.current) {
+      const headings = getHeadings();
+      const pos: number[] = [];
+      headings.forEach(v => {
+        const top = v.getBoundingClientRect().top - doc.getBoundingClientRect().top;
+        pos.push(Math.floor(top));
+      });
+      const nearestValue = Math.floor(
+        pos.reduce((p, n) => (Math.abs(p) > Math.abs(n) ? n : p), Infinity)
+      );
+      const activeIndex = pos.findIndex(v => v === nearestValue);
+      if (activeIndex !== -1) {
+        setActiveNavIndex(activeIndex);
+      }
+    }
+  };
+
+  const scrollToId = (id: string) => {
+    const wrapper = docsWrapper.current;
+    const el = document.getElementById(id);
+    if (!wrapper || !el) {
+      return;
+    }
+    const prevTarget = wrapper.getElementsByClassName(s.target);
+    if (prevTarget[0]) {
+      prevTarget[0].classList.remove(s.target);
+    }
+    el.classList.add(s.target);
+    el.addEventListener('animationend', () => {
+      el.classList.remove(s.target);
+    });
+    wrapper.scrollTo({ top: el.offsetTop - wrapper.offsetTop, behavior: 'smooth' });
+  };
 
   const generateFriendlyHashLink = (item: Nav) => {
     return encodeURIComponent(item.text);
@@ -89,13 +140,27 @@ export const Docs: FC = () => {
   const getNav = () => {
     return (
       <nav className={s.Nav}>
-        {nav.map(v => {
+        {nav.map((v, i) => {
           const classes = classNames(s.NavLink, {
             [`level_${v.level}`]: true,
+            [`active`]: i === activeNavIndex,
           });
 
           return (
-            <a className={classes} href={`#${generateFriendlyHashLink(v)}`} key={v.index}>
+            <a
+              className={classes}
+              href={`#${generateFriendlyHashLink(v)}`}
+              key={v.index}
+              onClick={ev => {
+                const target = ev.target as HTMLLinkElement;
+                ev.preventDefault();
+                ev.stopPropagation();
+                console.log(ev);
+                window.history.pushState({}, '', target.href);
+                const hash = window.location.hash;
+                scrollToId(hash.substring(1));
+              }}
+            >
               {v.text}
             </a>
           );
@@ -108,7 +173,8 @@ export const Docs: FC = () => {
     <>
       <div className={s.Docs} ref={contentRef}>
         {getNav()}
-        <div className={s.DocsContent}>
+        <div className={s.DocsContent} ref={docsWrapper}>
+          <div className={s.DocsContentInner}></div>
           <div className={s.DocsContentInner}>
             <ReactMarkdown children={docsSource} remarkPlugins={[remarkGfm, remarkhint]} />
           </div>

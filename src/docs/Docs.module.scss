@@ -5,14 +5,30 @@
     width: 22rem;
     box-sizing: border-box;
     padding: var(--spacing-03);
+    background: rgb(white, 0.7);
+    border-radius: var(--spacing-01);
     .NavLink {
         display: block;
         color: var(--text-01);
+        z-index: 2;
         &:hover {
             color: var(--interactive-01);
         }
+        position: relative;
     }
     :global {
+        .active {
+            &::before {
+                content: "";
+                position: absolute;
+                height: 2px;
+                width: 100%;
+                left: 0;
+                bottom: 0;
+                background-color: var(--primary);
+                z-index: -1;
+            }
+        }
         .level_1 {
             margin-bottom: var(--spacing-01);
         }
@@ -54,7 +70,7 @@
         color: var(--interactive-01);
     }
 
-    *:target {
+    .target {
         animation: highlight 3s forwards;
     }
     table,

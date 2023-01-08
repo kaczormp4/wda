@@ -85,13 +85,17 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => 
     ev.stopPropagation();
     ev.preventDefault();
     handleRipple(ev, ripple);
-    onClick(ev);
+    if(!disabled) {
+      onClick(ev);
+    }
   };
   
   const handleLinkClick = (ev: React.MouseEvent) => {
     ev.stopPropagation();
     ev.preventDefault();
-    navigate(rest.href);
+    if(!disabled) {
+      navigate(rest.href);
+    }
   };
   
   const handleMouseDown = (ev: React.MouseEvent) => {

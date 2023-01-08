@@ -1,12 +1,10 @@
 # Podstawowe informacje
 
----
+Witaj w **Nuptiae**! To aplikacja internetowa dla osób poszukujących pomocy przy organizacji wesela - zarówno dla tych, którzy mają coś do zaoferowania jak i dla tych, którzy szukają ofert.
 
-> Aplikacja internetowa przeznaczona dla ludzi poszukujących pomocy przy organizacji wesela bądź dla osób poszukujących partnerów/partnerek na taką okoliczność.
+Przeglądaj oferty wynajmu sal weselnych, znajdź wymarzony pojazd który będzie Wam towarzyszył w tym szczególnym dniu, odkryj fantastyczne zespoły muzyczne oraz znajdź najlepszy catering, który zaskoczy podniebienia wszystkich gości!
 
-> Dzięki niej bez problemu znajdziesz odpowiedni lokal, najlepszą kapelę, kierowców czy catering.
-
-> Dostęp do wszystkich potrzebnych informacji w jednym miejscu, posortowanych po konkretnej tematyce, dzięki czemu każdy na pewność, że znajdzie to czego potrzebuje, bez względu na to czy jest się gościem czy organizatorem!
+Oferty możesz przeglądać w dowolny sposób - szukaj pośród tych kategorii które Cię interesują, sprawdź które oferty są dla Ciebie korzystne cenowo oraz filtruj według miejsc.
 
 # Tworzenie konta / logowanie do serwisu
 
@@ -14,22 +12,50 @@
 
 ## Tworzenie konta
 
-- Przejdz do strony logowania klikając w przycisk "Zaloguj" ktory znajduje się w prawym gornym rogu aplikacji
-- Przejdz do pod strony "Sing up now", odnosnik znajduje się poniżej przycisku "Sign in"
+- Przejdź do strony logowania klikając w przycisk "Zaloguj" który znajduje się w prawym górnym rogu aplikacji
+- Przejdź do podstrony "Sing up now", odnosnik znajduje się poniżej przycisku "Sign in"
 - Uzupełnij wymagane informacje:
-  - W polu „Email Address” wpisz swoj adres email.
-  - W polu „New Password” wpisz hasło. (hasło powinno składac się z minimum 1 duzej litery...)
-  - W polu „Confirm New Password” powtorz powyzej wpisane haslo.
-  - Kliknij przycisk "Create" aby utworzyc konto
+  - W polu **Email Address** wpisz swoj adres email.
+  - Po podaniu adresu email kilknij przycisk **`Send verification code`**. Sprawdź swoją skrzynkę pocztową, powinien tam znaleźć się kod weryfikacyjny, który należy podać w polu **Verification code**
+  - W polu **New Password** wpisz hasło. Powinno się ono składać z **co najmniej 8 znaków**, z czego  musi zawierać co najmniej 3 z podanych wymagań:
+    - posiada małą literę
+    - posiada wielką literę
+    - cyfrę
+    - znak specjalny
+  - W polu **Confirm New Password** powtórz powyżej wpisane hasło.
+- Kliknij przycisk **`Create`** aby utworzyć konto
+
+## Logowanie
+
+- Przejdź do strony logowania klikając w przycisk "Zaloguj" który znajduje się w prawym górnym rogu aplikacji
+- Podaj swój adres email oraz hasło
+- Użyj przycisku **`Sign in`** aby zakończyć proces logowania
+
+?> Podczas logowania możesz zostać poproszony o podanie kodu weryfikacyjnego - znajdziesz go w swojej skrzynce emailowej.
+
+### Przypomnienie hasła
+
+Jeżeli zapomnisz swojego hasła możesz skorzystać z możliwości zresetowania go. Aby tego dokonać musisz:
+- Przejść do strony logowania klikając w przycisk "Zaloguj" który znajduje się w prawym górnym rogu aplikacji
+- Nad przyciskiem logowania **`Sign in`** znajdź link **`Forgot your password?`**
 
 # Zarządzanie profilem użytkownika
 
 ---
 
+## Edycja danych
+
+Możesz edytować swoje dane z poziomu [profilu użytkownika](/profil). Aby tam przejść użyj menu w prawym górnym rogu ekranu klikając przycisk z ikoną użytkownika 👤, a następnie klikając w przycisk **`Profil`**.
+
+Tam, w prawym górnym rogu sekcji znajduje się przycisk **`Edytuj profil`**.
+Po kliknięciu dane, które mogą zostać zmienione zmienią się w pole formularza. 
+
+Po zmianie danych, aby je zapisać, użyj przycisku **`Zapisz`**.
+
 ## Pakiety
 
 ---
-
+x> TBD
 <!-- # Wyszukiwarka (kategorie i filtry), wyszukiwanie -->
 
 # Ogłoszenia
@@ -139,20 +165,15 @@ Jeżeli nie chcesz zgubić ogłoszenia, możesz dodać je do ulubionych. Możliw
 Zapisane ogłoszenia można wyświetlić poprzez kliknięcie przycisku **`Moja lista`** znajdującego się w pasku nawigacyjnym na górze strony. 
 Ogłoszenia zapisywane są w pamięci przeglądarki.
 
-# Wiadomosci
+# Wiadomości
+
+x> TBD
 
 # Zgłoszenia
 
----
+Z poziomu widoku ogłoszenia możliwe jest zgłoszenie 🚩 ogłoszenia. Jeżeli jako użytkownik uważasz, że łamie ono w jakikolwiek sposób regulamin, narusza dobra osobiste lub jest po prostu niewłaściwe lub obraźliwe możesz je zgłosić administracji do weryfikacji. 
 
-# Panel administracyjny
+Administracja serwisu zostanie powiadomiona o zgłoszeniu. Zostanie ono poddane weryfikacji pod kątem łamania zasad i - jeżeli jest to konieczne - usunięte z serwisu.
 
----
+?> Aby zgłosić ogłoszenie musisz być zalogowany!
 
-## statystyki
-
-## Zarzadzanie tresciami (reporty)
-
-# Moja Lista
-
----

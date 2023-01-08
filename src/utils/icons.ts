@@ -16,5 +16,5 @@ library.add(
     faAdjust, faChevronRight, faImage, faTrash, faCircleCheck,
     faHeart, faFlag, faClone, faChevronDown, faCheck,
     faCircleDot, faChevronLeft, faTrashCan,
-    faEdit, faArrowsRotate, faDashboard, faMagnifyingGlass
+    faEdit, faArrowsRotate, faDashboard, faMagnifyingGlass,
 );

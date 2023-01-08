@@ -41,7 +41,7 @@ const Offer: FC<OfferProps> = () => {
   const navigateTo = (route: string) => {
     navigate(`/${route}`);
   };
-
+  const account = MSALInstance.getAccount()?.accountIdentifier;
   useEffect(() => {
     if (offerId === undefined) navigateTo('notfound');
 
@@ -49,7 +49,7 @@ const Offer: FC<OfferProps> = () => {
       .get(offerId)
       .then(data => {
         setData(data);
-        setIsUserOffer(data.author.userIdentifier === MSALInstance.getAccount()?.accountIdentifier);
+        setIsUserOffer(data.author.userIdentifier === account);
       })
       .catch(error => {
         navigateTo('notfound');
@@ -89,7 +89,7 @@ const Offer: FC<OfferProps> = () => {
             ></div>
             <div className={styles.DescriptionFooter}>
               <div>ID: {data?.id}</div>
-              <Button danger kind="ghost" onClick={() => setModalOpen(true)}>
+              <Button danger kind="ghost" onClick={() => setModalOpen(true)} disabled={!account}>
                 <FontAwesomeIcon icon="flag" /> Zgłoś
               </Button>
             </div>
@@ -122,7 +122,7 @@ const Offer: FC<OfferProps> = () => {
               <Button kind="teritiary" onClick={() => setShowPhoneNumber(!isShowPhoneNumber)}>
                 Zadzwoń
               </Button>
-              <Button renderAsLink={true} href={`/wiadomosci/${data.author.userIdentifier}`}>
+              <Button renderAsLink={true} href={`/wiadomosci/${data.author.userIdentifier}`} disabled={!account}>
                 Wyślij wiadomość
               </Button>
             </div>

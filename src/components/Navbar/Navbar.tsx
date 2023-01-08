@@ -133,9 +133,9 @@ const Navbar: FC<NavbarProps> = props => {
           </Button>
           <Flyout
             direction="bottom-end"
-            openOnHover
             useAbsolutePositioning
             focusTrap
+            renderInPortal
             disabled={!offers || offers?.length < 3 || location.pathname === '/profil'}
             buttonProps={{
               kind: 'teritiary',
@@ -160,10 +160,10 @@ const Navbar: FC<NavbarProps> = props => {
           {context.isAuthenticated ? (
             <Flyout
               direction="bottom-end"
-              openOnHover
               useAbsolutePositioning
               focusTrap
-              buttonProps={{ kind: 'ghost', iconOnly: true }}
+              renderInPortal
+              buttonProps={{ kind: 'ghost', iconOnly: true, icon: <FontAwesomeIcon icon="user" />, }}
             >
               <div className={styles.FlyoutMenu}>
                 {flyoutMenuList.map(item => (
