@@ -155,7 +155,6 @@ export const Docs: FC = () => {
                 const target = ev.target as HTMLLinkElement;
                 ev.preventDefault();
                 ev.stopPropagation();
-                console.log(ev);
                 window.history.pushState({}, '', target.href);
                 const hash = window.location.hash;
                 scrollToId(hash.substring(1));

@@ -67,7 +67,6 @@ const OfferEdit: FC<OfferEditProps> = () => {
   }, []);
 
   const onSubmit = (values: IEditOffer) => {
-    console.log({ values });
     new Offers().patch(offer.id, values).then((v) => {
       toast.success(v);
       navigateTo(`ogloszenie/${offer.id}`);
