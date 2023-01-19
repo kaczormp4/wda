@@ -65,9 +65,7 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>((props, ref) => 
   };
 
   useEffect(() => {
-    console.log({items, defaultSelected});
     const defaultItem = items.find(v => v.id === defaultSelected) || items[0];
-    console.log(defaultItem);
     setSelectedItem(defaultItem)
   }, [defaultSelected]);
 

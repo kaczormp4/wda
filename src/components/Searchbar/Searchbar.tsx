@@ -30,18 +30,15 @@ const Searchbar: FC<P> = (props: P) => {
   }, [textQuery]);
 
   const openDropdown = (event: any) => {
-    console.log(event);
     setOpen(true);
   };
 
   const closeDropdown = (event: any) => {
-    console.log(event, wrapperRef);
     if (!wrapperRef.current.contains(event.relatedTarget)) {
       setOpen(false);
     }
   };
 
-  console.log(props);
 
   if (!props.categories) {
     return <Button size="lg" className={styles.Skeleton} skeleton></Button>;
@@ -50,7 +47,6 @@ const Searchbar: FC<P> = (props: P) => {
   const addCategoryFilter = (cat: ICategory) => {
     setLoadingCategory(true);
     new Categories().getById(cat.id).then(currentCat => {
-      console.log(currentCat);
       setLoadingCategory(false);
       setSelectedCategory(currentCat);
       setSelectedFilters([]);
@@ -78,7 +74,6 @@ const Searchbar: FC<P> = (props: P) => {
   };
 
   const getCategoryTag = (cat: ICategory) => {
-    console.log(cat);
     return (
       <Button
         className={classnames(styles.Tag, {
@@ -98,7 +93,6 @@ const Searchbar: FC<P> = (props: P) => {
     type: FilterType,
     oneOfGroupSelected: boolean
   ) => {
-    console.log(filter);
     const filterSelected = selectedFilters.map(v => v.id).includes(filter.id);
     return (
       <Button
@@ -147,7 +141,6 @@ const Searchbar: FC<P> = (props: P) => {
   };
 
   const getFilterControls = (filter: IFilter) => {
-    console.log(filter);
     const groupIDs = filter.filterValues.map(v => v.id);
     const oneOfGroupSelected = groupIDs.some(v => selectedFilters.map(v => v.id).includes(v));
 
@@ -218,9 +211,7 @@ const Searchbar: FC<P> = (props: P) => {
         } else {
           filters[filterGroup.id] = [filter.id];
         }
-        console.log(filterGroup);
       });
-      console.log(filters);
       const filtersArr = Object.keys(filters);
 
       filtersArr.forEach((v, i) => {

@@ -76,13 +76,11 @@ const Offers = (props: OffersProps) => {
     if (newFilters[filterGroup].length === 0) {
       delete newFilters[filterGroup];
     }
-    console.log(newFilters);
     setDynamicFilters(newFilters);
   };
 
   const getCategorySelect = (filter: IFilter) => {
     let defaultItem = dynamicFilters[filter.id];
-    console.log({ dynamicFilters, filter, defaultItem });
     const filterSelectItems = filter.filterValues?.map(v => {
       return { id: v.id, text: v.value, value: v.id };
     });

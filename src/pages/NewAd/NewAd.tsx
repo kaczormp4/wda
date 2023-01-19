@@ -227,7 +227,6 @@ const NewAd: FC = () => {
                         error={Boolean(errors.selectedFilterValueIds)}
                         {...field}
                         onChange={(e: ISelectItem) => {
-                          console.log(e);
                           const filterID = filter.id;
                           const newValue = {
                             ...field.value,

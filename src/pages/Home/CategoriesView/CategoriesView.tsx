@@ -22,7 +22,6 @@ const getImg = (name: string) => {
 export const CategoriesView: FC<P> = props => {
   const navigate = useNavigate();
   const { categories } = props;
-  console.log(categories);
 
   const getCategoryBtn = (cat: ICategory) => {
     const img = getImg(cat.name);

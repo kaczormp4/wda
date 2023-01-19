@@ -63,7 +63,6 @@ const Profile: FC<ProfileProps> = () => {
       setUser(user);
     });
     new OfferAPI().getUserOffers(isOwnProfile ? prof.accountIdentifier : id).then(userOffers => {
-      console.log({ userOffers });
       setOffers(userOffers);
     });
   }, [id]);
@@ -73,7 +72,6 @@ const Profile: FC<ProfileProps> = () => {
   }
 
   const onSubmit = (values: IUserEdit) => {
-    console.log({ values });
     setSendingEditUserReq(true);
     new Users().patch(user.userIdentifier, values).then(v => {
       setUser({...user, ...values});

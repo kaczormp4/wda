@@ -69,7 +69,6 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>((props, ref) => 
           defaultItems.push(items.find((item) => v == item.id))
         }
       })
-      console.log(defaultItems);
   
       setSelectedItems(defaultItems);
 

@@ -37,7 +37,6 @@ const PhotoAdder: FC<P> = (props) => {
             const accFile = Array.from(event.dataTransfer.files as File[]).find((x: File) => x.name === v.name);
             files.push(accFile);
         })
-        console.log(files);
         addFiles(files);
         const errors = rejected.map((v) => v.errors).map((v) => v.filter((v) => v.code)).map((v) => v[0].code);
         const uniqueErrors = [...new Set(errors)];
@@ -59,7 +58,6 @@ const PhotoAdder: FC<P> = (props) => {
 
     const addFiles = async (files: FileList | File[]) => {
         const maxFiles = props.count - photos.filter((v) => v).length;
-        console.log(files.length, maxFiles);
         if (files) {
             for (let i = 0; i < files.length; i++) {
                 if (i >= maxFiles) {
