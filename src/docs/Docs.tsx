@@ -24,6 +24,7 @@ export const Docs: FC = () => {
   const isAdmin = MSALInstance.getAccount(); // currently just isLoggedIn
   const mark = require(`./docs.md`);
   const markAdmin = require(`./docsAdmin.md`);
+  console.log({mark, markAdmin});
   useEffect(() => {
     Promise.all([fetch(mark), fetch(markAdmin)])
       .then(async ([resp, respAdmin]) => {
