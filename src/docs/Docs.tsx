@@ -2,8 +2,8 @@ import { FC, useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkhint from 'remark-hint';
-import mark from './docs.md';
-import markAdmin from './docsAdmin.md';
+// import mark from './docs.md';
+// import markAdmin from './docsAdmin.md';
 import mark2 from './docsTEMPLATE.md';
 import s from './Docs.module.scss';
 import classNames from 'classnames';
@@ -22,9 +22,9 @@ export const Docs: FC = () => {
   const contentRef = useRef<HTMLDivElement>();
   const docsWrapper = useRef<HTMLDivElement>();
   const isAdmin = MSALInstance.getAccount(); // currently just isLoggedIn
-
+  const mark = require(`./docs.md`);
+  const markAdmin = require(`./docsAdmin.md`);
   useEffect(() => {
-
     Promise.all([fetch(mark), fetch(markAdmin)])
       .then(async ([resp, respAdmin]) => {
         let text = await resp.text();
