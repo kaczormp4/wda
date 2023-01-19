@@ -14,15 +14,16 @@ type Nav = {
 };
 
 export const Docs: FC = () => {
+  const mark = require(`./../assets/docs.md`);
+  const markAdmin = require(`./../assets/docsAdmin.md`);
+  
   const [docsSource, setDocsSource] = useState<string>('');
   const [nav, setNav] = useState<Nav[]>([]);
   const [activeNavIndex, setActiveNavIndex] = useState<number>();
   const contentRef = useRef<HTMLDivElement>();
   const docsWrapper = useRef<HTMLDivElement>();
   const isAdmin = MSALInstance.getAccount(); // currently just isLoggedIn
-  const mark = require(`./../assets/docs.md`);
-  const markAdmin = require(`./../assets/docsAdmin.md`);
-  console.log({mark, markAdmin});
+  console.log({'d': 'd', mark, markAdmin});
   useEffect(() => {
     Promise.all([fetch(mark), fetch(markAdmin)])
       .then(async ([resp, respAdmin]) => {
