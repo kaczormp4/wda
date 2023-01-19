@@ -43,6 +43,25 @@ const Offers = (props: OffersProps) => {
     }
   }, [id]);
 
+  useEffect(() => {
+    if (window.location.search && category?.filters) {
+      const paramsString = window.location.search;
+      const searchParams = new URLSearchParams(paramsString);
+      const newFilters = [];
+      for (const [key, value] of searchParams.entries()) {
+        if (key === 'text') {
+          setSearchValue(value);
+        }
+        const availableFilters = category.filters;
+        const usedFilterCat = availableFilters.find(v => v.id.toString() === key);
+        if (usedFilterCat) {
+          newFilters[usedFilterCat.id] = value.split(',').map(v => Number(v));
+        }
+        setDynamicFilters(newFilters);
+      }
+    }
+  }, [category]);
+
   const onCategoryChange = (item: ISelectItem) => {
     navigate(`/ogloszenia/${item.value}`);
   };
@@ -57,10 +76,13 @@ const Offers = (props: OffersProps) => {
     if (newFilters[filterGroup].length === 0) {
       delete newFilters[filterGroup];
     }
+    console.log(newFilters);
     setDynamicFilters(newFilters);
   };
 
   const getCategorySelect = (filter: IFilter) => {
+    let defaultItem = dynamicFilters[filter.id];
+    console.log({ dynamicFilters, filter, defaultItem });
     const filterSelectItems = filter.filterValues?.map(v => {
       return { id: v.id, text: v.value, value: v.id };
     });
@@ -73,6 +95,7 @@ const Offers = (props: OffersProps) => {
           <MultiSelect
             buttonProps={{ id: String(filter.id) }}
             items={filterSelectItems}
+            defaultSelected={defaultItem}
             onChange={(item: ISelectItem) => {
               changeFilters(filter.id, item);
             }}
@@ -82,6 +105,8 @@ const Offers = (props: OffersProps) => {
     }
 
     filterSelectItems.unshift({ id: -1, text: 'Nie wybrano', value: -1 });
+    defaultItem = dynamicFilters[filter.id] ? dynamicFilters[filter.id][0] : null;
+
     return (
       <div className={s.FilterField} key={filter.id}>
         <label htmlFor={String(filter.id)} className={s.FilterLabel}>
@@ -90,6 +115,7 @@ const Offers = (props: OffersProps) => {
         <Select
           buttonProps={{ id: String(filter.id) }}
           items={filterSelectItems}
+          defaultSelected={defaultItem}
           onChange={(items: ISelectItem) => {
             changeFilters(filter.id, items);
           }}
@@ -125,6 +151,7 @@ const Offers = (props: OffersProps) => {
             kind="outlined"
             size="sm"
             type="search"
+            defaultValue={searchValue}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value)}
             label="Wyszukaj po nazwie i opisie ogłoszenia"
           />
@@ -153,15 +180,16 @@ const Offers = (props: OffersProps) => {
   };
 
   const filteredOffers = (offers: IOffer[]) => {
-    if(!offers) return null;
+    if (!offers) return null;
     const currFilters = Object.values(dynamicFilters);
     let filteredOffers = [...offers];
-    if(searchValue) {
-      filteredOffers = filteredOffers.filter((v) =>  
-        v.title.toLowerCase().includes((searchValue.toLowerCase())) ||
-        v.description.toLowerCase().includes((searchValue.toLowerCase())) ||
-        v.shortDescription.toLowerCase().includes((searchValue.toLowerCase()))
-      )
+    if (searchValue) {
+      filteredOffers = filteredOffers.filter(
+        v =>
+          v.title.toLowerCase().includes(searchValue.toLowerCase()) ||
+          v.description.toLowerCase().includes(searchValue.toLowerCase()) ||
+          v.shortDescription.toLowerCase().includes(searchValue.toLowerCase())
+      );
     }
     if (currFilters.length) {
       return filteredOffers.filter(offer => {
@@ -172,11 +200,19 @@ const Offers = (props: OffersProps) => {
     } else return filteredOffers;
   };
 
+  const getEmptyScreen = () => {
+    return <div className={s.Empty}>
+      <h2>Nie znaleziono ofert</h2>
+      <p>Zmień kryteria wyszukiwania</p>
+    </div>
+  }
+  const filtered = filteredOffers(offers);
+
   return (
     <div className={s.Offers}>
       {/* cannot rneder filters for profile view cuase they don't have onme category */}
       {!props.offers && <div className={s.Filters}>{getFilters()}</div>}
-      <OffersView offers={filteredOffers(offers)} />
+      {filtered?.length ? <OffersView offers={filtered} /> : getEmptyScreen()}
     </div>
   );
 };

@@ -7,7 +7,8 @@ import {
     faTrash, faCircleCheck, faHeart,
     faFlag, faClone, faChevronDown,
     faCheck, faCircleDot, faChevronLeft, faTrashCan,
-    faEdit, faArrowsRotate, faDashboard, faMagnifyingGlass
+    faEdit, faArrowsRotate, faDashboard, faMagnifyingGlass,
+    faClose, faQuoteLeft
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -17,4 +18,5 @@ library.add(
     faHeart, faFlag, faClone, faChevronDown, faCheck,
     faCircleDot, faChevronLeft, faTrashCan,
     faEdit, faArrowsRotate, faDashboard, faMagnifyingGlass,
+    faClose, faQuoteLeft
 );

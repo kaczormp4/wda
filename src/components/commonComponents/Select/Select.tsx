@@ -65,6 +65,13 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>((props, ref) => 
   };
 
   useEffect(() => {
+    console.log({items, defaultSelected});
+    const defaultItem = items.find(v => v.id === defaultSelected) || items[0];
+    console.log(defaultItem);
+    setSelectedItem(defaultItem)
+  }, [defaultSelected]);
+
+  useEffect(() => {
     if (isOpen) {
       if (isOutOfBounds(selectListRef.current).includes(Directions.BOTTOM)) {
         selectListRef.current.classList.add(`${cls}--top`);

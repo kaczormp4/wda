@@ -61,6 +61,22 @@ const Select = React.forwardRef<HTMLButtonElement, SelectProps>((props, ref) => 
   };
 
   useEffect(() => {
+    let defaultItems: ISelectItem[] = [];
+    const itemsIDs = items.map((v) => v.id.toString());
+    if(defaultSelected) {
+      defaultSelected.forEach((v) => {
+        if(itemsIDs.includes(v.toString())) {
+          defaultItems.push(items.find((item) => v == item.id))
+        }
+      })
+      console.log(defaultItems);
+  
+      setSelectedItems(defaultItems);
+
+    }
+  }, [defaultSelected]);
+
+  useEffect(() => {
     if (isOpen) {
       if (isOutOfBounds(selectListRef.current).includes(Directions.BOTTOM)) {
         selectListRef.current.classList.add(`${cls}--top`);

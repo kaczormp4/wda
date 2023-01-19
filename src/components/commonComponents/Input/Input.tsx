@@ -60,13 +60,17 @@ const Input: FC<InputProps> = props => {
   const [isFocus, setIsFocus] = useState<boolean>(false);
   const [isText, setText] = useState<typeof defaultValue>(defaultValue);
 
-  const labelRef = useRef<any>(null);
+  const labelRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (isText.toString().length > 0 || type === 'date') {
       setIsActive(true);
     }
   }, []);
+
+  useEffect(() => {
+      setText(defaultValue);
+  }, [defaultValue]);
 
   // classnames
   const classes = classNames(className, {

@@ -5,6 +5,7 @@ import { HomeOffers } from './HomeOffers/HomeOffers';
 
 import styles from "./Home.module.scss";
 import { IOffer, Offers } from '../../api/Offers';
+import Searchbar from '../../components/Searchbar/Searchbar';
 
 export const Home: FC = () => {
 
@@ -22,7 +23,7 @@ export const Home: FC = () => {
 
     return <>
         <div className={styles.Home}>
-            <div className={styles.Search}>Placeholder dla wyszukiwarki</div>
+            <Searchbar categories={categories}/>
             <CategoriesView categories={categories} />
             <HomeOffers offers={offers}/>
         </div>
