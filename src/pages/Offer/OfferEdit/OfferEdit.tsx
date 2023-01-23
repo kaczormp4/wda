@@ -1,19 +1,23 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
-
-import styles from './OfferEdit.module.scss';
-import { IEditOffer, IOffer, Offers } from '../../../api/Offers';
+import { FC, useEffect, useRef, useState } from 'react';
+import { toast } from 'react-toastify';
+import { Controller, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
-import Skeleton from '../Skeleton/Skeleton';
-import Slider from '../Slider/Slider';
-import { FavButton } from '../../../components/FavButton/FavButton';
-import { getTags } from '../../../components/OfferCard/OfferCard';
+
 import Button from '../../../components/commonComponents/Button/Button';
 import Input from '../../../components/commonComponents/Input/Input';
 import TextField from '../../../components/commonComponents/TextField/TextField';
-import { Controller, useForm } from 'react-hook-form';
 import { TextEditor } from '../../../components/commonComponents/TextEditor/TextEditor';
+import { FavButton } from '../../../components/FavButton/FavButton';
+import { getTags } from '../../../components/OfferCard/OfferCard';
+
+import Skeleton from '../Skeleton/Skeleton';
+import Slider from '../Slider/Slider';
+
 import { MSALInstance } from '../../../api/Authentication/MSALConfig';
-import { toast } from 'react-toastify';
+import { IEditOffer, IOffer, Offers } from '../../../api/Offers';
+
+import styles from './OfferEdit.module.scss';
+import { SectionMedium } from '../../../components/Section/Section';
 
 type OfferEditProps = {};
 
@@ -78,7 +82,7 @@ const OfferEdit: FC<OfferEditProps> = () => {
   }
 
   return (
-    <>
+    <SectionMedium>
       <form ref={formRef} className={styles.Container} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.OfferInfoContainer}>
           <section className={styles.Slider}>
@@ -181,7 +185,7 @@ const OfferEdit: FC<OfferEditProps> = () => {
           </section>
         </div>
       </form>
-    </>
+    </SectionMedium>
   );
 };
 

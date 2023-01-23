@@ -1,15 +1,17 @@
 import { FC, useEffect, useState } from 'react';
-import { Categories, ICategory } from '../../api/Categories';
-import { CategoriesView } from './CategoriesView/CategoriesView';
-import { HomeOffers } from './HomeOffers/HomeOffers';
 
-import styles from "./Home.module.scss";
-import { IOffer, Offers } from '../../api/Offers';
 import Searchbar from '../../components/Searchbar/Searchbar';
 import { SectionLarge, SectionMedium } from '../../components/Section/Section';
 
-export const Home: FC = () => {
+import { CategoriesView } from './CategoriesView/CategoriesView';
+import { HomeOffers } from './HomeOffers/HomeOffers';
 
+import { Categories, ICategory } from '../../api/Categories';
+import { IOffer, Offers } from '../../api/Offers';
+
+import styles from "./Home.module.scss";
+
+export const Home: FC = () => {
     const [categories, setCategories] = useState<ICategory[]>(null);
     const [offers, setOffers] = useState<IOffer[]>(null);
 

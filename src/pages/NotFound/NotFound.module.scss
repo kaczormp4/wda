@@ -1,3 +1,7 @@
 .NotFound {
-    background-color: cyan;
+    text-align: center;
+
+    &>h2 {
+        color: gray;
+    }
 }

@@ -1,16 +1,20 @@
 import { FC, useEffect, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IOffer, Offers as OfferAPI } from '../../api/Offers';
-import styles from './Profile.module.scss';
-import Button from '../../components/commonComponents/Button/Button';
-import { useNavigate, useParams } from 'react-router-dom';
-import { MSALInstance } from '../../api/Authentication/MSALConfig';
-import { Account } from 'msal';
-import { IUser, IUserEdit, Users } from '../../api/Users';
-import { OffersView } from '../Offers/OffersView';
-import { Controller, useForm } from 'react-hook-form';
-import Input from '../../components/commonComponents/Input/Input';
 import { toast } from 'react-toastify';
+import { Controller, useForm } from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import Button from '../../components/commonComponents/Button/Button';
+import Input from '../../components/commonComponents/Input/Input';
+
+import { OffersView } from '../Offers/OffersView';
+
+import { MSALInstance } from '../../api/Authentication/MSALConfig';
+import { IUser, IUserEdit, Users } from '../../api/Users';
+import { IOffer, Offers as OfferAPI } from '../../api/Offers';
+
+import styles from './Profile.module.scss';
+import { SectionMedium } from '../../components/Section/Section';
 
 type ProfileProps = {};
 
@@ -74,7 +78,7 @@ const Profile: FC<ProfileProps> = () => {
   const onSubmit = (values: IUserEdit) => {
     setSendingEditUserReq(true);
     new Users().patch(user.userIdentifier, values).then(v => {
-      setUser({...user, ...values});
+      setUser({ ...user, ...values });
       setEditUserForm(false);
       setSendingEditUserReq(false);
       toast.success(v);
@@ -82,7 +86,7 @@ const Profile: FC<ProfileProps> = () => {
   };
 
   return (
-    <>
+    <SectionMedium>
       <main className={styles.Container}>
         <section className={styles.MainProfileInfoContainer}>
           <div className={styles.UserAvatar}>
@@ -198,7 +202,7 @@ const Profile: FC<ProfileProps> = () => {
             </div>
           </div>
         </section>
-        { isOwnProfile && 
+        {isOwnProfile &&
           <section className={styles.PremiumSection}>
             <h2>Pakiet twojego konta</h2>
             <div className={styles.PremiumSectionWrapper}>
@@ -252,7 +256,7 @@ const Profile: FC<ProfileProps> = () => {
           {<OffersView allowEdit={isOwnProfile} offers={offers} />}
         </section>
       </main>
-    </>
+    </SectionMedium>
   );
 };
 

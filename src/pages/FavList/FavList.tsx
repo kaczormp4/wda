@@ -1,17 +1,20 @@
 import { FC, useEffect, useState } from 'react';
-import styles from './FavList.module.scss';
+import { fill } from 'lodash';
+
+import { OfferCard } from '../../components/OfferCard/OfferCard';
+import { SectionMedium } from '../../components/Section/Section';
 
 import { Favorites } from '../../api/Favorites';
 import { Offers, IImage, IOffer } from '../../api/Offers';
-import { OfferCard } from '../../components/OfferCard/OfferCard';
-import { fill } from 'lodash';
-import { SectionMedium } from '../../components/Section/Section';
+
+import styles from './FavList.module.scss';
 
 type FavListProps = {};
 
 const FavList: FC<FavListProps> = () => {
   const favOffers = new Favorites().getList();
   const [offers, setOffers] = useState<IOffer[]>();
+
   useEffect(() => {
     const api = new Offers();
     const offersPromises = favOffers?.map(

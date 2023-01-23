@@ -1,23 +1,28 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import classNames from 'classnames';
 import React, { FC, useContext, useEffect, useRef, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useForm, Controller } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { Offers, IPostOffer } from '../../api/Offers';
-import { Categories, FilterType, ICategory, ICategoryFilter } from '../../api/Categories';
-import { PriceUnits } from '../../api/PriceUnits';
+import classNames from 'classnames';
+
 import Button from '../../components/commonComponents/Button/Button';
 import Input from '../../components/commonComponents/Input/Input';
-import Select, { ISelectItem } from '../../components/commonComponents/Select/Select';
 import TextField from '../../components/commonComponents/TextField/TextField';
-import CategoriesModal from './CategoriesModal';
-import { useForm, Controller } from 'react-hook-form';
-
-import styles from './NewAd.module.scss';
-import PhotoAdder from './PhotoAdder';
 import { TextEditor } from '../../components/commonComponents/TextEditor/TextEditor';
 import MultiSelect from '../../components/commonComponents/MultiSelect/MultiSelect';
+import Select, { ISelectItem } from '../../components/commonComponents/Select/Select';
+
+
+import CategoriesModal from './CategoriesModal';
+import PhotoAdder from './PhotoAdder';
+
+import { Categories, FilterType, ICategory, ICategoryFilter } from '../../api/Categories';
 import AuthenticationContext from '../../api/Authentication/AuthenticationContext';
+import { Offers, IPostOffer } from '../../api/Offers';
+import { PriceUnits } from '../../api/PriceUnits';
+
+import styles from './NewAd.module.scss';
+import { SectionMedium } from '../../components/Section/Section';
 
 enum PRICE_TYPES {
   UNIT = 'UNIT',
@@ -45,7 +50,7 @@ const priceTypes: ISelectItem[] = [
 const NewAd: FC = () => {
   const navigate = useNavigate();
   const context = useContext(AuthenticationContext);
-  if(!context.isAuthenticated) {
+  if (!context.isAuthenticated) {
     navigate('/');
   }
 
@@ -374,7 +379,7 @@ const NewAd: FC = () => {
   };
 
   return (
-    <>
+    <SectionMedium>
       <main className={styles.NewAd}>
         <h1 className={styles.Header}>Dodaj ogłoszenie</h1>
         <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
@@ -527,7 +532,7 @@ const NewAd: FC = () => {
           </section>
         </form>
       </main>
-    </>
+    </SectionMedium>
   );
 };
 
