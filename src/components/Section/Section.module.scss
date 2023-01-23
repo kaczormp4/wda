@@ -1,0 +1,13 @@
+@import "../../styles/cssVariables.scss";
+
+.Large {
+    width: 100%;
+    max-width: var(--width-desktop-1920);
+    display: flex;
+    justify-content: center;
+}
+
+.Medium {
+    width: 100%;
+    max-width: var(--width-desktop-1600);
+}

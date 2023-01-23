@@ -102,7 +102,7 @@ const Navbar: FC<NavbarProps> = props => {
     <div className={styles.NavbarContainer}>
       <div className={styles.NavbarContent}>
         <div className={styles.Logo}>
-          <Link to="/">Nuptiae</Link>
+          <Link to="/"><div className={styles.LogoImg}></div></Link>
         </div>
         <nav className={styles.NavMenu}>
           {isAdmin && (

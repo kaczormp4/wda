@@ -11,6 +11,7 @@ import classNames from 'classnames';
 import MultiSelect from '../../components/commonComponents/MultiSelect/MultiSelect';
 import { OffersView } from './OffersView';
 import Input from '../../components/commonComponents/Input/Input';
+import { SectionMedium } from '../../components/Section/Section';
 
 type OffersProps = {
   offers?: IOffer[];
@@ -207,11 +208,13 @@ const Offers = (props: OffersProps) => {
   const filtered = filteredOffers(offers);
 
   return (
-    <div className={s.Offers}>
-      {/* cannot rneder filters for profile view cuase they don't have onme category */}
-      {!props.offers && <div className={s.Filters}>{getFilters()}</div>}
-      {filtered?.length ? <OffersView offers={filtered} /> : getEmptyScreen()}
-    </div>
+    <SectionMedium>
+      <div className={s.Offers}>
+        {/* cannot rneder filters for profile view cuase they don't have onme category */}
+        {!props.offers && <div className={s.Filters}>{getFilters()}</div>}
+        {filtered?.length ? <OffersView offers={filtered} /> : getEmptyScreen()}
+      </div>
+    </SectionMedium>
   );
 };
 

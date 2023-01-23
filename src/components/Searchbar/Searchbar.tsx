@@ -1,5 +1,4 @@
 import { FC, FocusEventHandler, KeyboardEvent, useEffect, useRef, useState } from 'react';
-import styles from './Searchbar.module.scss';
 import { Categories, FilterType, ICategory, ICategoryFilter, IFilter } from '../../api/Categories';
 import Button from '../commonComponents/Button/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,6 +7,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { IsAny } from 'react-hook-form';
 import { filter } from 'lodash';
 
+import styles from './Searchbar.module.scss';
 type P = {
   categories: ICategory[];
 };
@@ -195,7 +195,7 @@ const Searchbar: FC<P> = (props: P) => {
       query += `?text=${textQuery}`;
     }
     if (selectedFilters.length) {
-      if(!textQuery) {
+      if (!textQuery) {
         query = '?';
       } else {
         query += '&';

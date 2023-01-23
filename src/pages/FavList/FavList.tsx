@@ -5,6 +5,7 @@ import { Favorites } from '../../api/Favorites';
 import { Offers, IImage, IOffer } from '../../api/Offers';
 import { OfferCard } from '../../components/OfferCard/OfferCard';
 import { fill } from 'lodash';
+import { SectionMedium } from '../../components/Section/Section';
 
 type FavListProps = {};
 
@@ -28,7 +29,7 @@ const FavList: FC<FavListProps> = () => {
   }, []);
 
   return (
-    <>
+    <SectionMedium>
       <main className={styles.FavList}>
         <h1 className={styles.Header}>Obserwowane ogłoszenia</h1>
         {!favOffers || favOffers.length === 0 ? (
@@ -41,7 +42,7 @@ const FavList: FC<FavListProps> = () => {
           </div>
         )}
       </main>
-    </>
+    </SectionMedium>
   );
 };
 

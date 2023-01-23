@@ -15,6 +15,7 @@ import { getTags } from '../../components/OfferCard/OfferCard';
 import ReportModal from './ReportModal/ReportModal';
 import DeleteOfferModal from '../../components/OfferCard/DeleteOfferModal/DeleteOfferModal';
 import { MSALInstance } from '../../api/Authentication/MSALConfig';
+import { SectionMedium } from '../../components/Section/Section';
 
 const arrayPhotos = [
   'https://ckis.tczew.pl/imagecache/max_1800/orkiestra-jubileusz.jpg',
@@ -65,7 +66,7 @@ const Offer: FC<OfferProps> = () => {
   }
 
   return (
-    <>
+    <SectionMedium>
       <main className={styles.Container}>
         <div className={styles.OfferInfoContainer}>
           <section className={styles.Slider}>
@@ -170,7 +171,7 @@ const Offer: FC<OfferProps> = () => {
         <DeleteOfferModal offer={data} setModalOpen={setShowDeleteModal} onDelete={onDelete} />
       )}
       {modalOpen && <ReportModal offer={data} setModalOpen={setModalOpen} />}
-    </>
+    </SectionMedium>
   );
 };
 

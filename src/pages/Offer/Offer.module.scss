@@ -1,15 +1,18 @@
 .Container {
     // width: var(--width-desktop-1250);
     // max-width: calc(100% - var(--spacing-05));
+
     margin: auto;
     margin-bottom: var(--spacing-03);
     display: grid;
     grid-template-columns: repeat(10, 1fr);
     grid-column-gap: var(--spacing-04);
     align-items: stretch;
+
     .OfferInfoContainer {
         height: max-content;
         grid-column: span 9;
+
         .Slider {
             padding: var(--spacing-05);
             background-color: var(--background-02);
@@ -19,54 +22,68 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 0 8px 0px var(--md-overlay);
         }
+
         .Description {
             padding: var(--spacing-05);
             background-color: var(--background-02);
             margin-top: var(--spacing-03);
             border-radius: var(--spacing-02);
+            box-shadow: 0 0 8px 0px var(--md-overlay);
+
             .DateAndFavourite {
                 width: 100%;
                 display: flex;
                 justify-content: space-between;
-                & > span {
+
+                &>span {
                     color: var(--text-03);
                     font-size: var(--font-size-02);
                 }
             }
-            & > h1 {
+
+            &>h1 {
                 font-size: var(--font-size-04);
                 margin-top: var(--spacing-05);
             }
+
             .PriceAndInfo {
                 margin-top: var(--spacing-05);
                 display: flex;
                 align-items: center;
                 gap: var(--spacing-04);
-                & > h1 {
+
+                &>h1 {
                     font-size: var(--font-size-04);
                     font-weight: bold;
                 }
-                & > span {
+
+                &>span {
                     color: var(--positive-01);
                 }
             }
+
             .AdditionalInfo {
                 margin-top: var(--spacing-05);
                 display: flex;
                 flex-wrap: wrap;
                 gap: var(--spacing-04);
+
                 .singleLine {
                     font-size: var(--font-size-02);
-                    & > img,
+
+                    &>img,
                     svg {
                         color: var(--primary);
                     }
                 }
             }
+
             .MainDescription {
                 margin-top: var(--spacing-05);
             }
+
             .DescriptionFooter {
                 margin-top: var(--spacing-05);
                 padding-top: var(--spacing-03);
@@ -79,66 +96,83 @@
             }
         }
     }
+
     .MainUseInfoContainer {
         height: max-content;
         // grid-column: 360px;
         position: sticky;
         top: 0;
+
         .OfferManagement {
             padding: var(--spacing-05);
             background-color: var(--background-02);
             margin-top: var(--spacing-03);
             border-radius: var(--spacing-02);
+
             h2 {
                 margin-bottom: var(--spacing-03);
             }
         }
+
         .UserInfo {
             padding: var(--spacing-05);
             margin-top: var(--spacing-03);
             border-radius: var(--spacing-02);
-            box-shadow: 0 0 10px rgb(0 0 0 / 5%);
+            // box-shadow: 0 0 10px rgb(0 0 0 / 5%);
+            box-shadow: 0 0 8px 0px var(--md-overlay);
+
             margin-right: var(--spacing-03);
+
             .MainUserInfo {
                 display: flex;
                 gap: var(--spacing-04);
+
                 .UserAvatar {
                     width: max-content;
-                    & > img {
+
+                    &>img {
                         width: 60px;
                         height: 60px;
                     }
                 }
+
                 .NameAndRate {
                     display: flex;
                     flex-direction: column;
                     gap: var(--spacing-02);
-                    & > div {
+
+                    &>div {
                         display: flex;
                         gap: var(--spacing-02);
-                        & > svg,
+
+                        &>svg,
                         img {
                             color: var(--positive-01);
                         }
-                        & > a {
+
+                        &>a {
                             color: var(--interactive-01);
                             cursor: pointer;
                         }
+
                         &:last-child {
                             color: var(--text-03);
                         }
                     }
                 }
             }
+
             .ButtonsContainer {
                 margin-top: var(--spacing-06);
                 display: flex;
                 gap: var(--spacing-02);
             }
+
             .PhoneNumber {
                 margin-top: var(--spacing-06);
             }
         }
+
         .Calendar {
             grid-column: span 4;
             padding: var(--spacing-05);
@@ -146,20 +180,23 @@
             margin-top: var(--spacing-03);
             border-radius: var(--spacing-02);
         }
+
         .MiniMapContainer {
             grid-column: span 4;
             padding: var(--spacing-05);
             background-color: var(--background-02);
             margin-top: var(--spacing-03);
             border-radius: var(--spacing-02);
+
             .LocationInfo {
                 color: var(--text-03);
                 display: flex;
                 flex-direction: column;
                 justify-content: flex-end;
             }
+
             .MiniMap {
-                & > img {
+                &>img {
                     width: 100%;
                 }
             }
@@ -176,17 +213,21 @@
         }
     }
 }
+
 @media only screen and (max-width: 1000px) {
     .Container {
         grid-template-columns: repeat(9, 1fr);
+
         .OfferInfoContainer {
             grid-column: span 9;
         }
+
         .MainUseInfoContainer {
             grid-column: span 9;
         }
     }
 }
+
 @media only screen and (max-width: 700px) {
     .Container {
         .OfferInfoContainer {

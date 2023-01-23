@@ -33,7 +33,8 @@ const Slider: FC<SliderProps> = ({ photos, maxNumOfPhotos }) => {
     <>
       <div className={styles.Container}>
         <div className={styles.Photo}>
-          <img src={photos[isCurrentPhoto].imageUrl} />
+          {/* <img src={photos[isCurrentPhoto].imageUrl} /> */}
+          <img src={'https://www.maciejpluta.pl/files/sale-weselne/sale-weselne-czestochowa%20(42).jpg'} />
         </div>
         {photos.length > 1 && (
           <div className={styles.Buttons}>

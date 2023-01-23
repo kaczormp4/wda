@@ -3,6 +3,7 @@
 
 .HomeOffers {
     @include centerSection(var(--width-desktop-1600));
+
     .OffersWrapper {
         gap: var(--spacing-03);
         column-gap: var(--spacing-06);

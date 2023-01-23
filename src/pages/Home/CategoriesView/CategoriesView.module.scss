@@ -3,6 +3,7 @@
 
 .Categories {
     @include centerSection(100%);
+
     .CatList {
         display: grid;
         grid-gap: var(--spacing-03);
@@ -22,16 +23,20 @@
             border-radius: var(--spacing-02);
             overflow: hidden;
             height: 10rem;
+            box-shadow: 0 0 8px 0px var(--md-overlay);
+
             &:first-child {
                 grid-column: 1;
                 grid-row: 1 / span 2;
                 height: calc(20rem + var(--spacing-03));
             }
+
             &:nth-child(3) {
                 grid-column: 3;
                 grid-row: 1 / span 2;
                 height: calc(20rem + var(--spacing-03));
             }
+
             .CatBtnName {
                 color: var(--text-02);
                 font-size: var(--font-size-04);
@@ -44,6 +49,7 @@
                 justify-content: center;
                 z-index: 2;
             }
+
             &::after {
                 content: "";
                 position: absolute;

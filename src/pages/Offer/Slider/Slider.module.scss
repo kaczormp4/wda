@@ -4,7 +4,8 @@
     height: 100%;
     display: flex;
     justify-content: center;
-    .Photo > img {
+
+    .Photo>img {
         max-width: 100%;
         max-height: 500px;
         width: 100%;
@@ -12,6 +13,7 @@
         object-fit: cover;
         // position: relative;
     }
+
     .Buttons {
         width: 100%;
         height: 100%;
@@ -20,18 +22,22 @@
         display: flex;
         justify-content: space-between;
         align-items: flex-end;
+
         .Arrow {
             height: 100%;
             display: flex;
             align-items: center;
             padding: 0 var(--spacing-02);
+
             &:hover {
                 cursor: pointer;
             }
+
             & svg {
                 font-size: 1.5rem;
             }
         }
+
         .Circles {
             height: max-content;
             display: flex;
@@ -41,20 +47,20 @@
             padding-top: 1rem;
             padding-left: 0.5rem;
             padding-right: 0.5rem;
-            background-image: linear-gradient(
-                rgba(255, 0, 0, 0),
-                rgba(255, 0, 0, 0),
-                rgba(21, 21, 21, 0.399),
-                rgba(7, 50, 7, 0),
-                rgba(7, 50, 7, 0)
-            );
+            background-image: linear-gradient(rgba(255, 0, 0, 0),
+                    rgba(255, 0, 0, 0),
+                    rgba(21, 21, 21, 0.399),
+                    rgba(7, 50, 7, 0),
+                    rgba(7, 50, 7, 0));
             border-radius: 60px;
+
             & svg {
                 &:hover {
                     color: var(--primary-hover);
                     cursor: pointer;
                 }
             }
+
             & svg {
                 font-size: 1rem;
                 color: var(--text-02);
