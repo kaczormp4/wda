@@ -12,6 +12,7 @@ import MultiSelect from '../../components/commonComponents/MultiSelect/MultiSele
 import { OffersView } from './OffersView';
 import Input from '../../components/commonComponents/Input/Input';
 import { SectionMedium } from '../../components/Section/Section';
+import Searchbar from '../../components/Searchbar/Searchbar';
 
 type OffersProps = {
   offers?: IOffer[];

@@ -1,21 +1,25 @@
-import { Home } from './pages/Home/Home';
-import NotFound from './pages/NotFound/NotFound';
-import Showcase from './components/Showcase/Showcase';
-import NewAd from './pages/NewAd/NewAd';
-import './utils/icons';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar/Navbar';
-import APITest from './api/APITest';
 import { ToastContainer } from 'react-toastify';
+
+import NewAd from './pages/NewAd/NewAd';
 import Offer from './pages/Offer/Offer';
 import Offers from './pages/Offers/Offers';
 import Profile from './pages/Profile/Profile';
-import Messages from './pages/Messages/Messages';
 import FavList from './pages/FavList/FavList';
-import AdminPanel from './pages/AdminPanel/AdminPanel';
+import Messages from './pages/Messages/Messages';
+import { Home } from './pages/Home/Home';
+import NotFound from './pages/NotFound/NotFound';
 import OfferEdit from './pages/Offer/OfferEdit/OfferEdit';
-import { Docs } from './docs/Docs';
+import AdminPanel from './pages/AdminPanel/AdminPanel';
+
+import Showcase from './components/Showcase/Showcase';
+import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
+
+import APITest from './api/APITest';
+
+import { Docs } from './docs/Docs';
+import './utils/icons';
 
 import './App.scss';
 
@@ -45,7 +49,6 @@ function App() {
     <div className="App">
       <Router>
         <Navbar flyoutMenuList={flyoutMenuList} />
-        {/* <div className="app"> */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/*" element={<NotFound />} />
@@ -70,7 +73,6 @@ function App() {
             <Route path=":offerId/edycja" element={<OfferEdit />} />
           </Route>
         </Routes>
-        {/* </div> */}
         <Footer />
       </Router >
       <ToastContainer />

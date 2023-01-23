@@ -15,7 +15,7 @@ import { getTags } from '../../components/OfferCard/OfferCard';
 import ReportModal from './ReportModal/ReportModal';
 import DeleteOfferModal from '../../components/OfferCard/DeleteOfferModal/DeleteOfferModal';
 import { MSALInstance } from '../../api/Authentication/MSALConfig';
-import { SectionMedium } from '../../components/Section/Section';
+import { SectionLine, SectionMedium } from '../../components/Section/Section';
 
 const arrayPhotos = [
   'https://ckis.tczew.pl/imagecache/max_1800/orkiestra-jubileusz.jpg',
@@ -83,6 +83,7 @@ const Offer: FC<OfferProps> = () => {
               {/* <span>dostępne terminy NEW FUTURE</span> */}
             </div>
             <div className={styles.AdditionalInfo}>{getTags(data.selectedFilters)}</div>
+            <SectionLine />
             <h1>Opis</h1>
             <div
               className={classNames(styles.MainDescription, 'styledText')}

@@ -13,3 +13,13 @@ export const SectionMedium: FC = ({ children }) => {
         <section className={styles.Medium}>{children}</section>
     )
 }
+
+export const SectionLine: FC = () => {
+    return (
+        <div className={styles.LineContainer}>
+            <div className={styles.Line}></div>
+            <div className={styles.Logo}></div>
+            <div className={styles.Line}></div>
+        </div>
+    )
+}
