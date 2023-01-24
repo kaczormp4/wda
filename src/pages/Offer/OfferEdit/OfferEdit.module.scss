@@ -6,15 +6,20 @@
     display: grid;
     grid-column-gap: var(--spacing-04);
     align-items: stretch;
+
     .OfferInfoContainer {
         height: max-content;
         grid-column: span 9;
+
         :global {
-            .wedd-input, .wedd-text-field {
+
+            .wedd-input,
+            .wedd-text-field {
                 max-width: unset;
                 width: 100%;
             }
         }
+
         .Slider {
             padding: var(--spacing-05);
             background-color: var(--background-02);
@@ -24,54 +29,73 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 0 8px 0px var(--md-overlay);
+
         }
+
         .Description {
             padding: var(--spacing-05);
             background-color: var(--background-02);
             margin-top: var(--spacing-03);
             border-radius: var(--spacing-02);
+            box-shadow: 0 0 8px 0px var(--md-overlay);
+
             .DateAndFavourite {
                 width: 100%;
                 display: flex;
                 justify-content: space-between;
-                & > span {
+
+                &>span {
                     color: var(--text-03);
                     font-size: var(--font-size-02);
                 }
             }
-            & > h1 {
+
+            &>h1 {
                 font-size: var(--font-size-04);
                 margin-top: var(--spacing-05);
             }
+
             .PriceAndInfo {
                 margin-top: var(--spacing-05);
                 display: flex;
                 align-items: center;
                 gap: var(--spacing-04);
-                & > h1 {
+
+                &>h1 {
                     font-size: var(--font-size-04);
                     font-weight: bold;
                 }
-                & > span {
+
+                &>span {
                     color: var(--positive-01);
                 }
             }
+
             .AdditionalInfo {
                 margin-top: var(--spacing-05);
                 display: flex;
                 flex-wrap: wrap;
                 gap: var(--spacing-04);
+
                 .singleLine {
                     font-size: var(--font-size-02);
-                    & > img,
+
+                    &>img,
                     svg {
                         color: var(--primary);
                     }
                 }
             }
+
             .MainDescription {
                 margin-top: var(--spacing-05);
             }
+
+            .TextEditor {
+                box-shadow: 0 0 0px 1px var(--md-overlay);
+            }
+
             .DescriptionFooter {
                 margin-top: var(--spacing-05);
                 padding-top: var(--spacing-03);
@@ -84,16 +108,19 @@
             }
         }
     }
+
     .MainUseInfoContainer {
         height: max-content;
         // grid-column: 360px;
         position: sticky;
         top: 80px;
+
         .OfferManagement {
             padding: var(--spacing-05);
             background-color: var(--background-02);
             margin-top: var(--spacing-03);
             border-radius: var(--spacing-02);
+
             h2 {
                 margin-bottom: var(--spacing-03);
                 margin-top: 0;

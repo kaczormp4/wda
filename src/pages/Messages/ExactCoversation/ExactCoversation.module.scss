@@ -6,41 +6,52 @@
     top: 0;
     display: flex;
     box-shadow: 0 2px 4px 0 rgb(0 0 0 / 10%);
+
     .ArrowMobile {
         display: none;
         padding-right: var(--spacing-02);
     }
+
     .ConversationInfoNavbarAvatar {
         width: 50px;
         height: 50px;
         margin-right: var(--spacing-02);
+
         &:hover {
             cursor: pointer;
         }
-        & > img,
+
+        &>img,
         svg {
             border-radius: 50px;
             width: 50px;
             height: 50px;
         }
     }
+
     .ConversationInfoAndButtonsContainer {
         width: 100%;
         display: flex;
         justify-content: space-between;
+
         .ConversationInfoNameAndStatus {
             width: auto;
-            & > h3 {
+
+            &>h3 {
+                margin: 0;
                 color: var(--text-03);
             }
-            & > div {
+
+            &>div {
                 margin-top: var(--spacing-02);
                 display: flex;
-                & > div {
+
+                &>div {
                     color: var(--positive-01);
                 }
             }
         }
+
         .ConversationInfoButtons {
             width: auto;
             margin-right: var(--spacing-02);
@@ -49,7 +60,8 @@
             align-items: center;
             gap: 1rem;
             color: var(--text-03);
-            & > svg {
+
+            &>svg {
                 &:hover {
                     color: var(--text-01);
                     cursor: pointer;
@@ -58,16 +70,19 @@
         }
     }
 }
+
 .ConversationContent {
     height: 100%;
     overflow: auto;
     overflow-x: none;
+
     /// POPRAWIC TO !!!!!!!!!!!!!!
     .ConwerstionOnelineContainerRight {
         width: 100%;
         display: flex;
         justify-content: flex-end;
         position: relative;
+
         .ConwerstionOnelineContentRight {
             max-width: 50%;
             background-color: var(--primary);
@@ -78,6 +93,7 @@
             word-wrap: break-word;
             animation: OpacityAnimation 400ms linear;
         }
+
         .ConwerstionOnelineDate {
             opacity: 0;
             position: absolute;
@@ -87,18 +103,21 @@
             transition-duration: 0.4s;
             transition-timing-function: ease-in-out;
         }
+
         &:hover {
             .ConwerstionOnelineDate {
                 opacity: 1;
             }
         }
     }
+
     /// POPRAWIC TO !!!!!!!!!!!!!!
     .ConwerstionOnelineContainerLeft {
         width: 100%;
         display: flex;
         justify-content: flex-start;
         position: relative;
+
         .ConwerstionOnelineContentLeft {
             max-width: 50%;
             background-color: var(--text-02);
@@ -109,6 +128,7 @@
             word-wrap: break-word;
             animation: OpacityAnimation 400ms linear;
         }
+
         .ConwerstionOnelineDate {
             opacity: 0;
             position: absolute;
@@ -118,21 +138,25 @@
             transition-duration: 0.4s;
             transition-timing-function: ease-in-out;
         }
+
         &:hover {
             .ConwerstionOnelineDate {
                 opacity: 1;
             }
         }
     }
+
     @keyframes OpacityAnimation {
         from {
             opacity: 0;
         }
+
         to {
             opacity: 1;
         }
     }
 }
+
 .WriteMessageContainer {
     margin-top: auto;
     background-color: var(--background-02);
@@ -141,6 +165,7 @@
     align-items: center;
     margin-top: var(--spacing-04);
     margin-bottom: var(--spacing-04);
+
     .textField {
         width: 100%;
         margin-left: var(--spacing-02);
@@ -150,17 +175,20 @@
         padding-top: 0;
         padding-bottom: 0;
     }
+
     .SendMessageButton {
         // margin-bottom: var(--spacing-04);
         margin-right: var(--spacing-04);
     }
 }
+
 @media only screen and (max-width: 700px) {
     .ConversationInfoNavbar {
         .ArrowMobile {
             display: block;
         }
     }
+
     .ConversationContent {
         height: 80%;
     }

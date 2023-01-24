@@ -202,7 +202,8 @@ const Messages: FC<MessagesProps> = () => {
                   onClick={() => changeMessage(user.id)}
                 >
                   <div className={styles.OneMessageAvatar}>
-                    <img src={user.photo} />
+                    {/* <img src={user.photo} /> */}
+                    <img src={'https://mir-s3-cdn-cf.behance.net/project_modules/disp/ea7a3c32163929.567197ac70bda.png'} />
                   </div>
                   <div className={styles.OneMessageInfoAndMessage}>
                     <div className={styles.NameAndMessage}>

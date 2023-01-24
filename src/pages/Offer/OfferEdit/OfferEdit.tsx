@@ -104,7 +104,7 @@ const OfferEdit: FC<OfferEditProps> = () => {
                 <Input
                   className={styles.LongInput}
                   defaultValue={field.value}
-                  kind="filled"
+                  kind="outlined"
                   type="text"
                   label="Tytuł ogłoszenia"
                   required
@@ -133,7 +133,7 @@ const OfferEdit: FC<OfferEditProps> = () => {
                   id="newAdShortDesc"
                   className={styles.ShortDesc}
                   defaultValue={field.value}
-                  kind="filled"
+                  kind="outlined"
                   label="Krótki opis ogłoszenia"
                   required
                   errorText={errors.shortDescription?.message}
