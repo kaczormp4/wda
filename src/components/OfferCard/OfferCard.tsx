@@ -62,8 +62,7 @@ export const OfferCard: FC<P> = props => {
         <img
           className={s.Image}
           alt={`Przedmiot ogłoszenia ${offer.title}`}
-          // src={offer.image ? offer.image.imageUrl : ''}
-          src={'https://www.maciejpluta.pl/files/sale-weselne/sale-weselne-czestochowa%20(42).jpg'}
+          src={offer?.image?.imageUrl || ''}
         />
         <div className={s.InfoWrap}>
           <div>
