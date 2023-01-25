@@ -46,7 +46,7 @@ export const CategoriesView: FC<P> = props => {
     <div className={s.Categories}>
       <div className={s.CatList}>
         {categories
-          ? [...categories, categories[1], categories[3]].map(v => {
+          ? [...categories].map(v => {
             return getCategoryBtn(v);
           })
           : fill(Array(8), null).map((x, i) => <Button key={i} size="lg" skeleton></Button>)}
