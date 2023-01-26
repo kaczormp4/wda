@@ -52,11 +52,6 @@ Po kliknięciu dane, które mogą zostać zmienione zmienią się w pole formula
 
 Po zmianie danych, aby je zapisać, użyj przycisku **`Zapisz`**.
 
-## Pakiety
-
----
-x> TBD
-<!-- # Wyszukiwarka (kategorie i filtry), wyszukiwanie -->
 
 # Ogłoszenia
 
@@ -105,8 +100,6 @@ Aby zapobiec przypadkowemu usunięciu ogłoszenia należy potwierdzić akcję w 
 
 x> Usunięcie ogłoszenia jest procesem nieodwracalnym!
 
-### Promowanie
-x> TBD
 
 ## Klient
 
@@ -118,7 +111,18 @@ Jako klient możesz swobodnie przeglądać ogłoszenia znajdujące się na stron
 
 #### Strona główna
 
-x> TBD
+Z poziomu strony głównej użytkownik ma dostęp do listy ogłoszeń oraz wyszukiwarki opisanej w następnym podrozdziale. 
+Za pośrednictwem tej strony można również łatwo zlokalizować skróty do większości innych ekranów, dzięki czemu nie musisz przedzierać się przez wiele innych sekcji aby dotrzeć do pożądanego miejsca. Ekran ten można też podzielić na następujące sekcje: 
+
+**Menu nawigacyjne** - znajdujące się na górze ekranu zawiera logo aplikacji oraz przyciski będące odnośnikami do innych ekranów. Dzięki stałej pozycji – na górze ekranu oraz w jego dolnej części jeżeli aplikacja została otworzona na urządzeniu mobilnym (rysunek 17) - użytkownik zawsze wie jak szybko przejść do innych podstron.  
+
+**Wyszukiwarka**  - jako pierwszy interaktywny element poza menu wyszukiwarka bezpośrednio sugeruje użytkownikowi aby z jej pomocą przeglądać i filtrować ogłoszenia zamieszczone na stronie. Pozwala ona na nie tylko wyszukiwanie ofert na podstawie tekstowej frazy, ale również na wybranie kategorii oraz specyficznych dla niej filtrów.  
+
+**Kategorie**  - w formie klikalnych kafelków następnie przedstawione zostały kategorie ogłoszeń. Z racji iż każde ogłoszenie należy do jednej z kategorii użytkownik może tutaj przejść do ekranu zawierającego ogłoszenia predefiniując kategorię jako jeden z parametrów filtrowania. 
+
+**Ogłoszenia** - pod kategoriami znajduje się dwukolumnowa lista ogłoszeń, które zostały dodane przez innych użytkowników. Zapewnia ona szybki dostęp do nowo dodanych ogłoszeń dzięki czemu ma do nich szybki dostęp zarówno je poszukujący oraz osoba które te ogłoszenia dodała - dodaje to pewności, że dodana oferta nie “zginie” pośród innych, skoro została wyróżniona na głównej stronie. 
+
+**Stopka**  - na samym dole strony został umieszczony przycisk do dokumentacji użytkownika. Dzięki takiemu stałemu umiejscowieniu jest on łatwy do odnalezienia przez osoby potrzebujące skorzystać z dokumentacji, a jednocześnie miejsce to jest na tyle nieinwazyjne, że jeżeli nie jesteśmy zainteresowani dokumentacją po pewnym czasie wręcz przestanie być on zauważany. 
 
 #### Wyszukiwarka
 
@@ -167,7 +171,15 @@ Ogłoszenia zapisywane są w pamięci przeglądarki.
 
 # Wiadomości
 
-x> TBD
+Odnośnik do panelu z wiadomościami znajduje się w menu nawigacyjnym strony znajdującym się na górze ekranu. 
+
+Aby przenieść się tam teraz kliknij [tutaj](/wiadomosci).
+
+_____
+
+
+Po lewej stronie ekranu ogłoszeń znajduje się lista osób z którymi nawiązano już kiedyś kontakt. Jeżeli użytkownik z którym chcesz się skontakować nie znajduje się na tej liście możesz rozpocząć z nim konwersacje za pośrednictwem odnośników znajdujących się na jego profilu lub dowolnym z jego ogłoszeń.
+Po wybraniu użytkownika z którym chcesz wymienić się wiadomościami możesz już je wysyłać. Odbiorca otrzyma wiadomość natychmiast.
 
 # Zgłoszenia
 
