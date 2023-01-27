@@ -2,6 +2,10 @@ import { FC, useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkhint from 'remark-hint';
+import mark from './docs.md';
+import markAdmin from './docsAdmin.md';
+import mark2 from './docsTEMPLATE.md';
+import s from './Docs.module.scss';
 import classNames from 'classnames';
 
 import { MSALInstance } from '../api/Authentication/MSALConfig';
@@ -15,16 +19,15 @@ type Nav = {
 };
 
 export const Docs: FC = () => {
-  const mark = require(`./../assets/docs.md`);
-  const markAdmin = require(`./../assets/docsAdmin.md`);
-
+  // const mark = require(`./../assets/docs.md`);
+  // const markAdmin = require(`./../assets/docsAdmin.md`);
+  
   const [docsSource, setDocsSource] = useState<string>('');
   const [nav, setNav] = useState<Nav[]>([]);
   const [activeNavIndex, setActiveNavIndex] = useState<number>();
   const contentRef = useRef<HTMLDivElement>();
   const docsWrapper = useRef<HTMLDivElement>();
   const isAdmin = MSALInstance.getAccount(); // currently just isLoggedIn
-  console.log({ 'd': 'd', mark, markAdmin });
   useEffect(() => {
     Promise.all([fetch(mark), fetch(markAdmin)])
       .then(async ([resp, respAdmin]) => {
