@@ -1,10 +1,16 @@
 import React, { FC } from 'react'
 
 import styles from './Section.module.scss';
+import classnames from 'classnames';
 
-export const SectionLarge: FC = ({ children }) => {
+type SectionProps = {
+    children: React.ReactNode,
+    noCenter?: boolean
+}
+
+export const SectionLarge: FC<SectionProps> = ({ children, noCenter }) => {
     return (
-        <section className={styles.Large}>{children}</section>
+        <section className={classnames(styles.Large, noCenter ? styles.noCenter : '')}>{children}</section>
     )
 }
 

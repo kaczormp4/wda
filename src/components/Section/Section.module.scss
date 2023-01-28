@@ -12,6 +12,10 @@
     max-width: var(--width-desktop-1600);
 }
 
+.noCenter {
+    max-width: unset;
+}
+
 .LineContainer {
     width: 100%;
     display: flex;

@@ -25,7 +25,7 @@ export const Home: FC = () => {
     }, []);
 
     return <>
-        <SectionLarge>
+        <SectionLarge noCenter>
             <div className={styles.WelcomePage}>
                 <Searchbar categories={categories} />
                 <div className={styles.WelcomePageContentContainer}>
