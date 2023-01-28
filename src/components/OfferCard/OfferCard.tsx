@@ -62,7 +62,7 @@ export const OfferCard: FC<P> = props => {
         <img
           className={s.Image}
           alt={`Przedmiot ogłoszenia ${offer.title}`}
-          src={offer.image ? offer.image.imageUrl : ''}
+          src={offer?.image?.imageUrl || ''}
         />
         <div className={s.InfoWrap}>
           <div>

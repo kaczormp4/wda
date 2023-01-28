@@ -22,6 +22,7 @@ const getImg = (name: string) => {
 export const CategoriesView: FC<P> = props => {
   const navigate = useNavigate();
   const { categories } = props;
+  console.log(categories);
 
   const getCategoryBtn = (cat: ICategory) => {
     const img = getImg(cat.name);
@@ -35,7 +36,7 @@ export const CategoriesView: FC<P> = props => {
         title={cat.name}
       >
         <span className={s.CatBtnName}>
-        {cat.name}
+          {cat.name}
         </span>
       </a>
     );
@@ -45,9 +46,9 @@ export const CategoriesView: FC<P> = props => {
     <div className={s.Categories}>
       <div className={s.CatList}>
         {categories
-          ? [...categories, categories[1], categories[3]].map(v => {
-              return getCategoryBtn(v);
-            })
+          ? [...categories].map(v => {
+            return getCategoryBtn(v);
+          })
           : fill(Array(8), null).map((x, i) => <Button key={i} size="lg" skeleton></Button>)}
       </div>
     </div>

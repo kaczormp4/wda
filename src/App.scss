@@ -7,33 +7,16 @@
 .App {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    min-height: 100%;
     align-items: center;
-    .app {
-        height: 100%;
-        width: -webkit-fill-available;
-        overflow: hidden;
-        margin: 4vh auto;
-        background-color: rgba(255, 255, 255, 0.522);
-        z-index: 1;
-        max-width: var(--width-desktop-1600);
-        padding: var(--spacing-04);
-        border-radius: var(--spacing-04);
 
-        &.no-scroll {
-            overflow: hidden;
-        }
-        &-wrapper {
-            overflow: auto;
-            height: 100%;
-        }
-    }
     .decorators {
         position: absolute;
         height: 100%;
         width: 100%;
         max-width: var(--width-desktop-1600);
         margin: auto;
+
         &::before {
             content: "";
             background-image: url(./assets/images/lily1.png);
@@ -47,6 +30,7 @@
             z-index: 0;
             transform: rotate(-15deg);
         }
+
         &::after {
             content: "";
             background-image: url(./assets/images/lily2.png);

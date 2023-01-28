@@ -1,20 +1,25 @@
-import React, { FC, useContext, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import styles from './Offer.module.scss';
-import Button from '../../components/commonComponents/Button/Button';
 import { useNavigate, useParams } from 'react-router-dom';
-import Slider from './Slider/Slider';
-import { getAdvPrice } from '../../utils/offersUtils';
-import Skeleton from './Skeleton/Skeleton';
 import classNames from 'classnames';
 import DOMPurify from 'dompurify';
-import { Offers, IOffer, IImage } from '../../api/Offers';
+
+import Button from '../../components/commonComponents/Button/Button';
 import { FavButton } from '../../components/FavButton/FavButton';
 import { getTags } from '../../components/OfferCard/OfferCard';
-import ReportModal from './ReportModal/ReportModal';
 import DeleteOfferModal from '../../components/OfferCard/DeleteOfferModal/DeleteOfferModal';
+import { SectionLine, SectionMedium } from '../../components/Section/Section';
+
+import Slider from './Slider/Slider';
+import Skeleton from './Skeleton/Skeleton';
+import ReportModal from './ReportModal/ReportModal';
+
+import { getAdvPrice } from '../../utils/offersUtils';
+
 import { MSALInstance } from '../../api/Authentication/MSALConfig';
+import { Offers, IOffer, IImage } from '../../api/Offers';
+
+import styles from './Offer.module.scss';
 
 const arrayPhotos = [
   'https://ckis.tczew.pl/imagecache/max_1800/orkiestra-jubileusz.jpg',
@@ -65,7 +70,7 @@ const Offer: FC<OfferProps> = () => {
   }
 
   return (
-    <>
+    <SectionMedium>
       <main className={styles.Container}>
         <div className={styles.OfferInfoContainer}>
           <section className={styles.Slider}>
@@ -82,6 +87,7 @@ const Offer: FC<OfferProps> = () => {
               {/* <span>dostępne terminy NEW FUTURE</span> */}
             </div>
             <div className={styles.AdditionalInfo}>{getTags(data.selectedFilters)}</div>
+            <SectionLine />
             <h1>Opis</h1>
             <div
               className={classNames(styles.MainDescription, 'styledText')}
@@ -170,7 +176,7 @@ const Offer: FC<OfferProps> = () => {
         <DeleteOfferModal offer={data} setModalOpen={setShowDeleteModal} onDelete={onDelete} />
       )}
       {modalOpen && <ReportModal offer={data} setModalOpen={setModalOpen} />}
-    </>
+    </SectionMedium>
   );
 };
 

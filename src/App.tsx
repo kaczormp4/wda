@@ -1,49 +1,27 @@
-import './App.scss';
-import { Home } from './pages/Home/Home';
-import NotFound from './pages/NotFound/NotFound';
-import Showcase from './components/Showcase/Showcase';
-import NewAd from './pages/NewAd/NewAd';
-import './utils/icons';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar/Navbar';
-import APITest from './api/APITest';
 import { ToastContainer } from 'react-toastify';
+
+import NewAd from './pages/NewAd/NewAd';
 import Offer from './pages/Offer/Offer';
 import Offers from './pages/Offers/Offers';
 import Profile from './pages/Profile/Profile';
-import Messages from './pages/Messages/Messages';
 import FavList from './pages/FavList/FavList';
-import AdminPanel from './pages/AdminPanel/AdminPanel';
+import Messages from './pages/Messages/Messages';
+import { Home } from './pages/Home/Home';
+import NotFound from './pages/NotFound/NotFound';
 import OfferEdit from './pages/Offer/OfferEdit/OfferEdit';
-import { Docs } from './docs/Docs';
+import AdminPanel from './pages/AdminPanel/AdminPanel';
+
+import Showcase from './components/Showcase/Showcase';
+import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 
-// const routes = [
-//   {
-//     path: "/",
-//     element: Home
-//   },
-//   {
-//     path: "/components",
-//     element: Showcase
-//   },
-//   {
-//     path: "/nowe-ogloszenie",
-//     element: NewAd
-//   },
-//   {
-//     path: "/apitest",
-//     element: APITest
-//   },
-//   {
-//     path: "/*",
-//     element: NotFound
-//   },
-//   {
-//     path: "/oferta",
-//     element: Offer,
-//   }
-// ];
+import APITest from './api/APITest';
+
+import { Docs } from './docs/Docs';
+import './utils/icons';
+
+import './App.scss';
 
 const flyoutMenuList = [
   {
@@ -71,44 +49,34 @@ function App() {
     <div className="App">
       <Router>
         <Navbar flyoutMenuList={flyoutMenuList} />
-        <div className="decorators" />
-        <div className="app">
-          <div className="app-wrapper">
-            {/* <Routes >
-            {routes.map((route, i) => (
-              <Route key={i} path={route.path} element={<route.element />} />
-            ))}
-          </Routes> */}
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/*" element={<NotFound />} />
-              <Route path="/docs" element={<Docs />} />
-              <Route path="/wiadomosci/:userId" element={<Messages />} />
-              <Route path="/wiadomosci" element={<Messages />} />
-              <Route path="/nowe-ogloszenie" element={<NewAd />} />
-              <Route path="/apitest" element={<APITest />} />
-              <Route path="/components" element={<Showcase />} />
-              <Route path="/moja-lista" element={<FavList />} />
-              <Route path="/admin" element={<AdminPanel />}>
-                <Route path=":subpage" element={<Profile />} />
-              </Route>
-              <Route path="/profil" element={<Profile />}>
-                <Route path=":id" element={<Profile />} />
-              </Route>
-              <Route path="/ogloszenia" element={<Offers />}>
-                <Route path=":id" element={<Offers />} />
-              </Route>
-              <Route path="/ogloszenie">
-                <Route path=":offerId" element={<Offer />} />
-                <Route path=":offerId/edycja" element={<OfferEdit />} />
-              </Route>
-            </Routes>
-          </div>
-        </div>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/*" element={<NotFound />} />
+          <Route path="/docs" element={<Docs />} />
+          <Route path="/wiadomosci/:userId" element={<Messages />} />
+          <Route path="/wiadomosci" element={<Messages />} />
+          <Route path="/nowe-ogloszenie" element={<NewAd />} />
+          <Route path="/apitest" element={<APITest />} />
+          <Route path="/components" element={<Showcase />} />
+          <Route path="/moja-lista" element={<FavList />} />
+          <Route path="/admin" element={<AdminPanel />}>
+            <Route path=":subpage" element={<Profile />} />
+          </Route>
+          <Route path="/profil" element={<Profile />}>
+            <Route path=":id" element={<Profile />} />
+          </Route>
+          <Route path="/ogloszenia" element={<Offers />}>
+            <Route path=":id" element={<Offers />} />
+          </Route>
+          <Route path="/ogloszenie">
+            <Route path=":offerId" element={<Offer />} />
+            <Route path=":offerId/edycja" element={<OfferEdit />} />
+          </Route>
+        </Routes>
         <Footer />
-      </Router>
+      </Router >
       <ToastContainer />
-    </div>
+    </div >
   );
 }
 

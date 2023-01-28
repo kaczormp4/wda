@@ -10,7 +10,10 @@
     will-change: transform;
     overflow: hidden;
     box-shadow: 0 0 8px 0px var(--md-overlay);
-    background-color: rgba(255, 255, 255, 0.5);
+    // box-shadow: 0 2px 2px 0 rgb(0 0 0 / 5%), 0 1px 5px 0 rgb(0 0 0 / 4%);
+
+    background-color: white;
+
     .Background {
         background-image: url(./../../assets/images/corner.png);
         background-repeat: no-repeat;
@@ -22,6 +25,7 @@
         pointer-events: none;
         opacity: 0.2;
     }
+
     .Promo {
         position: absolute;
         top: 26px;
@@ -31,10 +35,12 @@
         padding: var(--spacing-02) var(--spacing-07);
         color: var(--text-02);
     }
+
     &.Skeleton {
         background: white;
         border-color: transparent;
         overflow: hidden;
+
         &::after {
             position: absolute;
             inset: 0;
@@ -42,17 +48,17 @@
             content: "";
             transform: translateX(-100%);
             animation: skeletonAnim 2s infinite;
-            background-image: linear-gradient(
-                90deg,
-                transparent 0,
-                var(--disabled-01) 20%,
-                transparent 60%,
-                var(--disabled-01)
-            );
+            background-image: linear-gradient(90deg,
+                    transparent 0,
+                    var(--disabled-01) 20%,
+                    transparent 60%,
+                    var(--disabled-01));
         }
+
         &:hover {
             background: transparent;
         }
+
         @keyframes skeletonAnim {
             100% {
                 transform: translateX(100%);
@@ -63,7 +69,9 @@
     &:hover,
     &:focus {
         transform: scale(1.005);
+        background-color: #f5f5f6e3;
     }
+
     .Image {
         width: 12rem;
         height: 12rem;
@@ -71,29 +79,35 @@
         border-radius: var(--spacing-01);
         flex-shrink: 0;
     }
+
     .InfoWrap {
         width: 100%;
         position: relative;
         display: grid;
-        > div {
+
+        >div {
             display: flex;
             align-items: flex-start;
             justify-content: space-between;
             min-width: 0;
             gap: var(--spacing-03);
-            > div {
-                max-width: 100%;
+
+            >div {
+                max-width: 70%;
                 min-width: 0;
             }
         }
+
         .footerWrapper {
             display: flex;
             align-items: flex-end;
             justify-content: space-between;
             margin-top: var(--spacing-03);
+
             p {
                 font-size: var(--font-size-02);
             }
+
             .footerEdit {
                 display: flex;
                 gap: var(--spacing-03);
@@ -107,10 +121,16 @@
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            margin: 0;
         }
+
         .Desc {
+            height: 40px;
             word-break: break-all;
+            text-overflow: ellipsis;
+            overflow: hidden;
         }
+
         .Price {
             // position: absolute;
             // top: 0;
@@ -120,18 +140,24 @@
             flex-direction: column;
             align-items: flex-end;
         }
+
         .Tags {
             display: flex;
             flex-wrap: wrap;
             gap: var(--spacing-02);
             margin-top: var(--spacing-03);
+            height: 40px;
+            word-break: break-all;
+            text-overflow: ellipsis;
+            overflow: hidden;
         }
     }
 }
 
 .Tag {
     font-size: var(--font-size-02);
-    & > img,
+
+    &>img,
     svg {
         color: var(--primary);
     }

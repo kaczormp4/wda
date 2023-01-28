@@ -3,19 +3,21 @@
     width: calc(83rem);
     max-width: 100%;
     margin: var(--spacing-04) auto 0;
+
     .Searchbar {
         box-sizing: border-box;
         display: flex;
         font-size: var(--font-size-04);
         color: var(--text-01);
         background: var(--background-02);
-        border: 2px solid var(--secondary);
+        box-shadow: 0 0 8px 0px var(--md-overlay);
         height: 3rem;
         z-index: 4;
         position: relative;
         align-items: center;
         padding: 0 var(--spacing-02);
         font-family: "Inter", sans-serif;
+        border-radius: 10px;
 
         .Input {
             flex: 1;
@@ -26,11 +28,13 @@
             font-size: var(--font-size-03);
             padding-left: var(--spacing-03);
         }
+
         .Placeholder {
             opacity: 0.5;
             font-size: var(--font-size-03);
         }
     }
+
     .Dropdown {
         position: absolute;
         top: 3rem;
@@ -38,27 +42,34 @@
         width: 100%;
         background: var(--background-02);
         z-index: 3;
-        box-shadow: 0 10px 30px #0003;
+        box-shadow: 0 0 8px 0px var(--md-overlay);
         padding: var(--spacing-03);
         box-sizing: border-box;
+        border-radius: 10px;
+        margin-top: 5px;
 
         label {
             display: block;
             margin-bottom: var(--spacing-02);
             font-family: "Inter", sans-serif;
         }
+
         .Tag {
             display: inline-flex;
+
             &.Disabled {
                 opacity: 0.5;
             }
+
             &.Selected {
                 background: var(--primary-highlight);
             }
+
             &.Inactive {
                 opacity: 0.5;
             }
         }
+
         .DropdownSection {
             .TypeSection {
                 display: flex;
@@ -76,6 +87,7 @@
 
     .TagFilter {
         display: flex;
+
         button {
             height: 2rem;
             color: white;
@@ -83,6 +95,7 @@
             font-size: var(--font-size-03);
             border: 0;
         }
+
         .Main {
             border-radius: var(--spacing-01) 0 0 var(--spacing-01);
             border: 2px solid var(--primary-hover);
@@ -90,13 +103,15 @@
             background: none;
             color: var(--text-03);
             font-size: var(--font-size-03);
-    display: flex;
-    align-items: center;
-    .TagIcon {
-        margin-right: var(--spacing-02);
-        color: var(--primary)
-    }
+            display: flex;
+            align-items: center;
+
+            .TagIcon {
+                margin-right: var(--spacing-02);
+                color: var(--primary)
+            }
         }
+
         .Close {
             background: var(--primary);
             // border-left: 2px solid var(--primary-hover);

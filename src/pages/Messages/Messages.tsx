@@ -1,14 +1,18 @@
 import { FC, useContext, useEffect, useState } from 'react';
-
-import styles from './Messages.module.scss';
 import { useNavigate, useParams } from 'react-router-dom';
-import Input from '../../components/commonComponents/Input/Input';
-import ExactCoversation from './ExactCoversation/ExactCoversation';
-import AuthenticationContext from '../../api/Authentication/AuthenticationContext';
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
+import classNames from 'classnames';
+
+import Input from '../../components/commonComponents/Input/Input';
+import { SectionMedium } from '../../components/Section/Section';
+
+import ExactCoversation from './ExactCoversation/ExactCoversation';
+
+import AuthenticationContext from '../../api/Authentication/AuthenticationContext';
 import { MSALInstance } from '../../api/Authentication/MSALConfig';
 import { Users } from '../../api/Users';
-import classNames from 'classnames';
+
+import styles from './Messages.module.scss';
 
 const mockUserMessages = [
   {
@@ -177,7 +181,7 @@ const Messages: FC<MessagesProps> = () => {
   }
 
   return (
-    <>
+    <SectionMedium>
       <main className={styles.Container}>
         <div className={styles.UserAndMessgesContainer}>
           <div className={styles.SearchEngineAndFilter}>
@@ -198,7 +202,8 @@ const Messages: FC<MessagesProps> = () => {
                   onClick={() => changeMessage(user.id)}
                 >
                   <div className={styles.OneMessageAvatar}>
-                    <img src={user.photo} />
+                    {/* <img src={user.photo} /> */}
+                    <img src={'https://mir-s3-cdn-cf.behance.net/project_modules/disp/ea7a3c32163929.567197ac70bda.png'} />
                   </div>
                   <div className={styles.OneMessageInfoAndMessage}>
                     <div className={styles.NameAndMessage}>
@@ -229,7 +234,7 @@ const Messages: FC<MessagesProps> = () => {
           )}
         </div>
       </main>
-    </>
+    </SectionMedium>
   );
 };
 

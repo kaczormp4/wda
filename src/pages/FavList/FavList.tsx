@@ -1,16 +1,20 @@
 import { FC, useEffect, useState } from 'react';
-import styles from './FavList.module.scss';
+import { fill } from 'lodash';
+
+import { OfferCard } from '../../components/OfferCard/OfferCard';
+import { SectionMedium } from '../../components/Section/Section';
 
 import { Favorites } from '../../api/Favorites';
 import { Offers, IImage, IOffer } from '../../api/Offers';
-import { OfferCard } from '../../components/OfferCard/OfferCard';
-import { fill } from 'lodash';
+
+import styles from './FavList.module.scss';
 
 type FavListProps = {};
 
 const FavList: FC<FavListProps> = () => {
   const favOffers = new Favorites().getList();
   const [offers, setOffers] = useState<IOffer[]>();
+
   useEffect(() => {
     const api = new Offers();
     const offersPromises = favOffers?.map(
@@ -28,7 +32,7 @@ const FavList: FC<FavListProps> = () => {
   }, []);
 
   return (
-    <>
+    <SectionMedium>
       <main className={styles.FavList}>
         <h1 className={styles.Header}>Obserwowane ogłoszenia</h1>
         {!favOffers || favOffers.length === 0 ? (
@@ -41,7 +45,7 @@ const FavList: FC<FavListProps> = () => {
           </div>
         )}
       </main>
-    </>
+    </SectionMedium>
   );
 };
 

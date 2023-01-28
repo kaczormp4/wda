@@ -1,14 +1,17 @@
 import { FC, useEffect, useState } from 'react';
-import { Categories, ICategory } from '../../api/Categories';
+
+import Searchbar from '../../components/Searchbar/Searchbar';
+import { SectionLarge, SectionMedium } from '../../components/Section/Section';
+
 import { CategoriesView } from './CategoriesView/CategoriesView';
 import { HomeOffers } from './HomeOffers/HomeOffers';
 
-import styles from "./Home.module.scss";
+import { Categories, ICategory } from '../../api/Categories';
 import { IOffer, Offers } from '../../api/Offers';
-import Searchbar from '../../components/Searchbar/Searchbar';
+
+import styles from "./Home.module.scss";
 
 export const Home: FC = () => {
-
     const [categories, setCategories] = useState<ICategory[]>(null);
     const [offers, setOffers] = useState<IOffer[]>(null);
 
@@ -22,10 +25,27 @@ export const Home: FC = () => {
     }, []);
 
     return <>
-        <div className={styles.Home}>
-            <Searchbar categories={categories}/>
-            <CategoriesView categories={categories} />
-            <HomeOffers offers={offers}/>
-        </div>
+        <SectionLarge>
+            <div className={styles.WelcomePage}>
+                <Searchbar categories={categories} />
+                <div className={styles.WelcomePageContentContainer}>
+                    <div className={styles.WPTitle}>
+                        <h1>NUPTIAE - TUTAJ ZNAJDZIESZ CZEGO SZUKASZ</h1>
+                    </div>
+                </div>
+            </div>
+        </SectionLarge>
+        <SectionMedium>
+            <div className={styles.Home}>
+                <CategoriesView categories={categories} />
+            </div>
+        </SectionMedium>
+        <SectionLarge>
+            <div className={styles.PopularOffers}>
+                <SectionMedium>
+                    <HomeOffers offers={offers} />
+                </SectionMedium>
+            </div>
+        </SectionLarge>
     </>
 }

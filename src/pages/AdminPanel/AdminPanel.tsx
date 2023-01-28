@@ -1,12 +1,16 @@
 import { FC, useEffect, useState } from 'react';
-import styles from './AdminPanel.module.scss';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { MSALInstance } from '../../api/Authentication/MSALConfig';
-import Button from '../../components/commonComponents/Button/Button';
 import classnames from 'classnames';
-import { IReport, Reports } from '../../api/Reports';
 import { toast } from 'react-toastify';
+
+import Button from '../../components/commonComponents/Button/Button';
+
+import { MSALInstance } from '../../api/Authentication/MSALConfig';
+import { IReport, Reports } from '../../api/Reports';
 import { IStatistics, Statistics } from '../../api/Statistics';
+
+import styles from './AdminPanel.module.scss';
+import { SectionMedium } from '../../components/Section/Section';
 
 type AdminPanelProps = {};
 const Pages = {
@@ -124,7 +128,7 @@ const AdminPanel: FC<AdminPanelProps> = () => {
   };
 
   return (
-    <>
+    <SectionMedium>
       <main className={styles.Container}>
         <header className={styles.Header}>
           {Object.values(Pages).map(v => {
@@ -145,7 +149,7 @@ const AdminPanel: FC<AdminPanelProps> = () => {
         </header>
         {getActiveView()}
       </main>
-    </>
+    </SectionMedium>
   );
 };
 

@@ -3,16 +3,20 @@
 .Container {
     @include centerSection(var(--width-desktop-1250));
     margin-bottom: var(--spacing-03);
+
     .Header {
         display: flex;
         gap: var(--spacing-03);
+
         &Btn {
             border-bottom-left-radius: 0;
             border-bottom-right-radius: 0;
+
             &Active {
                 border-bottom: 2px solid var(--interactive-01);
                 background-color: var(--focus);
                 color: var(--text-02);
+
                 &:hover {
                     background-color: var(--interactive-01);
                 }
@@ -24,10 +28,13 @@
         background: var(--background-01);
         border-radius: var(--spacing-02);
         padding: var(--spacing-04) var(--spacing-03);
+        box-shadow: 0 0 8px 0px var(--md-overlay);
+
         .CardTitle {
             color: var(--text-03);
             margin-bottom: var(--spacing-03);
         }
+
         .CardValue {
             font-size: var(--font-size-06);
         }
@@ -41,22 +48,28 @@
         background: var(--background-02);
         border-radius: var(--spacing-02);
         padding: var(--spacing-04) var(--spacing-03);
+
         .Report {
             background: var(--background-01);
             border-radius: var(--spacing-02);
             overflow: hidden;
+            box-shadow: 0 0 8px 0px var(--md-overlay);
+
             &ID {
                 font-size: var(--font-size-02);
             }
+
             &Status {
                 width: var(--spacing-04);
                 height: var(--spacing-04);
                 border-radius: var(--spacing-04);
                 background: var(--danger);
+
                 &.ReportComplete {
                     background-color: var(--positive-01);
                 }
             }
+
             &Header {
                 display: flex;
                 align-items: center;
@@ -65,7 +78,8 @@
                 margin-bottom: var(--spacing-03);
                 padding: var(--spacing-02);
                 box-shadow: var(--box-shadow--small);
-                > div {
+
+                >div {
                     display: flex;
                     align-items: center;
                     gap: var(--spacing-03);
@@ -76,11 +90,13 @@
                 display: grid;
                 padding: 0 var(--spacing-02);
                 padding-bottom: var(--spacing-02);
+
                 label {
                     font-size: var(--font-size-02);
                     margin-top: var(--spacing-02);
                     margin-bottom: var(--spacing-01);
                 }
+
                 a {
                     color: var(--interactive-01);
                 }

@@ -1,22 +1,26 @@
 import { FC, useEffect, useState } from 'react';
-import s from './Offers.module.scss';
-import { IOffer, Offers as OfferAPI } from '../../api/Offers';
-
 import { useParams, useNavigate } from 'react-router-dom';
-import { Categories, FilterType, ICategory, ICategoryFilter, IFilter } from '../../api/Categories';
-import { fill } from 'lodash';
-import Select, { ISelectItem } from '../../components/commonComponents/Select/Select';
-import Button from '../../components/commonComponents/Button/Button';
 import classNames from 'classnames';
-import MultiSelect from '../../components/commonComponents/MultiSelect/MultiSelect';
-import { OffersView } from './OffersView';
+import { fill } from 'lodash';
+
+import Button from '../../components/commonComponents/Button/Button';
 import Input from '../../components/commonComponents/Input/Input';
+import MultiSelect from '../../components/commonComponents/MultiSelect/MultiSelect';
+import { SectionMedium } from '../../components/Section/Section';
+import Select, { ISelectItem } from '../../components/commonComponents/Select/Select';
+
+import { OffersView } from './OffersView';
+
+import { IOffer, Offers as OfferAPI } from '../../api/Offers';
+import { Categories, FilterType, ICategory, ICategoryFilter, IFilter } from '../../api/Categories';
+
+import s from './Offers.module.scss';
 
 type OffersProps = {
   offers?: IOffer[];
 };
 
-const Offers = (props: OffersProps) => {
+const Offers: FC<OffersProps> = (props) => {
   const propsOffers = props.offers;
   const [offers, setOffers] = useState<IOffer[]>(propsOffers);
   const [category, setCategory] = useState<ICategoryFilter>(null);
@@ -207,11 +211,13 @@ const Offers = (props: OffersProps) => {
   const filtered = filteredOffers(offers);
 
   return (
-    <div className={s.Offers}>
-      {/* cannot rneder filters for profile view cuase they don't have onme category */}
-      {!props.offers && <div className={s.Filters}>{getFilters()}</div>}
-      {filtered?.length ? <OffersView offers={filtered} /> : getEmptyScreen()}
-    </div>
+    <SectionMedium>
+      <div className={s.Offers}>
+        {/* cannot rneder filters for profile view cuase they don't have onme category */}
+        {!props.offers && <div className={s.Filters}>{getFilters()}</div>}
+        {filtered?.length ? <OffersView offers={filtered} /> : getEmptyScreen()}
+      </div>
+    </SectionMedium>
   );
 };
 

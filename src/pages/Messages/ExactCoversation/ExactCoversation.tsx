@@ -64,7 +64,8 @@ const ExactCoversation = ({
           className={styles.ConversationInfoNavbarAvatar}
           onClick={() => navigateTo(`profil/${userId}`)}
         >
-          <img src={exactMessage?.photo} />
+          {/* <img src={exactMessage?.photo} /> */}
+          <img src={'https://mir-s3-cdn-cf.behance.net/project_modules/disp/ea7a3c32163929.567197ac70bda.png'} />
         </div>
         <div className={styles.ConversationInfoAndButtonsContainer}>
           <div className={styles.ConversationInfoNameAndStatus}>

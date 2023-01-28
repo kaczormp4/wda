@@ -1,0 +1,37 @@
+@import "../../styles/cssVariables.scss";
+
+.Large {
+    width: 100%;
+    max-width: var(--width-desktop-1920);
+    display: flex;
+    justify-content: center;
+}
+
+.Medium {
+    width: 100%;
+    max-width: var(--width-desktop-1600);
+}
+
+.LineContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0;
+
+    .Line {
+        width: 40%;
+        height: 2px;
+        background-color: #8860324f;
+        border-radius: 5px;
+    }
+
+    .Logo {
+        width: 30px;
+        height: 30px;
+        background-color: black;
+        margin: 0 20px;
+        background-image: url(../../assets/images/ring.png);
+        background-size: cover;
+    }
+}
