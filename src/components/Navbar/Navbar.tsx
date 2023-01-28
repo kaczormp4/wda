@@ -119,6 +119,7 @@ const Navbar: FC<NavbarProps> = props => {
             kind="teritiary"
             onClick={() => navigateTo('wiadomosci')}
             icon={<FontAwesomeIcon icon="comment-alt" />}
+            disabled={!isAdmin}
             iconPosition="left"
           >
             Wiadomości
@@ -136,6 +137,7 @@ const Navbar: FC<NavbarProps> = props => {
             useAbsolutePositioning
             focusTrap
             renderInPortal
+            openOnHover
             disabled={!offers || offers?.length < 3 || location.pathname === '/profil'}
             buttonProps={{
               kind: 'teritiary',

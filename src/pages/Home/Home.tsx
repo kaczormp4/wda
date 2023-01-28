@@ -27,21 +27,16 @@ export const Home: FC = () => {
     return <>
         <SectionLarge>
             <div className={styles.WelcomePage}>
+                <Searchbar categories={categories} />
                 <div className={styles.WelcomePageContentContainer}>
                     <div className={styles.WPTitle}>
                         <h1>NUPTIAE - TUTAJ ZNAJDZIESZ CZEGO SZUKASZ</h1>
-                    </div>
-                    <div className={styles.WPButtons}>
-                        <div> <h2>WYSZUKIWARKA</h2></div>
-
-                        <div> <h2>POPULARNE OFERTY</h2></div>
                     </div>
                 </div>
             </div>
         </SectionLarge>
         <SectionMedium>
             <div className={styles.Home}>
-                <Searchbar categories={categories} />
                 <CategoriesView categories={categories} />
             </div>
         </SectionMedium>

@@ -10,8 +10,6 @@ import classNames from 'classnames';
 
 import { MSALInstance } from '../api/Authentication/MSALConfig';
 
-import s from './Docs.module.scss';
-
 type Nav = {
   index: number;
   level: number;
@@ -19,9 +17,6 @@ type Nav = {
 };
 
 export const Docs: FC = () => {
-  // const mark = require(`./../assets/docs.md`);
-  // const markAdmin = require(`./../assets/docsAdmin.md`);
-  
   const [docsSource, setDocsSource] = useState<string>('');
   const [nav, setNav] = useState<Nav[]>([]);
   const [activeNavIndex, setActiveNavIndex] = useState<number>();
@@ -43,7 +38,7 @@ export const Docs: FC = () => {
 
   useEffect(() => {
     if (nav.length) {
-      docsWrapper.current.addEventListener('scroll', scrollObserver);
+      contentRef.current.addEventListener('scroll', scrollObserver);
     }
   }, [nav]);
 
@@ -100,7 +95,7 @@ export const Docs: FC = () => {
     el.addEventListener('animationend', () => {
       el.classList.remove(s.target);
     });
-    wrapper.scrollTo({ top: el.offsetTop - wrapper.offsetTop, behavior: 'smooth' });
+    window.scrollTo({ top: el.offsetTop - wrapper.offsetTop, behavior: 'smooth' });
   };
 
   const generateFriendlyHashLink = (item: Nav) => {

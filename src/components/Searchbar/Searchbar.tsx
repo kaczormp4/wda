@@ -10,6 +10,7 @@ import { filter } from 'lodash';
 import styles from './Searchbar.module.scss';
 type P = {
   categories: ICategory[];
+  className?: string;
 };
 
 const Searchbar: FC<P> = (props: P) => {
@@ -228,7 +229,7 @@ const Searchbar: FC<P> = (props: P) => {
 
   return (
     <div
-      className={styles.Wrapper}
+      className={classnames(styles.Wrapper, props.className)}
       onClick={openDropdown}
       onFocus={openDropdown}
       onBlur={closeDropdown}
