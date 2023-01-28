@@ -301,7 +301,7 @@ const NewAd: FC = () => {
             }}
             render={({ field }) => (
               <Input
-                kind="filled"
+                kind="outlined"
                 type="number"
                 label="Cena"
                 required
@@ -331,7 +331,7 @@ const NewAd: FC = () => {
                 }}
                 render={({ field }) => (
                   <Input
-                    kind="filled"
+                    kind="outlined"
                     type="number"
                     label="Cena minimalna"
                     defaultValue={formValues.minPrice || ''}
@@ -357,7 +357,7 @@ const NewAd: FC = () => {
                 }}
                 render={({ field }) => (
                   <Input
-                    kind="filled"
+                    kind="outlined"
                     type="number"
                     label="Cena maksymalna"
                     defaultValue={formValues.maxPrice || ''}
@@ -394,7 +394,7 @@ const NewAd: FC = () => {
               render={({ field }) => (
                 <Input
                   className={styles.LongInput}
-                  kind="filled"
+                  kind="outlined"
                   type="text"
                   label="Tytuł ogłoszenia"
                   required
@@ -421,7 +421,7 @@ const NewAd: FC = () => {
                 <TextField
                   id="newAdShortDesc"
                   className={styles.ShortDesc}
-                  kind="filled"
+                  kind="outlined"
                   label="Krótki opis ogłoszenia"
                   required
                   errorText={errors.shortDescription?.message}
@@ -438,6 +438,7 @@ const NewAd: FC = () => {
               render={({ field }) => (
                 <>
                   <Button
+                    className={styles.CategoryButton}
                     type="button"
                     size="lg"
                     icon={<FontAwesomeIcon icon="chevron-right" />}
