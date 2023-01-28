@@ -301,7 +301,7 @@ const NewAd: FC = () => {
             }}
             render={({ field }) => (
               <Input
-                kind="filled"
+                kind="outlined"
                 type="number"
                 label="Cena"
                 required
@@ -331,7 +331,7 @@ const NewAd: FC = () => {
                 }}
                 render={({ field }) => (
                   <Input
-                    kind="filled"
+                    kind="outlined"
                     type="number"
                     label="Cena minimalna"
                     defaultValue={formValues.minPrice || ''}
@@ -357,7 +357,7 @@ const NewAd: FC = () => {
                 }}
                 render={({ field }) => (
                   <Input
-                    kind="filled"
+                    kind="outlined"
                     type="number"
                     label="Cena maksymalna"
                     defaultValue={formValues.maxPrice || ''}

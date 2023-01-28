@@ -83,6 +83,7 @@
         display: flex;
         flex-wrap: wrap;
         column-gap: var(--spacing-04);
+        margin-top: var(--spacing-04);
 
         :global {
             .#{$prefix}-input--wrapper {}
