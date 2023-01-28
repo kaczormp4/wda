@@ -4,37 +4,46 @@
     width: var(--width-desktop-1250);
     max-width: calc(100% - var(--spacing-05));
     margin: auto;
+
     .Header {
         margin-top: var(--spacing-05);
         font-size: var(--font-size-05);
         font-weight: bold;
     }
+
     .FormSection {
         padding: var(--spacing-05);
         background-color: var(--background-02);
         margin-top: var(--spacing-03);
         border-radius: var(--spacing-02);
+        box-shadow: 0 0 8px 0px var(--md-overlay);
+
         &:last-of-type {
             margin-bottom: var(--spacing-05);
         }
+
         .Section {
             &Header {
                 margin-bottom: var(--spacing-02);
                 font-size: var(--font-size-04);
+
                 &:not(:first-of-type) {
                     margin-top: var(--spacing-05);
                 }
             }
+
             &Desc {
                 font-size: var(--font-size-02);
             }
         }
-        
+
     }
+
     .FilterField {
         display: inline-flex;
         flex-direction: column;
         margin-right: var(--spacing-04);
+
         .FilterLabel {
             font-size: var(--font-size-02);
             padding-left: var(--spacing-03);
@@ -42,18 +51,26 @@
             display: inherit;
         }
     }
+
     .SubmitSection {
         display: flex;
         justify-content: flex-end;
     }
+
+
+
     .LongInput,
     .ShortDesc {
         width: 40rem;
         max-width: 100%;
     }
 
+    .CategoryButton {
+        margin-top: var(--spacing-04);
+    }
+
     .BtnLabel {
-        margin-bottom: var(--spacing-01);
+        margin: 0 var(--spacing-01);
         font-size: var(--font-size-02);
 
         &.Error {
@@ -66,10 +83,9 @@
         display: flex;
         flex-wrap: wrap;
         column-gap: var(--spacing-04);
-        :global {
-            .#{$prefix}-input--wrapper {
 
-            }
+        :global {
+            .#{$prefix}-input--wrapper {}
         }
     }
 
@@ -80,6 +96,7 @@
 
     .TextEditor {
         margin: var(--spacing-03) 0 var(--spacing-05);
+        box-shadow: 0 0 18px 0px rgb(239, 239, 239);
     }
 }
 
@@ -88,6 +105,7 @@
     grid-gap: var(--spacing-03);
     grid-template-columns: repeat(auto-fill, 16rem);
     justify-content: center;
+
     :global {
         .#{$prefix}-btn {
             width: 100%;
@@ -102,6 +120,7 @@
     padding: var(--spacing-03) var(--spacing-01);
     margin: var(--spacing-01) 0;
 
+
     &Drop {
         outline: 2px dashed var(--focus);
     }
@@ -114,14 +133,14 @@
         top: -999px;
         left: -99px;
 
-        &:focus + .Photo {
+        &:focus+.Photo {
             outline: 2px solid var(--focus);
         }
     }
+
     .Photo {
         width: 160px;
         height: 120px;
-        background: var(--background-01);
         border-radius: var(--spacing-02);
         display: flex;
         align-items: center;
@@ -132,9 +151,15 @@
         border: 0;
         overflow: hidden;
         position: relative;
+        background-color: rgb(250, 250, 250);
+        box-shadow: 0 0 8px 0px var(--md-overlay);
+
         &:hover {
             color: var(--primary-hover);
+            background-color: rgb(236, 236, 236);
+
         }
+
         &Img {
             object-fit: cover;
             width: 100%;
@@ -151,6 +176,7 @@
             gap: var(--spacing-03);
             background: var(--modal-overlay);
             backdrop-filter: blur(2px);
+
             &:hover,
             &:focus-within {
                 opacity: 1;
